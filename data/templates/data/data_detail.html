@@ -1,0 +1,107 @@
+{% extends 'data/base.html' %}
+
+{% block title%}
+Data detail
+{% endblock title%}
+
+{% block content%}
+	<h1>{{ object.m_number.id }} {{object.m_number.title}}</h1>
+	<div class="col-md-6">
+        <img class="img-thumbnail" src="{{ object.m_number.image.url }}">
+    </div>
+    <div class="col-md-6">
+    	{% if object.m_number.artist2.full_name %}
+    		{% if object.m_number.artist_validity %}
+    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & "{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</p>
+    		{% else %}	
+    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
+    		{% endif %}
+    	{% else %}
+    		{% if object.m_number.artist_validity %}
+    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+    		{% else %}
+    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+    		{% endif %}
+    	{% endif %}
+    	
+    	<p>Born: {{ object.place_of_birth }} ({{ object.year_of_birth }}) </p>
+		<p>Died: {{ object.place_of_death }} ({{ object.year_of_death }}) </p>
+		{% if object.other_names %}
+			<p>Also known as {{ object.other_names }}</p>
+		{% endif %} 
+		{% if object.centres_of_activity %}
+			<div>
+				<p><p>Was active in {{ object.centres_of_activity }}</p>
+			</div>
+		{% endif %}
+		<small class="text-muted"><a href="{{ object.rkd_link }}">(RKD)</a></small>
+    </div>
+	<p>Image, lists the artwork + artist details. List sampling techniques, links to samples, ground description etc. Additional information popdown.</p>
+{% endblock content %}
+
+<!--
+What do we want?
+- Larger image of the painting
+- title (datevalidation, date1, date2)
+- artist (LINK) (birth-death)
+- executed in:
+
+- support:
+- medium:
+- height x width (height x width in cm)
+- signature:
+
+- museumname(LINK): accessionnumber
+if artwork.museum_link:
+	- museum-link(LINK)
+- RKD-link (LINK)
+- amount of groundlayers + render
+
+DATA HEADING
+Overview
+- number of grounds
+- description
+- colour-code
+- colour-render
+
+if no_of_grounds = 1:
+- layer1_colour
+- layer1_composition
+elif no_of_grounds = 2:
+- layer2_colour
+- layer2_composition
+- layer1_colour
+- layer1_composition
+elif no_of_grounds = 3:
+- layer3_colour
+- layer3_composition
+- layer2_colour
+- layer2_composition
+- layer1_colour
+- layer1_composition
+endif
+
+DROPWDOWN: Reference
+- reliability (LINK)
+- Sampled?
+- Microscopy?
+- Elemental analysis?
+- Source
+	- give source
+	- new research within DttG
+	- researchers
+- Notes
+
+DROPDOWN: sample(s)
+if sample1df:
+	IMAGE
+if sample1bf:
+	IMAGE
+if sample1uv:
+	IMAGE
+if sample2df:
+	IMAGE
+if sample2bf:
+	IMAGE
+if sample2uv:
+-->

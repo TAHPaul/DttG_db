@@ -1,0 +1,52 @@
+{% extends 'data/base.html' %}
+
+{% block title%}
+{{object.id }}: {{object.full_name }}
+{% endblock title%}
+
+{% block content%}
+	<h1>{{object.id}}. {{ object.full_name }}<small> ({{ object.artist.count }})</small></h1>
+    <div class="row text-center">
+        <div class="col-md-6">
+            <img class="img-thumbnail" src="{{ object.image.url }}">
+        </div>
+        <div class="col-md-6">
+        	<p>Born: {{ object.place_of_birth }} ({{ object.year_of_birth }}) </p>
+			<p>Died: {{ object.place_of_death }} ({{ object.year_of_death }}) </p>
+			{% if object.other_names %}
+				<p>Also known as {{ object.other_names }}</p>
+			{% endif %} 
+			{% if object.centres_of_activity %}
+				<div>
+					<p><p>Was active in {{ object.centres_of_activity }}</p>
+				</div>
+			{% endif %}
+			<small class="text-muted"><a href="{{ object.rkd_link }}">(RKD)</a></small>
+        </div>
+    </div>
+	<!-- This has to become some sort of data overview -->
+	<h3>Data overview</h3>
+	<!-- number of groundlayer and count/total -->
+	<!-- lowest  groundlayer and count/total -->
+	<!-- Top groundlayer and count/total -->
+
+	<!-- this has to become a dropdown menu -->
+	{% if object.artist.count is not None %}
+		<h3>Number of artworks by {{ object.full_name }} in database: {{ object.artist.count }}</h3>
+		{% for artwork in object.artist.all %}
+			<p><a href="{% url 'data-detail' artwork.id %}">{{ artwork.title }}</a> ({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
+			<p>Groundlayers colour-code: {{ artwork.data.colour_code }}</p>
+			{% if artwork.data.no_of_grounds == '1' %}
+				<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
+			{% elif artwork.data.no_of_grounds == '2' %}
+				<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Toplayer:     {{ artwork.data.layer2_colour.colour_name }}</p>
+				<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
+			{% elif artwork.data.no_of_grounds == '3' %}
+				<p style="background-color:{{ artwork.data.layer3_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
+				<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Middle layer: {{ artwork.data.layer2_colour.colour_name }}</p>
+				<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
+			{% endif %}
+			<br>
+		{% endfor %}
+	{% endif %}		
+{% endblock content %}

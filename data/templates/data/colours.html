@@ -1,0 +1,26 @@
+{% extends 'data/base.html' %}
+
+{% block title%}
+Colours
+{% endblock title%}
+
+{% block content%}
+	<h1>COLOUR SYSTEM</h1>
+	<div>
+		<p>Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
+		<p>{{ colours }}</p>
+	</div>
+
+		<div class="container">
+			<div class="row">
+				{% for colour in colours %}
+				<div class="col-4">
+					<a class="mr-2" href="#">{{ colour.colour_name }}</a>
+					<small class="text-muted">Abbr: {{ colour.id }}</small>
+					<h5 style="background-color:{{ colour.hex_code }};">{{ colour.hex_code }}</h5>
+				</div>	
+				{% endfor %}
+			</div>
+		</div>	
+
+{% endblock content %}

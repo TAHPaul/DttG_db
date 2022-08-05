@@ -1,0 +1,24 @@
+{% extends 'data/base.html' %}
+
+{% block title%}
+Cities of execution overview
+{% endblock title%}
+
+{% block content%}
+	<h1>Cities of execution overview</h1>
+	{% for city in cities%}
+		{% if city.execution_city.count %}
+			<p><a href="{% url 'city-of-execution-detail' city.city %}">{{ city.city }}</a>, {{ city.country }}</p>
+			<p>Artworks executed in this city: {{ city.execution_city.count }}</p>
+			<br>
+		{% endif %}
+	{% endfor %}
+	
+	<p>Show on map. Little table with the amounts. The cities should be clickable. What else?</p>
+{% endblock content %}
+
+<!--
+What do we want?
+- map up top with all the cities. Should be clickable and refer to their detail-page.
+- e.g. UTRECHT, the Netherlands. Artworks in database: #
+-->
