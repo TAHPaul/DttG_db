@@ -1,0 +1,47 @@
+{% extends 'data/base.html' %}
+
+{% block title%}
+Artists overview
+{% endblock title%}
+
+{% block content%}
+	<h1>Artists overview</h1>
+	{% for artist in artists %}
+		<article class="media content_section">
+			<div class="media-body">
+				<div class="article-metadata">
+					<a class="mr-2" href="{% url 'artists-detail' artist.id %}">{{ artist.full_name }}</a>
+					<small class="text-muted"><a href="{{ artist.rkd_link }}">(RKD)</a></small>
+					{% if artist.other_names %}
+						<p>Also known as {{ artist.other_names }}</p>
+					{% endif %}
+					<p>Born: {{ artist.place_of_birth }} ({{ artist.year_of_birth }}) <br></p>
+					<p>Died: {{ artist.place_of_death }} ({{ artist.year_of_death }}) <br></p>
+					<p>Artworks in database: {{ artist.artist.count }} </p>
+				</div>
+			</div>
+		</article>
+	{% endfor %}
+
+	{% if is_paginated %}
+		
+		{% if page_obj.has_previous %}
+			<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
+			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
+		{% endif %}
+
+		{% for num in page_obj.paginator.page_range %}
+			{% if page_obj.number == num %}
+				<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
+			{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+				<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
+			{% endif %}
+		{% endfor %}
+
+		{% if page_obj.has_next %}
+			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
+			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+		{% endif %}
+	
+	{% endif %}
+{% endblock content %}

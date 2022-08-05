@@ -1,0 +1,39 @@
+{% extends 'data/base.html' %}
+
+{% block title%}
+{{ object.id}}: {{object.museum_name}}
+{% endblock title%}
+
+{% block content%}
+	<article class="media content_section">
+		<div class="media-body">
+			<div class="article-metadata">
+				<h1>{{ object.museum_name }}</h1>
+				<small class="text-muted"><a href="{{ object.website }}">(museum-site)</a></small>
+				{% if object.city %}
+					<p>This museum is located in {{ object.city }}, {{ object.city.country }}</p>
+					<!-- <p>Latitude: {{ object.city.latitude }}</p>
+					<p>Longitude: {{ object.city.longitude }}</p> -->
+				{% endif %}
+				<p>This museum has id {{ object.id }}</p> 
+				{% if object.artwork_museum.count is not 0 %}
+					<h5>Number of artworks in database: {{ museum.artwork_museum.count }}</h5>
+					{% for artwork in museum.artwork_museum.all %}
+						<p><a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }}</a> | <a href="{% url 'data-detail' artwork.id %}">{{ artwork.title }}</a> ({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
+						<p>Groundlayers colour-code: {{ artwork.data.colour_code }}</p>
+						{% if artwork.data.no_of_grounds == '1' %}
+							<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
+						{% elif artwork.data.no_of_grounds == '2' %}
+							<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Toplayer:     {{ artwork.data.layer2_colour.colour_name }}</p>
+							<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
+						{% elif artwork.data.no_of_grounds == '3' %}
+							<p style="background-color:{{ artwork.data.layer3_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
+							<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Middle layer: {{ artwork.data.layer2_colour.colour_name }}</p>
+							<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</article>
+{% endblock content %}
