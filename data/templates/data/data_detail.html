@@ -5,37 +5,54 @@ Data detail
 {% endblock title%}
 
 {% block content%}
-	<h1>{{ object.m_number.id }} {{object.m_number.title}}</h1>
-	<div class="col-md-6">
-        <img class="img-thumbnail" src="{{ object.m_number.image.url }}">
-    </div>
-    <div class="col-md-6">
-    	{% if object.m_number.artist2.full_name %}
-    		{% if object.m_number.artist_validity %}
-    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & "{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</p>
-    		{% else %}	
-    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
-    		{% endif %}
-    	{% else %}
-    		{% if object.m_number.artist_validity %}
-    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
-    		{% else %}
-    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
-    		{% endif %}
-    	{% endif %}
-    	
-    	<p>Born: {{ object.place_of_birth }} ({{ object.year_of_birth }}) </p>
-		<p>Died: {{ object.place_of_death }} ({{ object.year_of_death }}) </p>
-		{% if object.other_names %}
-			<p>Also known as {{ object.other_names }}</p>
-		{% endif %} 
-		{% if object.centres_of_activity %}
-			<div>
-				<p><p>Was active in {{ object.centres_of_activity }}</p>
-			</div>
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">{{object.m_number.id}}: {{ object.m_number.title }}</h1>
+		{% if object.m_number.date2 %}
+			<h3 class="card-text" align="center">({{ object.m_number.date_validity }}{{object.m_number.date1}}-{{object.m_number.date2}})</h3>
+		{% else %}
+			<h3 class="card-text" align="center">({{ object.m_number.date_validity }}{{object.m_number.date1}})</h3>
 		{% endif %}
-		<small class="text-muted"><a href="{{ object.rkd_link }}">(RKD)</a></small>
+	</div>
+	<div class="row text-left">
+        <div class="col-md-4">
+        	<div class="text-center">
+        		<img class="img-thumbnail" src="{{ object.m_number.image.url }}">
+        	</div>
+        </div>
+        <div class="col-md-8">
+        	<h3 align="center">Biographical information</h3><hr>
+        	{% if object.m_number.artist2.full_name %}
+	    		{% if object.m_number.artist_validity %}
+	    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & "{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</p>
+	    		{% else %}	
+	    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
+	    		{% endif %}
+	    	{% else %}
+	    		{% if object.m_number.artist_validity %}
+	    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+	    		{% else %}
+	    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+	    		{% endif %}
+	    	{% endif %}
+			<h6 style='display:inline'>Executed in: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.m_number.place_of_execution.city %}">{{ object.m_number.place_of_execution }}</a></p><br>
+        	<h6 style='display:inline'>Support: </h6><p style='display:inline'>{{ object.m_number.support }}</p><br>
+        	<h6 style='display:inline'>Medium: </h6><p style='display:inline'>{{ object.m_number.medium }}</p><br>
+        	<h6 style='display:inline'>Dimensions (cm): </h6><p style='display:inline'>{{ object.m_number.height }} x {{ object.m_number.width }}</p><br>
+			<h6 style='display:inline'>Signed? </h6><p style='display:inline'>{{ object.m_number.signature }}</p><br>
+			<hr>
+			<h6 style='display:inline'>Museum: </h6><p style='display:inline'><a href="{% url 'museums-detail' object.m_number.museum.id %}">{{ object.m_number.museum.museum_name }}</a> [inv.nr: {{ object.m_number.accession_number}}]</p>
+			{% if object.m_number.museum_link%}
+				<h6 style='display:inline'><a href="{object.m_number.museum_link %}"></a>Museum-link</h6>
+			{% endif %}
+			{% if object.m_number.rkd_link%}
+				<h6 style='display:inline'><a href="{object.m_number.rkd_link %}">RKD-link</a></h6>
+			{% endif %}
+			<hr>
+        </div>
+        <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
+        <!-- alternatively, we could maybe embed the RKD map? -->
     </div>
+
 	<p>Image, lists the artwork + artist details. List sampling techniques, links to samples, ground description etc. Additional information popdown.</p>
 {% endblock content %}
 

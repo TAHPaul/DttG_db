@@ -1,4 +1,4 @@
-from data.models import Artist, City, Museum, Artwork
+from data.models import Artist, City, Museum, Artwork, Colour, Data
 import csv
 
 def run():

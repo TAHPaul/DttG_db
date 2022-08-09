@@ -5,48 +5,108 @@
 {% endblock title%}
 
 {% block content%}
-	<h1>{{object.id}}. {{ object.full_name }}<small> ({{ object.artist.count }})</small></h1>
-    <div class="row text-center">
-        <div class="col-md-6">
-            <img class="img-thumbnail" src="{{ object.image.url }}">
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">{{object.id}}. {{ object.full_name }}</h1>
+		<p> ({{ object.artist.count }} database entries)</p>
+	</div>
+    <div class="row text-left">
+        <div class="col-md-4">
+        	<div class="text-center">
+        		<img class="img-thumbnail" src="{{ object.image.url }}">
+        	</div>
         </div>
-        <div class="col-md-6">
-        	<p>Born: {{ object.place_of_birth }} ({{ object.year_of_birth }}) </p>
-			<p>Died: {{ object.place_of_death }} ({{ object.year_of_death }}) </p>
+        <div class="col-md-8">
+        	<h3 align="center">Biographical information</h3><hr>
+        	<h6 style='display:inline'>Born: </h6><p style='display:inline'>{{ object.place_of_birth }} ({{ object.year_of_birth }})</p><br>
+			<h6 style='display:inline'>Died: </h6><p style='display:inline'>{{ object.place_of_death }} ({{ object.year_of_death }})</p><br>
 			{% if object.other_names %}
-				<p>Also known as {{ object.other_names }}</p>
+				<h6>Also known as:</h6><p align="center"> {{ object.other_names }}</p>
 			{% endif %} 
 			{% if object.centres_of_activity %}
 				<div>
-					<p><p>Was active in {{ object.centres_of_activity }}</p>
+					<h6>Centres of activity:</h6><p align="center">{{ object.centres_of_activity }}</p>
 				</div>
 			{% endif %}
-			<small class="text-muted"><a href="{{ object.rkd_link }}">(RKD)</a></small>
+			<h6><a href="{{ object.rkd_link }}" class="text-info">RKD-link</a></h6>
+			<hr>
         </div>
+        <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
+        <!-- alternatively, we could maybe embed the RKD map? -->
     </div>
 	<!-- This has to become some sort of data overview -->
-	<h3>Data overview</h3>
+	<br>
+	<div class="jumbotron text-center border">
+		<h3 align="center" class="display-4">Data Overview</h3>
+	</div>
+	<!-- Nav tabs -->
+
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#cards">Data entries</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#graphs">Graph data</a>
+		</li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div class="tab-pane container active" id="cards">
+			{% if object.artist.count is not None %}
+				<br><h4 align="center">{{ object.artist.count }} entries in database:</h4><br>
+				<div class="row">
+					{% for artwork in object.artist.all %}
+						<div class="col-4">
+							<div class="card h-100 d-flex">
+								<div class="card-body d-flex flex-column">
+									<h5 class="card-title" align="center"><a href="{% url 'data-detail' artwork.id %}" class="stretched-link">{{artwork.id}}: {{ artwork.title }}</a></h5>
+									{% if artwork.date2 %}
+										<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
+									{% else %}
+										<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}})</p>
+									{% endif %}
+									<h6 align="center" class="mt-auto">Preparatory layers:</h6>
+									<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:0;"><small>Paint layers</small></p>
+									{% if artwork.data.no_of_grounds == '1' %}
+										<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+									{% elif artwork.data.no_of_grounds == '2' %}
+										<div style=" border: 1px solid black;">
+											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+										<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+										</div>
+										
+									{% elif artwork.data.no_of_grounds == '3' %}
+										<div style=" border: 1px solid black;">
+											<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+											<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+										</div>
+										
+									{% endif %}
+									<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<h4 align="center">No entries (yet) in database.</h4>
+			{% endif %}		
+		</div>
+		<div class="tab-pane container fade" id="graphs">
+			Here something else ay
+		</div>
+	</div>
+
+
+
 	<!-- number of groundlayer and count/total -->
 	<!-- lowest  groundlayer and count/total -->
 	<!-- Top groundlayer and count/total -->
 
 	<!-- this has to become a dropdown menu -->
-	{% if object.artist.count is not None %}
-		<h3>Number of artworks by {{ object.full_name }} in database: {{ object.artist.count }}</h3>
-		{% for artwork in object.artist.all %}
-			<p><a href="{% url 'data-detail' artwork.id %}">{{ artwork.title }}</a> ({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
-			<p>Groundlayers colour-code: {{ artwork.data.colour_code }}</p>
-			{% if artwork.data.no_of_grounds == '1' %}
-				<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
-			{% elif artwork.data.no_of_grounds == '2' %}
-				<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Toplayer:     {{ artwork.data.layer2_colour.colour_name }}</p>
-				<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
-			{% elif artwork.data.no_of_grounds == '3' %}
-				<p style="background-color:{{ artwork.data.layer3_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
-				<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Middle layer: {{ artwork.data.layer2_colour.colour_name }}</p>
-				<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
-			{% endif %}
-			<br>
-		{% endfor %}
-	{% endif %}		
+	<div class="container-fluid">
+	
 {% endblock content %}
+
+	

@@ -11,7 +11,6 @@ urlpatterns = [
 	path('', views.enter, name='entry_page'),
 	path('home/', views.home, name='dttg-home'),
 	path('about/', views.about, name='dttg-about'),
-	path('team/', views.team, name='dttg-team'),
 	path('artists/', ArtistListView.as_view(), name='artists-overview'), #NEW LIST VIEW
 	path('artists/<int:pk>/', views.ArtistDetailView.as_view(), name='artists-detail'),
 	path('entries/', views.DataListView.as_view(), name='data-overview'),
@@ -22,5 +21,5 @@ urlpatterns = [
 	path('colours/', views.colours, name='colours'),
 	path('city-of-execution/', views.city_of_execution_overview, name='city-of-execution-overview'),
 	path('city-of-execution/<str:pk>/', views.city_of_execution_detail.as_view(), name='city-of-execution-detail'),
-	path('reliability/', views.reliability, name='reliability')
+	path('reliability/', views.reliability, name='reliability'),
 ]

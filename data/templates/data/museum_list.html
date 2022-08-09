@@ -6,23 +6,31 @@ Museums Overview
 
 {% block content%}
 	<!-- {{ map|safe }} -->
-	<h1>Museums Overview</h1>
-	{% for museum in museums %}
-		<article class="media content_section">
-			<div class="media-body">
-				<div class="article-metadata">
-					<a class="mr-2" href="{% url 'museums-detail' museum.id %}">{{ museum.id}}. {{ museum.museum_name }}</a>
-					<small class="text-muted"><a href="{{ museum.website }}">(Site)</a></small>
-					{% if museum.city %}
-						<p>This museum is located in {{ museum.city }}, {{ museum.city.country }}</p>
-						<!-- <p>Latitude: {{ museum.city.latitude }}</p> -->
-						<!-- <p>Longitude: {{ museum.city.longitude }}</p> -->
-					{% endif %}
-					<p>Artworks in database: {{ museum.artwork_museum.count }} </p> 
-				</div>
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">List of museums</h1>
+		<p>Museums in database: {{ no_of_museums }}</p>
+	</div>
+	<div class="row">
+		{% for museum in museums %}
+			<div class="col-4">
+				<a class="text-dark" href="{% url 'museums-detail' museum.id %}">
+					<div class="card box-shadow h-100 d-flex">
+						<div class="card-body d-flex flex-column">
+							<h5 class="card-title" align="center" style="margin-bottom: 0px"><a href="{% url 'museums-detail' museum.id %}" class="stretched-link">{{museum.museum_name}}</a></h5><small class="text-muted" align="center"><a href="{{ museum.website }}">(Site)</a></small>
+							{% if museum.city %}
+								<div style="float:left;"><h6 style='display:inline'>Location: </h6></div>
+								<div style="float:right;"><p style='display:inline'>{{ museum.city }}, {{ museum.city.country }}</p></div><br>
+							{% endif %}
+							<div style="float:left;"><h6 style='display:inline'>Artworks in database:</h6></div>
+							<div style="float:right;"><p>{{ museum.artwork_museum.count }}</p></div> 
+						</div>
+					</div>
+				</a>
 			</div>
-		</article>
-	{% endfor %}
+		{% endfor %}
+	</div>
+
+	
 	{% if is_paginated %}
 		
 		{% if page_obj.has_previous %}

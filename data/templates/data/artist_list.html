@@ -5,22 +5,30 @@ Artists overview
 {% endblock title%}
 
 {% block content%}
-	<h1>Artists overview</h1>
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">List of artists</h1>
+		<p>Artists in database: {{ no_of_artists }}</p>
+	</div>
+	<div class="row">
 	{% for artist in artists %}
-		<article class="media content_section">
-			<div class="media-body">
-				<div class="article-metadata">
-					<a class="mr-2" href="{% url 'artists-detail' artist.id %}">{{ artist.full_name }}</a>
-					<small class="text-muted"><a href="{{ artist.rkd_link }}">(RKD)</a></small>
-					{% if artist.other_names %}
-						<p>Also known as {{ artist.other_names }}</p>
-					{% endif %}
-					<p>Born: {{ artist.place_of_birth }} ({{ artist.year_of_birth }}) <br></p>
-					<p>Died: {{ artist.place_of_death }} ({{ artist.year_of_death }}) <br></p>
-					<p>Artworks in database: {{ artist.artist.count }} </p>
+		<div class="col-4">
+			<a class="text-dark" href="{% url 'artists-detail' artist.id %}">
+				<div class="card box-shadow h-100 d-flex">
+					<div class="text-center">
+						<img class="card-img-top" src="{{ artist.image.url }}" alt="Card Image" style="height: 300px; width: auto;">
+					</div>
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title" align="center"><a href="{% url 'artists-detail' artist.id %}" class="stretched-link">{{artist.full_name}}</a></h5>
+						<div style="float:left;"><h6 style='display:inline'>Born: </h6></div>
+						<div style="float:right;"><p style='display:inline'>{{ artist.place_of_birth }} ({{ artist.year_of_birth }})</p></div><br>
+						<div style="float:left;"><h6 style='display:inline'>Died: </h6></div>
+						<div style="float:right;"><p style='display:inline'>{{ artist.place_of_death }} ({{ artist.year_of_death }})</p></div><br>
+						<div style="float:left;"><h6 style='display:inline'>Artworks in database:</h6></div>
+						<div style="float:right;"><p>{{ artist.artist.count }}</p></div>
+					</div>
 				</div>
-			</div>
-		</article>
+			</a>
+		</div>
 	{% endfor %}
 
 	{% if is_paginated %}

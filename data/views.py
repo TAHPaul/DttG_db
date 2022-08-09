@@ -13,6 +13,12 @@ from django.views.generic import(
     )
 import folium
 
+from .tables import ArtistTable
+
+from django_tables2 import SingleTableView
+
+from .filters import ArtworkFilter
+
 ###OTHER###...................................###OTHER###
 
 def enter(request):
@@ -29,8 +35,10 @@ def team(request):
 
 def colours(request):
     context = {
-        'colours': Colour.objects.all(),
+        'colours': Colour.objects.all().order_by('group'),
         'title': 'Colours',
+        'black': Colour.objects.get(colour_name='Black'),
+        'white': Colour.objects.get(colour_name='White'),
     }
     return render(request, 'data/colours.html', context)
 
@@ -44,10 +52,16 @@ class ArtistListView(ListView):
     model = Artist
     context_object_name = 'artists'
     ordering = ['id']
-    paginate_by = 20
-    #'o': Artist.objects.get(id=115).artist.count()
+    paginate_by = 9
+    artists = Artist.objects.all()
 
-    #how to give title of page?
+    global no_of_artists 
+    no_of_artists = len(artists)
+
+    def get_context_data(self, **kwargs):
+        context = super(ArtistListView, self).get_context_data(**kwargs)
+        context['no_of_artists'] = no_of_artists
+        return context
 
 class ArtistDetailView(DetailView):
     model = Artist
@@ -70,7 +84,16 @@ class MuseumListView(ListView):
     model = Museum
     context_object_name = 'museums'
     ordering = ['id']
-    paginate_by = 20
+    paginate_by = 15
+    museums = Museum.objects.all()
+
+    global no_of_museums
+    no_of_museums = len(museums)
+
+    def get_context_data(self, **kwargs):
+        context = super(MuseumListView, self).get_context_data(**kwargs)
+        context['no_of_museums'] = no_of_museums
+        return context
 
     #def get_context_data(self, **kwargs):
         #context = super(MuseumListView, self).get_context_data(**kwargs)
@@ -85,13 +108,38 @@ class DataListView(ListView):
     model = Data
     context_object_name = 'data'
     ordering = ['m_number']
-    paginate_by = 20
+    paginate_by = 12
+
+    entries = Data.objects.all()
+
+    global no_of_entries
+    no_of_entries = len(entries)
+
+    def get_context_data(self, **kwargs):
+        context = super(DataListView, self).get_context_data(**kwargs)
+        context['no_of_entries'] = no_of_entries
+        return context
 
 class DataDetailView(DetailView):
     model = Data
 
 def data_table(request):
-	return render(request, 'data/data-table.html')
+    artworks = Artwork.objects.all()
+
+    myFilter = ArtworkFilter(request.GET, queryset=artworks)
+    artworks = myFilter.qs
+
+    results = len(artworks)
+
+    context = {
+        'artworks': artworks,
+        #'artwork1': Artwork.objects.first(),
+        'tablenames': Artwork._meta.get_fields(),
+        'myFilter': myFilter,
+        'results': results, 
+        }      
+
+    return render(request, 'data/table.html', context)
 
 ###CITIES###.................................###CITIES###
 
