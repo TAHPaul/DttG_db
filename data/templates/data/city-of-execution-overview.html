@@ -5,20 +5,28 @@ Cities of execution overview
 {% endblock title%}
 
 {% block content%}
-	<h1>Cities of execution overview</h1>
-	{% for city in cities%}
-		{% if city.execution_city.count %}
-			<p><a href="{% url 'city-of-execution-detail' city.city %}">{{ city.city }}</a>, {{ city.country }}</p>
-			<p>Artworks executed in this city: {{ city.execution_city.count }}</p>
-			<br>
-		{% endif %}
-	{% endfor %}
-	
-	<p>Show on map. Little table with the amounts. The cities should be clickable. What else?</p>
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">List of cities of execution</h1>
+	</div>
+	<p>To do: make it sortable by NAME or COUNT</p>
+	<p>To do: add a map with all these cities</p>
+	<div class="row">
+		{% for city in cities %}
+			{% if city.execution_city.count %}
+				<div class="col-3">
+					<a class="text-dark" href="{% url 'city-of-execution-detail' city.city %}">
+						<div class="card box-shadow h-100 d-flex">
+							<div class="card-body d-flex flex-column">
+								<h5 class="card-title" align="center" style="margin-bottom:0";><a href="{% url 'city-of-execution-detail' city.city %}" class="stretched-link">{{ city.city }}</a></h5>
+								{% if city.country%}
+									<h6 align="center">({{ city.country }})</h6>
+								{% endif %}	
+								<div style="float:left;" class="mt-auto"><h6 style='display:inline'>Artworks executed in this city: </h6></div>
+								<div style="float:right;"><p style='display:inline'>{{ city.execution_city.count }}</p></div><br>
+							</div>
+						</div>
+					</a>
+				</div>
+			{% endif %}
+		{% endfor %}
 {% endblock content %}
-
-<!--
-What do we want?
-- map up top with all the cities. Should be clickable and refer to their detail-page.
-- e.g. UTRECHT, the Netherlands. Artworks in database: #
--->

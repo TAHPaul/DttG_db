@@ -5,35 +5,109 @@
 {% endblock title%}
 
 {% block content%}
-	<article class="media content_section">
-		<div class="media-body">
-			<div class="article-metadata">
-				<h1>{{ object.museum_name }}</h1>
-				<small class="text-muted"><a href="{{ object.website }}">(museum-site)</a></small>
-				{% if object.city %}
-					<p>This museum is located in {{ object.city }}, {{ object.city.country }}</p>
-					<!-- <p>Latitude: {{ object.city.latitude }}</p>
-					<p>Longitude: {{ object.city.longitude }}</p> -->
-				{% endif %}
-				<p>This museum has id {{ object.id }}</p> 
-				{% if object.artwork_museum.count is not 0 %}
-					<h5>Number of artworks in database: {{ museum.artwork_museum.count }}</h5>
-					{% for artwork in museum.artwork_museum.all %}
-						<p><a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }}</a> | <a href="{% url 'data-detail' artwork.id %}">{{ artwork.title }}</a> ({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
-						<p>Groundlayers colour-code: {{ artwork.data.colour_code }}</p>
-						{% if artwork.data.no_of_grounds == '1' %}
-							<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
-						{% elif artwork.data.no_of_grounds == '2' %}
-							<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Toplayer:     {{ artwork.data.layer2_colour.colour_name }}</p>
-							<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
-						{% elif artwork.data.no_of_grounds == '3' %}
-							<p style="background-color:{{ artwork.data.layer3_colour.hex_code }};">Toplayer:     {{ artwork.data.layer1_colour.colour_name }}</p>
-							<p style="background-color:{{ artwork.data.layer2_colour.hex_code }};">Middle layer: {{ artwork.data.layer2_colour.colour_name }}</p>
-							<p style="background-color:{{ artwork.data.layer1_colour.hex_code }};">Lowest layer: {{ artwork.data.layer1_colour.colour_name }}</p>
-						{% endif %}
-					{% endfor %}
-				{% endif %}
-			</div>
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">{{object.id}}. {{ object.museum_name }}</h1>
+		<p> ({{ object.artwork_museum.count }} database entries)</p>
+	</div>
+	<div>
+		<h5>{{object.city}}, {{object.city.country}} ({{object.city.continent}})</h5>
+		<h5><a href="{{ object.website }}">Museum site</a></h5>
+	</div>
+
+	{% if object.artwork_museum.count is not None %}
+		<br><h4 align="center">{{ object.artwork_museum.count }} entries in database:</h4><br>
+		<div class="row">
+			{% for artwork in object.artist.all %}
+				<div class="col-4">
+					<div class="card h-100 d-flex">
+						<div class="card-body d-flex flex-column">
+							<h5 class="card-title" align="center"><a href="{% url 'data-detail' artwork.id %}" class="stretched-link">{{artwork.id}}: {{ artwork.title }}</a></h5>
+							{% if artwork.date2 %}
+								<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
+							{% else %}
+								<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}})</p>
+							{% endif %}
+							<h6 align="center" class="mt-auto">Preparatory layers:</h6>
+							<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:0;"><small>Paint layers</small></p>
+							{% if artwork.data.no_of_grounds == '1' %}
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+							{% elif artwork.data.no_of_grounds == '2' %}
+								<div style=" border: 1px solid black;">
+									<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								</div>
+								
+							{% elif artwork.data.no_of_grounds == '3' %}
+								<div style=" border: 1px solid black;">
+									<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+									<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+									<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								</div>
+								
+							{% endif %}
+							<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 		</div>
-	</article>
+	{% else %}
+		<h4 align="center">No entries (yet) in database.</h4>
+	{% endif %}
+
+	{% if object.artwork_museum.count is not 0 %}
+		<div class="row">
+			{% for artwork in museum.artwork_museum.all %}
+				<div class="col-4">
+					<a class="text-dark" href="{% url 'data-detail' artwork.id %}">
+						<div class="card box-shadow h-100 d-flex">
+							<div class="text-center">
+								<img class="card-img-top" src="{{ artwork.image.url}}" alt="Card Image" style="max-height:200px; width:auto;">
+							</div>
+							<div class="card-body d-flex flex-column">
+								<h5 class="card-title" align="center"><a href="{% url 'data-detail' artwork.id %}" class="stretched-link">{{ artwork.id }}: {{ artwork.title }}</a></h5>
+								{% if artwork.date2 %}
+									<small class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</small>
+								{% else %}
+									<small class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}})</small>
+								{% endif %}
+								{% if artwork.artist2.full_name %}
+									{% if artwork.artist_validity %}
+										<small class="mt-auto">{{ artwork.artist_validity }} <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }}</a> & <a href="{% url 'artists-detail' artwork.artist2.id %}">{{ artwork.artist2.full_name }}</a></small>
+									{% else %}
+										<small class="mt-auto">By: <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }}</a> & "{% url 'artists-detail' artwork.artist2.id %}">{{ artwork.artist2.full_name }}</small>
+									{% endif %}
+								{% else %}
+									{% if artwork.artist_validity %}
+										<small class="mt-auto">{{ artwork.artist_validity }} <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }}</a></small>
+									{% else %}
+										<small class="mt-auto">By: <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }}</a></small>
+									{% endif %}
+								{% endif %}
+								<small>Painted in: <a href="{% url 'city-of-execution-detail' artwork.place_of_execution.city %}">{{ artwork.place_of_execution }}</a></small>
+								<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:0;"><small>Paint layers</small></p>
+									{% if artwork.data.no_of_grounds == '1' %}
+										<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+									{% elif artwork.data.no_of_grounds == '2' %}
+										<div style=" border: 1px solid black;">
+											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+										<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+										</div>
+										
+									{% elif artwork.data.no_of_grounds == '3' %}
+										<div style=" border: 1px solid black;">
+											<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+											<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+										</div>
+										
+									{% endif %}
+								<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+							</div>
+						</div>
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}	
 {% endblock content %}

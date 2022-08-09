@@ -5,22 +5,66 @@ Colours
 {% endblock title%}
 
 {% block content%}
-	<h1>COLOUR SYSTEM</h1>
-	<div>
-		<p>Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
-		<p>{{ colours }}</p>
+	<div class="jumbotron text-center border">
+		<h1 class="display-4">Colour system</h1>
 	</div>
 
-		<div class="container">
-			<div class="row">
-				{% for colour in colours %}
-				<div class="col-4">
-					<a class="mr-2" href="#">{{ colour.colour_name }}</a>
-					<small class="text-muted">Abbr: {{ colour.id }}</small>
-					<h5 style="background-color:{{ colour.hex_code }};">{{ colour.hex_code }}</h5>
-				</div>	
-				{% endfor %}
+	<!-- Nav tabs -->
+
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#colours">Ground colours</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#info">More info</a>
+		</li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane container active" id="colours">
+			<div class="container">
+				<div class="row">
+					{% for colour in colours %}
+						{% if colour.group != 'Black' and colour.group != 'White' %}
+							<div class="col-4">
+								<div align="center">
+									<a class="mr-2" href="#">{{ colour.colour_name }}</a>
+									<small class="text-muted">({{ colour.id }})</small>
+									<small>{{ colour.hex_code }}</small>
+								</div>
+								<div style="background-color: {{ colour.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+								<br>
+							</div>
+						{% endif %}
+					{% endfor %}
+					<div class="col-12">
+						<div align="center">
+							<a class="mr-2" href=""> {{ white.colour_name }} </a>
+							<small class="text-muted">({{ white.id }})</small>
+							<small>{{ white.hex_code}}</small>
+							<div style="background-color: {{ white.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div align="center">
+							<a class="mr-2" href=""> {{ black.colour_name }} </a>
+							<small class="text-muted">({{ black.id }})</small>
+							<small>{{ black.hex_code}}</small>
+							<div style="background-color: {{ black.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+						</div>
+					</div>
+					
+				</div>
+				<div>
+					<br><br>
+				</div>
 			</div>
-		</div>	
+		</div>
+		<div class="tab-pane container fade" id="info">
+			<p>Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
+		</div>
+	</div>
+
+			
 
 {% endblock content %}
