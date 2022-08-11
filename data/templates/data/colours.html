@@ -5,23 +5,36 @@ Colours
 {% endblock title%}
 
 {% block content%}
-	<div class="jumbotron text-center border">
-		<h1 class="display-4">Colour system</h1>
+	<div class="container-fluid">
+		<div class="jumbotron text-center">
+			<h1 class="display-4" style="color: #e8e9eb ">Colour System</h1>
+		</div>
 	</div>
+	
 
 	<!-- Nav tabs -->
 
 	<ul class="nav nav-tabs" role="tablist">
 		<li class="nav-item">
-			<a class="nav-link active" data-toggle="tab" href="#colours">Ground colours</a>
+			<a class="nav-link active" data-toggle="tab" href="#reliability">Reliability System</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Colour System</a>
+				<div class="dropdown-menu">
+					<a href="#colours">Link 1</a>
+					<a href="#info">Link 2</a>
+				</div>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="tab" href="#info">More info</a>
 		</li>
 	</ul>
-
 	<div class="tab-content">
-		<div class="tab-pane container active" id="colours">
+		<div class="tab-pane container active" id="reliability">
+			
+		</div>
+		<div class="tab-pane container " id="colours">
+			<br>
 			<div class="container">
 				<div class="row">
 					{% for colour in colours %}
@@ -43,6 +56,7 @@ Colours
 							<small class="text-muted">({{ white.id }})</small>
 							<small>{{ white.hex_code}}</small>
 							<div style="background-color: {{ white.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+							<br>
 						</div>
 					</div>
 					<div class="col-12">
@@ -60,6 +74,7 @@ Colours
 				</div>
 			</div>
 		</div>
+		<br>
 		<div class="tab-pane container fade" id="info">
 			<p>Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
 		</div>

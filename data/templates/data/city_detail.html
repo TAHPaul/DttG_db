@@ -5,14 +5,18 @@ Cities detail
 {% endblock title%}
 
 {% block content%}
-	<div class="jumbotron text-center border">
-		<h1 class="display-4">{{ object.city }}</h1>
-		<p> ({{ object.execution_city.count }} database entries)</p>
+	<div class="jumbotron text-center">
+		<h1 class="display-4" style="color: #e8e9eb">{{ object.city }}</h1>
+		{% if object.execution_city.count is not 0 %}
+			<p style="color: #e8e9eb"> ({{ object.execution_city.count }} database entries)</p>
+		{% else %}
+			<p style="color: #e8e9eb">No database entries executed in this city.</p>
+		{% endif %}
 	</div>
 	{% if object.execution_city.count is not 0 %}
 		<div class="row">
 			{% for artwork in object.execution_city.all %}
-				<div class="col-4">
+				<div class="col-4 mb-4">
 					<a class="text-dark" href="{% url 'data-detail' artwork.id %}">
 						<div class="card box-shadow h-100 d-flex">
 							<div class="text-center">
