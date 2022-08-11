@@ -5,18 +5,18 @@ Data Overview
 {% endblock title%}
 
 {% block content%}
-	<div class="jumbotron text-center border">
-		<h1 class="display-4">List of entries</h1>
-		<p>Entries in database: {{ no_of_entries }}</p>
+	<div class="jumbotron text-center ">
+		<h1 class="display-4" style="color: #e8e9eb">List of entries</h1>
+		<p style="color: #e8e9eb">Entries in database: {{ no_of_entries }}</p>
 	</div>
 
-	<div class="row">
+	<div class="row" >
 		{% for d in data %}
-			<div class="col-4">
-				<a class="text-dark" href="{% url 'data-detail' d.m_number.id %}">
-					<div class="card box-shadow h-100 d-flex">
+			<div class="col-4 mb-4">
+				<a class="text-dark shadow" href="{% url 'data-detail' d.m_number.id %}">
+					<div class="card shadow h-100 d-flex">
 						<div class="text-center">
-							<img class="card-img-top" src="{{ d.m_number.image.url}}" alt="Card Image" style="max-height:200px; width:auto;">
+							<img class="card-img-top border rounded" src="{{ d.m_number.image.url}}" alt="Card Image" style="max-height:200px; width:auto; border-color: #383a43;">
 						</div>
 						<div class="card-body d-flex flex-column">
 							<h5 class="card-title" align="center"><a href="{% url 'data-detail' d.m_number.id %}" class="stretched-link">{{ d.m_number.id }}: {{ d.m_number.title }}</a></h5>
@@ -38,8 +38,12 @@ Data Overview
 									<small class="mt-auto">By: <a href="{% url 'artists-detail' d.m_number.artist1.id %}">{{ d.m_number.artist1.full_name }}</a></small>
 								{% endif %}
 							{% endif %}
-							<small>Painted in: <a href="{% url 'city-of-execution-detail' d.m_number.place_of_execution.city %}">{{ d.m_number.place_of_execution }}</a></small>
-							<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:0;"><small>Paint layers</small></p>
+							<small>Painted in: <a href="{% url 'city-of-execution-detail' d.m_number.place_of_execution.city %}">{{ d.m_number.place_of_execution }}</a></small><br>
+							{% if d.m_number.medium %}
+								<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ d.m_number.medium }})</small></p>
+							{% else %}
+								<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
+							{% endif %}
 								{% if d.m_number.data.no_of_grounds == '1' %}
 									<div style="background-color: {{ d.m_number.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
 								{% elif d.m_number.data.no_of_grounds == '2' %}
@@ -56,7 +60,11 @@ Data Overview
 									</div>
 									
 								{% endif %}
-							<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+							{% if d.m_number.support%}
+								<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ d.m_number.support }}</small></p>
+							{% else %}
+								<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+							{% endif %}
 						</div>
 					</div>
 				</a>
@@ -65,25 +73,27 @@ Data Overview
 	</div>
 
 	{% if is_paginated %}
-		
-		{% if page_obj.has_previous %}
-			<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
-			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
-		{% endif %}
-
-		{% for num in page_obj.paginator.page_range %}
-			{% if page_obj.number == num %}
-				<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
-			{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
-				<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
+		<div class="container text-center">
+			<br><hr><br>
+			{% if page_obj.has_previous %}
+				<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
+				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
 			{% endif %}
-		{% endfor %}
 
-		{% if page_obj.has_next %}
-			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
-			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-		{% endif %}
-	
+			{% for num in page_obj.paginator.page_range %}
+				{% if page_obj.number == num %}
+					<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
+				{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+					<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
+				{% endif %}
+			{% endfor %}
+
+			{% if page_obj.has_next %}
+				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
+				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+			{% endif %}	
+			<br><hr><br>
+		</div>
 	{% endif %}
 {% endblock content %}
 

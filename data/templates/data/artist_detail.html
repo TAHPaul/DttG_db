@@ -5,20 +5,20 @@
 {% endblock title%}
 
 {% block content%}
-	<div class="jumbotron text-center border">
-		<h1 class="display-4">{{object.id}}. {{ object.full_name }}</h1>
-		<p> ({{ object.artist.count }} database entries)</p>
+	<div class="jumbotron text-center">
+		<h1 class="display-4" style="color: #e8e9eb">{{object.id}}. {{ object.full_name }}</h1>
+		<p style="color: #e8e9eb"> ({{ object.artist.count }} database entries)</p>
 	</div>
     <div class="row text-left">
-        <div class="col-md-4">
+        <div class="col-md-4 my-auto">
         	<div class="text-center">
-        		<img class="img-thumbnail" src="{{ object.image.url }}">
+        		<img class="img-fluid align-self-center rounded border" src="{{ object.image.url }}">
         	</div>
         </div>
         <div class="col-md-8">
         	<h3 align="center">Biographical information</h3><hr>
-        	<h6 style='display:inline'>Born: </h6><p style='display:inline'>{{ object.place_of_birth }} ({{ object.year_of_birth }})</p><br>
-			<h6 style='display:inline'>Died: </h6><p style='display:inline'>{{ object.place_of_death }} ({{ object.year_of_death }})</p><br>
+        	<h6 style='display:inline'>Born: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }} </a>({{ object.year_of_birth }})</p><br>
+			<h6 style='display:inline'>Died: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }} </a>({{ object.year_of_death }})</p><br>
 			{% if object.other_names %}
 				<h6>Also known as:</h6><p align="center"> {{ object.other_names }}</p>
 			{% endif %} 
@@ -27,7 +27,7 @@
 					<h6>Centres of activity:</h6><p align="center">{{ object.centres_of_activity }}</p>
 				</div>
 			{% endif %}
-			<h6><a href="{{ object.rkd_link }}" class="text-info">RKD-link</a></h6>
+			<h6><a href="{{ object.rkd_link }}">RKD-link</a></h6>
 			<hr>
         </div>
         <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
@@ -35,8 +35,8 @@
     </div>
 	<!-- This has to become some sort of data overview -->
 	<br>
-	<div class="jumbotron text-center border">
-		<h3 align="center" class="display-4">Data Overview</h3>
+	<div class="jumbotron text-center">
+		<h3 align="center" class="display-4" style="color: #e8e9eb">Data Overview</h3>
 	</div>
 	<!-- Nav tabs -->
 
@@ -56,7 +56,7 @@
 				<br><h4 align="center">{{ object.artist.count }} entries in database:</h4><br>
 				<div class="row">
 					{% for artwork in object.artist.all %}
-						<div class="col-4">
+						<div class="col-4 mb-4">
 							<div class="card h-100 d-flex">
 								<div class="card-body d-flex flex-column">
 									<h5 class="card-title" align="center"><a href="{% url 'data-detail' artwork.id %}" class="stretched-link">{{artwork.id}}: {{ artwork.title }}</a></h5>
@@ -66,7 +66,11 @@
 										<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}})</p>
 									{% endif %}
 									<h6 align="center" class="mt-auto">Preparatory layers:</h6>
-									<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:0;"><small>Paint layers</small></p>
+									{% if artwork.medium %}
+										<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ artwork.medium }})</small></p>
+									{% else %}
+										<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
+									{% endif %}
 									{% if artwork.data.no_of_grounds == '1' %}
 										<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
 									{% elif artwork.data.no_of_grounds == '2' %}
@@ -83,7 +87,11 @@
 										</div>
 										
 									{% endif %}
-									<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+									{% if artwork.support%}
+										<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ artwork.support }}</small></p>
+									{% else %}
+										<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+									{% endif %}
 								</div>
 							</div>
 						</div>
@@ -94,6 +102,8 @@
 			{% endif %}		
 		</div>
 		<div class="tab-pane container fade" id="graphs">
+			
+
 			Here something else ay
 		</div>
 	</div>

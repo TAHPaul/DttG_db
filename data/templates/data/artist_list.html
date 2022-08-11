@@ -5,51 +5,50 @@ Artists overview
 {% endblock title%}
 
 {% block content%}
-	<div class="jumbotron text-center border">
-		<h1 class="display-4">List of artists</h1>
-		<p>Artists in database: {{ no_of_artists }}</p>
+	<div class="jumbotron text-center">
+		<h1 class="display-4" style="color: #e8e9eb">List of Artists</h1>
+		<p style="color: #e8e9eb">Artists in database: {{ no_of_artists }}</p>
 	</div>
 	<div class="row">
 	{% for artist in artists %}
-		<div class="col-4">
-			<a class="text-dark" href="{% url 'artists-detail' artist.id %}">
-				<div class="card box-shadow h-100 d-flex">
-					<div class="text-center">
-						<img class="card-img-top" src="{{ artist.image.url }}" alt="Card Image" style="height: 300px; width: auto;">
-					</div>
-					<div class="card-body d-flex flex-column">
-						<h5 class="card-title" align="center"><a href="{% url 'artists-detail' artist.id %}" class="stretched-link">{{artist.full_name}}</a></h5>
-						<div style="float:left;"><h6 style='display:inline'>Born: </h6></div>
-						<div style="float:right;"><p style='display:inline'>{{ artist.place_of_birth }} ({{ artist.year_of_birth }})</p></div><br>
-						<div style="float:left;"><h6 style='display:inline'>Died: </h6></div>
-						<div style="float:right;"><p style='display:inline'>{{ artist.place_of_death }} ({{ artist.year_of_death }})</p></div><br>
-						<div style="float:left;"><h6 style='display:inline'>Artworks in database:</h6></div>
-						<div style="float:right;"><p>{{ artist.artist.count }}</p></div>
-					</div>
+		<div class="col-4 mb-4">
+			<div class="card h-100 d-flex">
+				<div class="text-center">
+					<a href="{% url 'artists-detail' artist.id %}"><img class="card-img-top rounded border" src="{{ artist.image.url }}" alt="Card Image" style="height: 200px; width: auto; border-color: #383a43;"></a>
 				</div>
-			</a>
+				<div class="card-body d-flex flex-column">
+					<h5 class="card-title" align="center"><a href="{% url 'artists-detail' artist.id %}" class="stretched-link">{{artist.full_name}}</a></h5>
+					<small>Born: <a href="{% url 'city-of-execution-detail' artist.place_of_birth.city %}">{{ artist.place_of_birth }} </a>({{ artist.year_of_birth }})</small>
+					<small>Died: <a href="{% url 'city-of-execution-detail' artist.place_of_death.city %}">{{ artist.place_of_death }} </a>({{ artist.year_of_death }})</small>
+					<hr style="border-top-color: #383a43;">
+					<h6 align="center">Artworks in database:</h6>
+					<h6 align="center">{{ artist.artist.count }}</h6>
+				</div>
+			</div>
 		</div>
 	{% endfor %}
 
 	{% if is_paginated %}
-		
-		{% if page_obj.has_previous %}
-			<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
-			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
-		{% endif %}
-
-		{% for num in page_obj.paginator.page_range %}
-			{% if page_obj.number == num %}
-				<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
-			{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
-				<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
+		<div class="container text-center">
+			<br><hr><br>
+			{% if page_obj.has_previous %}
+				<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
+				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
 			{% endif %}
-		{% endfor %}
 
-		{% if page_obj.has_next %}
-			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
-			<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-		{% endif %}
-	
+			{% for num in page_obj.paginator.page_range %}
+				{% if page_obj.number == num %}
+					<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
+				{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
+					<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
+				{% endif %}
+			{% endfor %}
+
+			{% if page_obj.has_next %}
+				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
+				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+			{% endif %}	
+			<br><hr><br>
+		</div>
 	{% endif %}
 {% endblock content %}

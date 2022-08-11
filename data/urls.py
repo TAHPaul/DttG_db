@@ -21,5 +21,4 @@ urlpatterns = [
 	path('colours/', views.colours, name='colours'),
 	path('city-of-execution/', views.city_of_execution_overview, name='city-of-execution-overview'),
 	path('city-of-execution/<str:pk>/', views.city_of_execution_detail.as_view(), name='city-of-execution-detail'),
-	path('reliability/', views.reliability, name='reliability'),
 ]

@@ -170,8 +170,8 @@ class Artwork(models.Model):
 
 		img = Image.open(self.image.path)
 		
-		if img.height >300 or img.width >300:
-			output_size = (300,300)
+		if img.height >600 or img.width >600:
+			output_size = (600,600)
 			img.thumbnail(output_size)
 			img.save(self.image.path)
 
@@ -267,47 +267,47 @@ class Data(models.Model):
 		if self.sample1df:
 			img1 = Image.open(self.sample1df.path)
 			
-			if img1.height >300 or img1.width >300:
-				output_size = (300,300)
+			if img1.height >700 or img1.width >700:
+				output_size = (700,700)
 				img1.thumbnail(output_size)
 				img1.save(self.sample1df.path)
 
 		if self.sample1bf:
 			img2 = Image.open(self.sample1bf.path)
 			
-			if img2.height >300 or img2.width >300:
-				output_size = (300,300)
+			if img2.height >700 or img2.width >700:
+				output_size = (700,700)
 				img2.thumbnail(output_size)
 				img2.save(self.sample1bf.path)
 
 		if self.sample1uv:
 			img3 = Image.open(self.sample1uv.path)
 			
-			if img3.height >300 or img3.width >300:
-				output_size = (300,300)
+			if img3.height >700 or img3.width >700:
+				output_size = (700,700)
 				img3.thumbnail(output_size)
 				img3.save(self.sample1uv.path)
 
 		if self.sample2df:
 			img4 = Image.open(self.sample2df.path)
 			
-			if img4.height >300 or img4.width >300:
-				output_size = (300,300)
+			if img4.height >700 or img4.width >700:
+				output_size = (700,700)
 				img4.thumbnail(output_size)
 				img4.save(self.sample2df.path)
 
 		if self.sample2bf:
 			img5 = Image.open(self.sample2bf.path)
 			
-			if img5.height >300 or img5.width >300:
-				output_size = (300,300)
+			if img5.height >700 or img5.width >700:
+				output_size = (700,700)
 				img5.thumbnail(output_size)
 				img5.save(self.sample2bf.path)
 
 		if self.sample2uv:
 			img6 = Image.open(self.sample2uv.path)
 			
-			if img6.height >300 or img6.width >300:
-				output_size = (300,300)
+			if img6.height >700 or img6.width >700:
+				output_size = (700,700)
 				img6.thumbnail(output_size)
 				img6.save(self.sample2uv.path)

@@ -1,25 +1,31 @@
 {% extends 'data/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title%}
 Tabular data
 {% endblock title%}
 
 {% block content%}
-<div class="row">
-	<div class="col-12">
-		<div class="card card-body">
-			<form method="get">
-				{{ myFilter.form }}<br>
-			<button class="btn btn-primary" type="submit">
-				<span class="spinner-border spinner-border-sm">Search</span>
-			</button>
-			</form>
+<div class="jumbotron text-center">
+	<h1 class="display-4" style="color: #e8e9eb">Database Table</h1>
+	<div class="row" style="background-color: #383a43">
+		<div class="col-12 border rounded" style="background-color: #e8e9eb">
+			<div class="container mt-4">
+				<form method="get">
+					{{ myFilter.form }}<br>
+				<button class="btn btn-primary" type="submit" style="background-color:#383a43; border-color: #383a43;">
+					<span class="spinner-border spinner-border-sm">Search</span>
+				</button>
+				</form>
+			</div>
 		</div>
-		<div class="card card-body">
-			<h5 align="right">{{ results }} results</h5>
+		<div>
+			<h5 align="right" style="color: #e8e9eb">{{ results }} results</h5>
 		</div>
 	</div>
 </div>
+
 <table class="table table-condensed table-hover table-striped">
 	<thead>
 		<tr>

@@ -1,124 +1,361 @@
 {% extends 'data/base.html' %}
 
 {% block title%}
-Data detail
+	{{ object.m_number.id}}: {{ object.m_number.title }}
 {% endblock title%}
 
 {% block content%}
-	<div class="jumbotron text-center border">
-		<h1 class="display-4">{{object.m_number.id}}: {{ object.m_number.title }}</h1>
+	<div class="jumbotron text-center">
+		<h1 class="display-4" style="color: #e8e9eb">{{object.m_number.id}}: {{ object.m_number.title }}</h1>
 		{% if object.m_number.date2 %}
-			<h3 class="card-text" align="center">({{ object.m_number.date_validity }}{{object.m_number.date1}}-{{object.m_number.date2}})</h3>
+			<h3 class="card-text" align="center" style="color: #e8e9eb">({{ object.m_number.date_validity }}{{object.m_number.date1}}-{{object.m_number.date2}})</h3>
 		{% else %}
-			<h3 class="card-text" align="center">({{ object.m_number.date_validity }}{{object.m_number.date1}})</h3>
+			<h3 class="card-text" align="center" style="color: #e8e9eb">({{ object.m_number.date_validity }}{{object.m_number.date1}})</h3>
 		{% endif %}
 	</div>
 	<div class="row text-left">
-        <div class="col-md-4">
+        <div class="col-md-6 my-auto">
         	<div class="text-center">
-        		<img class="img-thumbnail" src="{{ object.m_number.image.url }}">
+        		<img class="img-fluid align-self-center rounded border" style="border-color: #383a43;" src="{{ object.m_number.image.url }}">
         	</div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
         	<h3 align="center">Biographical information</h3><hr>
         	{% if object.m_number.artist2.full_name %}
 	    		{% if object.m_number.artist_validity %}
-	    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & "{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</p>
+	    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
 	    		{% else %}	
-	    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
+	    			<p><h6 style='display:inline'>By: </h6><a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
 	    		{% endif %}
 	    	{% else %}
 	    		{% if object.m_number.artist_validity %}
-	    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+	    			<p><h6 style='display:inline'>{{object.m_number.artist_validity}} </h6><a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
 	    		{% else %}
-	    			<p>By: <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+	    			<p><h6 style='display:inline'>By: </h6><a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
 	    		{% endif %}
 	    	{% endif %}
 			<h6 style='display:inline'>Executed in: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.m_number.place_of_execution.city %}">{{ object.m_number.place_of_execution }}</a></p><br>
-        	<h6 style='display:inline'>Support: </h6><p style='display:inline'>{{ object.m_number.support }}</p><br>
-        	<h6 style='display:inline'>Medium: </h6><p style='display:inline'>{{ object.m_number.medium }}</p><br>
+        	<h6 style='display:inline'>Support: </h6><p style='display:inline' class="text-capitalize">{{ object.m_number.support }}</p><br>
+        	<h6 style='display:inline'>Medium: </h6><p style='display:inline' class="text-capitalize">{{ object.m_number.medium }}</p><br>
         	<h6 style='display:inline'>Dimensions (cm): </h6><p style='display:inline'>{{ object.m_number.height }} x {{ object.m_number.width }}</p><br>
-			<h6 style='display:inline'>Signed? </h6><p style='display:inline'>{{ object.m_number.signature }}</p><br>
+			<h6 style='display:inline'>Signed? </h6><p style='display:inline' class="text-capitalize">{{ object.m_number.signature }}</p><br>
 			<hr>
-			<h6 style='display:inline'>Museum: </h6><p style='display:inline'><a href="{% url 'museums-detail' object.m_number.museum.id %}">{{ object.m_number.museum.museum_name }}</a> [inv.nr: {{ object.m_number.accession_number}}]</p>
+			<h6 style='display:inline'>Museum: </h6><p style='display:inline'><a href="{% url 'museums-detail' object.m_number.museum.id %}">{{ object.m_number.museum.museum_name }}</a> [inv.nr: {{ object.m_number.accession_number}}]</p><br>
 			{% if object.m_number.museum_link%}
-				<h6 style='display:inline'><a href="{object.m_number.museum_link %}"></a>Museum-link</h6>
+				<h6 style='display:inline'><a href="{{ object.m_number.museum_link }}">Museum-link</a></h6><br>
 			{% endif %}
 			{% if object.m_number.rkd_link%}
-				<h6 style='display:inline'><a href="{object.m_number.rkd_link %}">RKD-link</a></h6>
+				<h6 style='display:inline'><a href="{{ object.m_number.rkd_link }}">RKD-link</a></h6>
 			{% endif %}
 			<hr>
         </div>
-        <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
-        <!-- alternatively, we could maybe embed the RKD map? -->
     </div>
+        <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
+        <!-- alternatively, we could maybe embed the RKD map? --> 
+	<br>
+	<div class="jumbotron text-center">
+		<h3 align="center" class="display-4" style="color: #e8e9eb">Data</h3>
+	</div>
+	<!-- Nav tabs -->
 
-	<p>Image, lists the artwork + artist details. List sampling techniques, links to samples, ground description etc. Additional information popdown.</p>
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#overview">Overview</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#samples">Sample data</a>
+		</li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div class="tab-pane container active" id="overview">
+			<div class="row">
+				<div class="col-8">
+					<br>
+					<h4 align="center">Description:</h4>
+					<hr>
+					<h6 style='display:inline'>Preparatory layers: </h6><p style='display:inline'>{{ object.no_of_grounds }} ({{ object.colour_code }})</p><br>
+					<h6 style='display:inline'>Free-text description: </h6>
+					<p>{{ object.description }}</p><br>
+				</div>
+				<div class="col-4 my-auto">
+					{% if object.m_number.medium %}
+						<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ object.m_number.medium }})</small></p>
+					{% else %}
+						<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
+					{% endif %}
+					{% if object.no_of_grounds == '1' %}
+						<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+					{% elif object.no_of_grounds == '2' %}
+						<div style=" border: 1px solid black;">
+							<div style="background-color: {{ object.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+						<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+						</div>
+					{% elif object.no_of_grounds == '3' %}
+						<div style=" border: 1px solid black;">
+							<div style="background-color: {{ object.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+							<div style="background-color: {{ object.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+						</div>
+					{% endif %}
+					{% if object.m_number.support%}
+						<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ object.m_number.support }}</small></p>
+					{% else %}
+						<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+					{% endif %}
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-8">
+					<h4 align="center" style="margin-bottom: 0px;">Layer information:</h4>
+					<p align="center" ><small>(Counting from the support up towards the paint layers)</small></p>
+					<hr>
+					{% if object.no_of_grounds == '1' %}
+						<div >
+							<h6>Layer 1:</h6>
+							<p>Colour: {{ object.layer1_colour}}</p>
+							<p>Composition: {{object.layer1_composition}}</p>
+						</div>
+					{% elif object.no_of_grounds == '2' %}
+						<div >
+							<h6>Layer 2:</h6>
+							<p>Colour: {{ object.layer2_colour}}</p>
+							<p>Composition: {{object.layer2_composition}}</p>
+						</div>
+						<hr>
+						<div>
+							<h6>Layer 1:</h6>
+							<p>Colour: {{ object.layer1_colour}}</p>
+							<p>Composition: {{object.layer1_composition}}</p>
+						</div>
+						<hr>
+					{% elif object.no_of_grounds == '3' %}
+						<div>
+							<h6>Layer 3:</h6>
+							<p>Colour: {{ object.layer3_colour}}</p>
+							<p>Composition: {{object.layer3_composition}}</p>
+						</div>
+						<hr>
+						<div>
+							<h6>Layer 2:</h6>
+							<p>Colour: {{ object.layer2_colour}}</p>
+							<p>Composition: {{object.layer2_composition}}</p>
+						</div>
+						<hr>
+						<div>
+							<h6>Layer 1:</h6>
+							<p>Colour: {{ object.layer1_colour}}</p>
+							<p>Composition: {{object.layer1_composition}}</p>
+						</div>
+						<hr>
+					{% endif %}
+				</div>
+				<div class="col-4">
+					<div>
+						<h4 align="center" style="margin-bottom: 35px;">Data information:</h4>
+					<hr>
+					</div>
+					<div>
+						<h6 style='display:inline' data-toggle="tooltip" data-placement="bottom" title="Description of the reliability rating">Reliability-rating: </h6><p style='display:inline'>{{ object.reliability }}</p>
+						<hr>
+						{% if object.sample or object.microscopy or object.elem_analysis %}
+						<div>
+							<div class="row text-center">
+								<div class="col-12">
+									<h6> Analytical Techniques:</h6>
+								</div>
+							</div>
+
+							<div class="row text-center">
+								{% if object.sample %}
+									<div class="col">
+										<p>Sampled?</p>
+										<p><small>{{ object.sample }}</small></p>
+									</div>
+								{% endif %}
+								{% if object.microscopy %}
+									<div class="col">
+										<p>Microscopy?</p>
+										<p><small>{{ object.microscopy }}</small></p>
+									</div>
+								{% endif %}
+								{% if object.elem_analysis %}
+									<div class="col">
+										<p>Elemental?</p>
+										<p><small>{{ object.elem_analysis }}</small></p>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<hr>
+						{% endif %}
+					</div>	
+					{% if object.researchers %}
+						<h6 align="center">Researchers:</h6>
+						<p>{{ object.researchers }}</p>
+						<hr>
+					{% endif %}				
+					{% if object.source %}
+						<h6 align="center">Source:</h6>
+						<p><small>{{ object.source }}</small></p>
+						<hr>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane container fade" id="samples">
+			<div class="row text-center">
+				<div class="col">
+					<br>
+					<h4>Sample information:</h4>
+					<hr>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-4">
+					{% if object.sample_name_1 %}
+						{% if object.sample_link_1 %}
+							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'><a href="{{object.sample_link_1}}">{{object.sample_name_1}}</a></p>
+						{% else %}
+							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'>{{object.sample_name_1}}</p>
+						{% endif %}
+					{% endif %}
+					{% if object.sample_name_2 %}
+						{% if object.sample_link_2 %}
+							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'><a href="{{object.sample_link_2}}">{{object.sample_name_2}}</a></p>
+						{% else %}
+							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'>{{object.sample_name_2}}</p>
+						{% endif %}
+					{% endif %}
+					<h6 >Sample location: </h6>
+					<p >{{ object.sample_location }}</p>					
+				</div>
+				<div class="col-8">
+					{% if object.embargo %}
+						<h4>Embargo</h4>
+						<p><small>The sample images are not allowed to be shared.</small></p>
+					{% else %}
+						{% if object.sample1df or object.sample1bf or object.sample1uv or object.sample2df or objects.sample2bf or object.sample2uv %}
+							<ul class="nav nav-tabs">
+								{% if object.sample1df or object.sample1bf or object.sample1uv %}
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sample 1</a>
+										<div class="dropdown-menu">
+											{% if object.sample1df %}
+												<a class="dropdown-item" data-toggle="tab" href="#1df">Darkfield</a>
+											{% endif %}
+											{% if object.sample1bf %}
+												<a class="dropdown-item" data-toggle="tab" href="#1bf">Brightfield</a>
+											{% endif %}
+											{% if object.sample1uv%}
+												<a class="dropdown-item" data-toggle="tab" href="#1uv">UV</a>
+											{% endif %}
+										</div>
+									</li>
+								{% else %}
+									<li>
+										<a class="nav-link disabled" href="">Sample 1</a>
+									</li>
+								{% endif %}
+								{% if object.sample2df or object.sample2bf or object.sample2uv %}
+									<li class="nav-item dropdown">
+										<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sample 2</a>
+										<div class="dropdown-menu">
+											{% if object.sample2df %}
+												<a class="dropdown-item" data-toggle="tab" href="#2df">Darkfield</a>
+											{% endif %}
+											{% if object.sample2bf %}
+												<a class="dropdown-item" data-toggle="tab" href="#2bf">Brightfield</a>
+											{% endif %}
+											{% if object.sample2uv%}
+												<a class="dropdown-item" data-toggle="tab" href="#2uv">UV</a>
+											{% endif %}
+										</div>
+									</li>
+								{% else %}
+									<li>
+										<a class="nav-link disabled" href="">Sample 2</a>
+									</li>
+								{% endif %}
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade" id="1bf">
+									<br>
+									<h3 align="center">Brightfield</h3>
+									<hr>
+									<div class="text-center">
+										{% if object.sample1bf %}
+											<img class="img-fluid align-self-center" style="width:700px" src="{{ object.sample1bf.url }}">
+										{% endif %}
+									</div>
+								</div>
+								<div class="tab-pane fade" id="1df">
+									<br>
+									<h3 align="center">Darkfield</h3>
+									<hr>
+									<div class="text-center">
+										{% if object.sample1df %}
+											<img class="img-fluid align-self-center" style="width:700px" src="{{ object.sample1df.url }}">
+										{% endif %}
+									</div>
+								</div>
+								<div class="tab-pane fade" id="1uv">
+									<br>
+									<h3 align="center">UV</h3>
+									<hr>
+									<div class="text-center">
+										{% if object.sample1uv %}
+											<img class="img-fluid align-self-center" style="width:700px" src="{{ object.sample1uv.url }}">
+										{% endif %}
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="2bf">
+									<br>
+									<h3 align="center">Brightfield</h3>
+									<hr>
+									<div class="text-center">
+										{% if object.sample2bf %}
+											<img class="img-fluid align-self-center" style="width:700px" src="{{ object.sample2bf.url }}">
+										{% endif %}
+									</div>
+								</div>
+								<div class="tab-pane fade" id="2df">
+									<br>
+									<h3 align="center">Darkfield</h3>
+									<hr>
+									<div class="text-center">
+										{% if object.sample2df %}
+											<img class="img-fluid align-self-center" style="width:700px" src="{{ object.sample2df.url }}">
+										{% endif %}
+									</div>
+								</div>
+								<div class="tab-pane fade" id="2uv">
+									<br>
+									<h3 align="center">UV</h3>
+									<hr>
+									<div class="text-center">
+										{% if object.sample2uv %}
+											<img class="img-fluid align-self-center" style="width:700px" src="{{ object.sample2uv.url }}">
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						{% else %}
+							<h4 align="center">No sample images available.</h4>
+						{% endif %}
+					{% endif %}
+				</div>
+				
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<hr>
+		</div>
+	</div>
 {% endblock content %}
-
-<!--
-What do we want?
-- Larger image of the painting
-- title (datevalidation, date1, date2)
-- artist (LINK) (birth-death)
-- executed in:
-
-- support:
-- medium:
-- height x width (height x width in cm)
-- signature:
-
-- museumname(LINK): accessionnumber
-if artwork.museum_link:
-	- museum-link(LINK)
-- RKD-link (LINK)
-- amount of groundlayers + render
-
-DATA HEADING
-Overview
-- number of grounds
-- description
-- colour-code
-- colour-render
-
-if no_of_grounds = 1:
-- layer1_colour
-- layer1_composition
-elif no_of_grounds = 2:
-- layer2_colour
-- layer2_composition
-- layer1_colour
-- layer1_composition
-elif no_of_grounds = 3:
-- layer3_colour
-- layer3_composition
-- layer2_colour
-- layer2_composition
-- layer1_colour
-- layer1_composition
-endif
-
-DROPWDOWN: Reference
-- reliability (LINK)
-- Sampled?
-- Microscopy?
-- Elemental analysis?
-- Source
-	- give source
-	- new research within DttG
-	- researchers
-- Notes
-
-DROPDOWN: sample(s)
-if sample1df:
-	IMAGE
-if sample1bf:
-	IMAGE
-if sample1uv:
-	IMAGE
-if sample2df:
-	IMAGE
-if sample2bf:
-	IMAGE
-if sample2uv:
--->
