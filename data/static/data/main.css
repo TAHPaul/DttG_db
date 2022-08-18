@@ -104,3 +104,10 @@ a.article-title:hover {
       padding-bottom: 4%;
       box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
+
+.header {
+    background-image: url('default_artist.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}

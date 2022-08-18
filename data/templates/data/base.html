@@ -1,10 +1,7 @@
 {% load static %} <!--loads static css file from static/data/main.css-->
-<script src="{% static 'js/htmx.min.js' %}" defer></script>
-
-
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<!-- Required meta tags -->
     <meta charset="utf-8">
@@ -45,12 +42,12 @@
 				    Database
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" href="{% url 'data-table' %}">Tabular data</a>
+				    <a class="dropdown-item" href="{% url 'data-table-simple' %}">Tabular data</a>
 				    <a class="dropdown-item" href="{% url 'data-overview' %}">Data entries</a>
 				    <a class="dropdown-item" href="{% url 'artists-overview' %}">Artists</a>
 				    <a class="dropdown-item" href="{% url 'city-of-execution-overview' %}">Places of execution</a>
 				    <a class="dropdown-item" href="{% url 'museums-overview' %}">Museums</a>
-				    <a class="dropdown-item" href="{% url 'colours' %}">Colour system</a>
+				    <a class="dropdown-item" href="{% url 'database-info' %}">Database Information</a>
 				  </div>
 				</div>
 	        </div>
@@ -63,21 +60,6 @@
 	    <div class="col-md-12">
 	      {% block content %}{% endblock %}
 	    </div>
-	      <!--
-	      <div class="col-md-4">
-	      <div class="content-section">
-	        <h3>Our Sidebar</h3>
-	        <p class='text-muted'>You can put any information here you'd like.
-	          <ul class="list-group">
-	            <li class="list-group-item list-group-item-light">Latest Posts</li>
-	            <li class="list-group-item list-group-item-light">Announcements</li>
-	            <li class="list-group-item list-group-item-light">Calendars</li>
-	            <li class="list-group-item list-group-item-light">etc</li>
-	          </ul>
-	        </p>
-	      </div>
-	    </div>
-		-->
 	  </div>
 	</main>
 
@@ -92,13 +74,12 @@
 		  $('[data-toggle="tooltip"]').tooltip();
 		});
 	</script>
-
 	
 </body>
 <footer class="bg-light text-center text-lg-start mt-auto">
 <!--Copyright-->
 	<div class="text-center p-3" style="background-color: #383a43; color: #e8e9eb">
-		© 2022 Copyright. Website design by: Paul van Laar
+		© Full Stack development by: Paul van Laar
 	</div>
 <!--Copyright-->
 </footer>
