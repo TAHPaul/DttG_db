@@ -1,0 +1,150 @@
+{% extends 'data/base.html' %}
+
+{% load crispy_forms_tags %}
+
+<!-- Title of the page -->
+{% block title%}
+Tabular data
+{% endblock title%}
+
+{% block content%}
+
+<!-- Header at the top -->
+<div class="jumbotron text-center">
+	<h1 class="display-4" style="color: #e8e9eb">Database Table</h1>
+	<p style="color: #e8e9eb">- Simple Queries -</p>
+	<div class="row border-bottom text-center" style="border-color: #e8e9eb"></div>
+	
+	<div class="mt-4 pb-4">
+		<!-- Two buttons that collapse the search view(s) -->
+		<a class="btn btn-outline-light float-left" role="button" href="{% url 'data-table-adv' %}">Switch to Advanced Search</a>
+		<button class="btn btn-outline-light float-right" type="button" data-toggle="collapse" data-target="#simplesearch" aria-expanded="false" aria-controls="simplesearch">Toggle search form visibility</button>
+	</div>
+</div>
+
+<!-- Simple search function -->
+<div class="collapse show" id="simplesearch">
+	<div class="container rounded border p-4" style="border-color: #383a43; background-color: #dfe0e3">
+		<h4 align="center">Simple Search</h4><hr>
+		<form>
+			<div class="form-row">
+				<div class="col-4">
+					<h6 style="color: #383a43">Artist</h6>
+					<input class="form-control" type="search" name="artist" placeholder="Artist" aria-label="search">
+				</div>
+				<div class="col-2">
+					<h6 style="color: #383a43">Date range</h6>
+					<input class="form-control" type="search" name="date1" placeholder="After" aria-label="search">
+				</div>
+				<div class="col-2">									
+					<h6>...</h6>
+					<input class="form-control" type="search" name="date2" placeholder="Before" aria-label="search">
+				</div>
+				<div class="col-3">
+					<h6 style="color: #383a43">Place of Execution</h6>
+					<input class="form-control" type="search" name="city" placeholder="City of execution" aria-label="search">
+				</div>
+				<div class="col-1">
+					<h6 style="color: #383a43">#Grounds</h6>
+					<div class="form-group">
+						<select class="form-control" id="no_of_grounds" name="no_of_grounds">
+							<option></option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col"></div>
+				<div class="col-2 text-right">
+					<h6>Sort by</h6>
+					<div class="form-group">
+						<select class="form-control" id="sortby" name="sortby">
+							<option>ID</option>
+							<option>Title</option>
+							<option>Artist</option>
+							<option>Date</option>
+							<option>Place of execution</option>
+							<option># grounds</option>
+							<option>Lowest ground</option>
+							<option>Uppermost ground</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="text-left"><button class="btn btn-outline-secondary" type="submit">Search</button></div>
+		</form>		
+	</div>
+</div>
+
+
+<div class="row mt-3 mb-3 p-3">
+	<!-- Amount of results -->
+	<div class="col text-left align-self-center">
+		<h5>{{ results }} results</h5>
+	</div>
+	<!-- Export function -->
+	<div class="col text-right align-self-center">
+		<a href="{% url 'csv-export-simple' %}?{{request.GET.urlencode}}"><button type="button" class="btn btn-outline-info">Export to CSV</button></a>
+	</div>	
+</div>
+
+
+<!-- This generates a table for all the results -->
+<table class="table table-condensed table-hover table-striped">
+	<thead>
+		<tr>
+			<!--<th></th>-->
+			<th>ID</th>
+			<th>Title</th>
+			<th>Artist</th>
+			<th>Date</th>
+			<th>Place of Execution</th>
+			<th>No. of Ground Layers</th>
+			<th>Colour-code</th>
+			<th>Layers</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for artwork in artworks %}
+			<tr>
+				<!--<td><a href="{{ artwork.image.url }}"><img class="img-responsive" src="{{ artwork.image.url }}"></a></td>-->
+				<td>{{ artwork.id }}</td>
+				<td><a href="{% url 'data-detail' artwork.id %}">{{ artwork.title }}</a></td>
+				{% if artwork.artist2.full_name %}
+					<td>{{ artwork.artist_validity}} <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }} </a> & <a href="{% url 'artists-detail' artwork.artist2.id %}">{{ artwork.artist2.full_name }}</a></td>
+				{% else %}
+					<td>{{ artwork.artist_validity}} <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }} </a></td>
+				{% endif %}
+				{% if artwork.date2 %}
+					<td>{{ artwork.date_validity }} {{ artwork.date1 }} - {{ artwork.date2 }}</td>
+				{% else %}
+					<td>{{ artwork.date_validity}} {{artwork.date1 }}</td>
+				{% endif %}			
+				<td><a href="{% url 'city-of-execution-detail' artwork.place_of_execution.city %}">{{ artwork.place_of_execution }}</a></td>
+				<td>{{ artwork.data.no_of_grounds }}</td>
+				<td>{{ artwork.data.colour_code}}</td>
+				<td>
+					{% if artwork.data.no_of_grounds == '1' %}
+						<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+					{% elif artwork.data.no_of_grounds == '2' %}
+						<div style=" border: 1px solid black;">
+							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+						<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+						</div>
+						
+					{% elif artwork.data.no_of_grounds == '3' %}
+						<div style=" border: 1px solid black;">
+							<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+						</div>
+					{% endif %}
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock content %}
+<!-- table pagination? --> 

@@ -7,10 +7,9 @@ Colours
 {% block content%}
 	<div class="container-fluid">
 		<div class="jumbotron text-center">
-			<h1 class="display-4" style="color: #e8e9eb ">Colour System</h1>
+			<h1 class="display-4" style="color: #e8e9eb ">Database Information</h1>
 		</div>
 	</div>
-	
 
 	<!-- Nav tabs -->
 
@@ -18,22 +17,24 @@ Colours
 		<li class="nav-item">
 			<a class="nav-link active" data-toggle="tab" href="#reliability">Reliability System</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Colour System</a>
 				<div class="dropdown-menu">
-					<a href="#colours">Link 1</a>
-					<a href="#info">Link 2</a>
+					<a class="dropdown-item" data-toggle="tab" href="#colour">Colours</a>
+					<a class="dropdown-item" data-toggle="tab" href="#colour_info">Information</a>
 				</div>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="tab" href="#info">More info</a>
 		</li>
 	</ul>
+
+	<!-- Tabs Content -->
 	<div class="tab-content">
 		<div class="tab-pane container active" id="reliability">
-			
+			<p class="mt-3">As opposed to other existing databases, we hoped to present data with varying levels of reliability. By accepting that not every entry might be up to par with current 21st-century standards, we made sure that data collected in the past is not simply lost. This is still a valuable resource blabla. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><hr>
 		</div>
-		<div class="tab-pane container " id="colours">
+		<div class="tab-pane fade" id="colour">
 			<br>
 			<div class="container">
 				<div class="row">
@@ -74,9 +75,11 @@ Colours
 				</div>
 			</div>
 		</div>
-		<br>
+		<div class="tab-pane fade" id="colour_info">
+			<p class="mt-3">Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
+		</div>
 		<div class="tab-pane container fade" id="info">
-			<p>Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
+			<p class="mt-3">If there's any more information that we want to provide the user with?</p>
 		</div>
 	</div>
 

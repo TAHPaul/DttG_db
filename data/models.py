@@ -92,7 +92,7 @@ class Artist(models.Model):
 	image = models.ImageField(default='artist_images/default_artist.jpg', upload_to=artist_file_name)
 
 	def __str__(self):
-		return '%s. %s' % (self.id, self.full_name)
+		return '%s' % (self.full_name)
 
 	def save(self):
 		super().save()
@@ -227,7 +227,7 @@ class Data(models.Model):
 	m_number = models.OneToOneField(Artwork, on_delete=models.CASCADE, primary_key=True)
 	no_of_grounds = models.CharField(choices=GROUND_NO, max_length=1, blank=True)
 	description = models.TextField(blank=True)
-	colour_code = models.CharField(max_length=10)
+	colour_code = models.CharField(max_length=10, blank=True)
 	layer1_colour = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='colour_1', null=True, blank=True)
 	layer1_composition = models.TextField(blank=True)
 	layer2_colour = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='colour_2', null=True, blank=True)
@@ -235,7 +235,7 @@ class Data(models.Model):
 	layer3_colour = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='colour_3', null=True, blank=True)
 	layer3_composition = models.TextField(blank=True)
 	toplayer_colour = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='colour_toplayer', null=True, blank=True)
-	reliability = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+	reliability = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)], blank=True, null=True)
 	sample = models.CharField(max_length=10, choices=OPTIONS, blank=True)
 	microscopy = models.CharField(max_length=10, choices=OPTIONS, blank=True)
 	elem_analysis = models.CharField(max_length=10, choices=OPTIONS, blank=True)
