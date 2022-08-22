@@ -24,9 +24,6 @@ from .forms import AdvancedSearch
 
 ###OTHER###...................................###OTHER###
 
-def enter(request):
-	return render(request, 'data/entry-page.html')
-
 def home(request):
 	return render(request, 'data/dttg-home.html')
 
@@ -147,6 +144,8 @@ def data_table_simple(request):
             artworks = artworks.order_by('title')
         elif sortby == 'Artist':
             artworks = artworks.order_by('artist1')
+        elif sortby == 'Date':
+            artworks = artworks.order_by('date1')
         elif sortby == 'Place of execution':
             artworks = artworks.order_by('place_of_execution')
         elif sortby == '# grounds':
@@ -212,6 +211,8 @@ def csv_export_simple(request):
             artworks = artworks.order_by('title')
         elif sortby == 'Artist':
             artworks = artworks.order_by('artist1')
+        elif sortby == 'Date':
+            artworks = artworks.order_by('date1')
         elif sortby == 'Place of execution':
             artworks = artworks.order_by('place_of_execution')
         elif sortby == '# grounds':

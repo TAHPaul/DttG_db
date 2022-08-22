@@ -35,5 +35,5 @@ def run():
 								centres_of_activity=row[7],
 								rkd_link=row[8])
 
-				artist.save()
-				print("artist", str(row[1]), "added to database\n")
+			artist.save()
+			print("artist", str(row[1]), "added to database\n")
