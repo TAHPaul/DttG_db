@@ -20,5 +20,5 @@ def run():
 								hex_code=row[2],
 								group=row[3])
 
-				colour.save()
-				print("Colour", str(row[1]), "added to database\n")
+			colour.save()
+			print("Colour", str(row[1]), "added to database\n")

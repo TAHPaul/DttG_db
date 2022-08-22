@@ -21,5 +21,5 @@ def run():
 							latitude=row[3],
 							longitude=row[4]) 
 
-				city.save()
-				print("City", str(row[1]), "added to database\n")
+			city.save()
+			print("City", str(row[1]), "added to database\n")

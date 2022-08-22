@@ -65,5 +65,5 @@ def run():
 								museum_link=row[16], 
 								rkd_link=row[17]) 
 
-				artwork.save()
-				print("Artwork", str(row[1]), "added to database\n")
+			artwork.save()
+			print("Artwork", str(row[1]), "added to database\n")

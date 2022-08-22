@@ -62,5 +62,5 @@ def run():
 								dttg_new_research = row[22],
 								notes = row[23])
 
-				data.save()
-				print("Data entry", str(row[0]), "added to database\n")
+			data.save()
+			print("Data entry", str(row[0]), "added to database\n")

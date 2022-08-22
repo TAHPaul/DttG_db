@@ -19,7 +19,7 @@ def run():
 				museum = Museum(id=row[0],
 								museum_name=row[1],
 								website=row[2],
-								city=City.objects.get(id=row[3])
+								city=City.objects.get(id=row[3]))
 
-				museum.save()
-				print("Museum", str(row[1]), "added to database\n")
+			museum.save()
+			print("Museum", str(row[1]), "added to database\n")
