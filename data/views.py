@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.http import HttpResponse
+from statistics import mean
 import csv
 
 # import all models from the models.py file
@@ -256,7 +257,9 @@ def csv_export_simple(request):
         'Place of execution', 
         'Date validity', 
         'Date 1', 
-        'Date 2', 
+        'Date 2',
+        'Date bin (5 years)',
+        'Date bin (10 years)',
         'Number of grounds',
         'Description',
         'Toplayer Colour',
@@ -292,6 +295,16 @@ def csv_export_simple(request):
         else:
             layer3 = ''
 
+        if entry.date2:
+            date_list = [entry.date2, entry.date1]
+            date_av = mean(date_list)
+            date_bin5 = int((date_av // 5) * 5)
+            date_bin10 = int((date_av // 10) * 10)
+        else: 
+            date_av = entry.date1
+            date_bin5 = int((date_av //5) * 5)
+            date_bin10 = int((date_av // 10) * 10)
+
         writer.writerow([
             entry.id, 
             entry.title, 
@@ -302,6 +315,8 @@ def csv_export_simple(request):
             entry.date_validity,
             entry.date1,
             entry.date2,
+            date_bin5,
+            date_bin10,
             entry.data.no_of_grounds,
             entry.data.description,
             entry.data.toplayer_colour,
@@ -349,7 +364,9 @@ def csv_export_adv(request):
         'Place of execution', 
         'Date validity', 
         'Date 1', 
-        'Date 2', 
+        'Date 2',
+        'Date bin (5 years)',
+        'Date bin (10 years)', 
         'Number of grounds',
         'Description',
         'Toplayer Colour',
@@ -385,6 +402,16 @@ def csv_export_adv(request):
         else:
             layer3 = ''
 
+        if entry.date2:
+            date_list = [entry.date2, entry.date1]
+            date_av = mean(date_list)
+            date_bin5 = int((date_av // 5) * 5)
+            date_bin10 = int((date_av // 10) * 10)
+        else: 
+            date_av = entry.date1
+            date_bin5 = int((date_av //5) * 5)
+            date_bin10 = int((date_av // 10) * 10)
+
         writer.writerow([
             entry.id, 
             entry.title, 
@@ -395,6 +422,8 @@ def csv_export_adv(request):
             entry.date_validity,
             entry.date1,
             entry.date2,
+            date_bin5,
+            date_bin10,
             entry.data.no_of_grounds,
             entry.data.description,
             entry.data.toplayer_colour,
