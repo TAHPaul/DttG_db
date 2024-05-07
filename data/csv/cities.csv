@@ -1,42 +1,84 @@
-COPENHAGEN,DENMARK,55.6867243,12.5700724
-DELFT,NETHERLANDS,52.011902,4.36026
-DERBYSHIRE,UNITED KINGDOM,53.1219825,-1.5584111
-DORDRECHT,NETHERLANDS,51.7958812,4.6779351
-DRESDEN,GERMANY,51.0493286,13.7381437
-EDINBURGH,SCOTLAND,55.9498214,-3.1902952
-GLASGOW,SCOTLAND,55.8609825,-4.2488787
-GORINCHEM,NETHERLANDS,51.8421872,4.9746005
-GOUDA,NETHERLANDS,52.0181194,4.7111221
-HAARLEM,NETHERLANDS,52.3837058,4.6435597
-HAMBURG,GERMANY,53.550341,10.000654
-KAMPEN,NETHERLANDS,52.55904,5.91512
-KINGSTON,CANADA,44.230687,-76.481323
-LEEUWARDEN,NETHERLANDS,53.2005936,5.7918548
-LEIDEN,NETHERLANDS,52.1518157,4.4811089
-LONDON,UNITED KINGDOM,51.5073219,-0.1276474
-LUBLIN,POLAND,51.250559,22.5701022
-LUXEMBOURG,LUXEMBOURG,49.599884,6.134678
-MADRID,SPAIN,40.4167047,-3.7035825
-MIDDELBURG,NETHERLANDS,51.25512,3.41603
-NEW YORK CITY,UNITED STATES OF AMERICA,40.7127281,-74.0060152
-OBERLIN,UNITED STATES OF AMERICA,41.2939386,-82.2173786
-OSLO,NORWAY,59.9133301,10.7389701
-RALEIGH,UNITED STATES OF AMERICA,35.7803977,-78.6390989
-ROME,ITALY,41.8933203,12.4829321
-ROTTERDAM,NETHERLANDS,51.9244424,4.47775
-SCHWERIN,GERMANY,53.6288297,11.4148038
-ST. LOUIS,UNITED STATES OF AMERICA,38.6312667,-90.2353056
-STOCKHOLM,SWEDEN,59.3251172,18.0710935
-THE HAGUE,NETHERLANDS,52.0799838,4.3113461
-UNKNOWN,,,
-VENICE,ITALY,45.4371908,12.3345898
-VIENNA,AUSTRIA,48.2083537,16.3725042
-WARSAW,POLAND,52.2319581,21.0067249
-WINDSOR,UNITED KINGDOM,51.4837577,-0.6040964
-ZOETERWOUDE,NETHERLANDS,52.1171894,4.5034595
-HARLINGEN,NETHERLANDS,53.1752103,5.4141998
-EMDEN,NETHERLANDS,53.3670541,7.2058304
-MONTFOORT,NETHERLANDS,52.0387833,4.9560877
-ZWOLLE,NETHERLANDS,52.5089759,6.0943765
-DEVENTER,NETHERLANDS,52.2695736,6.2363396
-SCHOORL,NETHERLANDS,52.700581,4.69394
+﻿city,country,continent,latitude,longitude
+Alkmaar,Netherlands,Europe,52.6324,4.7534
+Amersfoort,Netherlands,Europe,52.1561,5.3878
+Amsterdam,Netherlands,Europe,52.3676,4.9041
+Antwerp,Belgium,Europe,51.2194,4.4025
+Bergen op Zoom,Netherlands,Europe,51.4949,4.2875
+Berlin,Germany,Europe,52.52,13.405
+Beverwijk,Netherlands,Europe,52.4864,4.6567
+Birmingham,United Kingdom,Europe,52.4862,-1.8904
+Boston,United States of America,North America,,
+Breda,Netherlands,Europe,51.5719,4.7683
+Bruges,Belgium,Europe,,
+Brüggen,Germany,Europe,51.2,6.2
+Brussels,Belgium,Europe,50.8503,4.3517
+Buren,Netherlands,Europe,51.9139,5.2565
+Cambrai,France,Europe,50.171,3.2384
+Cambridge,United Kingdom,Europe,52.2053,0.1218
+Chicago,United States of America,North America,41.8781,-87.6298
+Cleveland,United States of America,North America,41.4993,-81.6944
+Cologne,Germany,Europe,50.9375,6.9603
+Copenhagen,Denmark,Europe,55.6761,12.5683
+Delft,Netherlands,Europe,51.999,4.3628
+Derbyshire,United Kingdom,Europe,53.1396,-1.5514
+Deventer,Netherlands,Europe,52.2555,6.1633
+Dinant,Belgium,Europe,,
+Dordrecht,Netherlands,Europe,51.8133,4.6901
+Dresden,Germany,Europe,51.0504,13.7373
+Edinburgh,Scotland,Europe,55.9533,-3.1883
+Emden,Netherlands,Europe,53.3643,7.201
+Elsinore,Denmark,Europe,56.033,12.613
+Frankfurt,Germany,Europe,,
+Ghent,Belgium,Europe,,
+Glasgow,Scotland,Europe,55.8642,-4.2518
+Goa,India,Asia,15.2993,74.124
+Gorinchem,Netherlands,Europe,51.8298,4.9741
+Gouda,Netherlands,Europe,52.0116,4.7109
+Haarlem,Netherlands,Europe,52.3874,4.9024
+Hamburg,Germany,Europe,53.5511,9.9937
+Harlingen,Netherlands,Europe,53.1759,5.4159
+Hasselt,Belgium,Europe,,
+Heemskerk,Netherlands,Europe,52.5098,4.6699
+Hulst,Netherlands,Europe,51.2806,4.0522
+Kampen,Netherlands,Europe,52.556,5.9111
+Kingston,Canada,North America,44.2312,-76.486
+Leeuwarden,Netherlands,Europe,53.2194,5.9789
+Leiden,Netherlands,Europe,52.1601,4.497
+Liege,Belgium,Europe,50.8503,5.687
+London,United Kingdom,Europe,51.5099,-0.118
+Los Angeles,United States of America,North America,,
+Lublin,Poland,Europe,51.2465,22.5684
+Luxembourg,Luxembourg,Europe,49.6116,6.1319
+Madrid,Spain,Europe,40.4168,-3.7038
+Mechelen,Belgium,Europe,51.0259,4.4773
+Meulebeke,Belgium,Europe,50.9356,3.3179
+Middelburg,Netherlands,Europe,51.4988,3.6104
+Montfoort,Netherlands,Europe,52.0442,4.9503
+Munich,Germany,Europe,,
+New York City,United States of America,North America,40.7128,-74.006
+Nijmegen,Netherlands,Europe,51.8126,5.8372
+Nuremberg,Germany,Europe,,
+Oberlin,United States of America,North America,41.2931,-82.2174
+Oostzaan,Netherlands,Europe,,
+Oslo,Norway,Europe,59.9139,10.7522
+Oudenaarde,Netherlands,Europe,50.847,3.6095
+Raleigh,United States of America,North America,35.7796,-78.6382
+Rome,Italy,Europe,41.9028,12.4964
+Rostock,Germany,Europe,54.0924,12.0991
+Rotterdam,Netherlands,Europe,51.9225,4.4792
+Schiedam,Netherlands,Europe,51.9194,4.3886
+Schoorl,Netherlands,Europe,52.7032,4.6944
+Schwerin,Germany,Europe,53.6355,11.4012
+St. Louis,United States of America,North America,38.627,-90.1994
+Steinbach,Germany,Europe,,
+Stockholm,Sweden,Europe,59.3293,18.0686
+the Hague,Netherlands,Europe,52.0705,4.3007
+UNKNOWN,,,-,-
+Utrecht,Netherlands,Europe,52.0907,5.1214
+Venice,Italy,Europe,45.4408,12.3155
+Vienna,Austria,Europe,48.8566,16.3522
+Warsaw,Poland,Europe,52.2297,21.0122
+Washington D.C.,United States of America,North America,,
+Windsor,United Kingdom,Europe,42.3149,-83.0364
+Zoeterwoude,Netherlands,Europe,52.1159,4.509
+Zwolle,Netherlands,Europe,52.5125,6.0943

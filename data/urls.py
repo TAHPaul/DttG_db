@@ -5,12 +5,12 @@ from .views import (
 	ArtistDetailView,
 	MuseumListView,
 	MuseumDetailView,
-	) # FOR THE LISTVIEW
+	)
 
 urlpatterns = [
 	path('', views.home, name='dttg-home'),
 	path('about/', views.about, name='dttg-about'),
-	path('artists/', ArtistListView.as_view(), name='artists-overview'), #NEW LIST VIEW
+	path('artists/', ArtistListView.as_view(), name='artists-overview'),
 	path('artists/<int:pk>/', views.ArtistDetailView.as_view(), name='artists-detail'),
 	path('entries/', views.DataListView.as_view(), name='data-overview'),
 	path('entries/<str:pk>/', views.DataDetailView.as_view(), name='data-detail'),

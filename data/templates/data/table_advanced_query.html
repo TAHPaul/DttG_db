@@ -57,11 +57,19 @@ Tabular data
 				<div class="col"></div>				
 			</div>
 			<div class="form-row">
-				<div class="col"></div>
+				<div class="col-4"></div>
 				<div class="col-4 text-center">
 					{{ advancedsearch.form.o|as_crispy_field}}
 				</div>
 				<div class="col"></div>
+				<div class="col">
+					<p class="text-center">Show top layer:</p>
+					{% if 'toplayervis' in request.GET %}
+						<input class = "form-control" type="checkbox" name="toplayervis" aria-label checked>
+					{% else %}
+						<input class = "form-control" type="checkbox" name="toplayervis" aria-label>
+					{% endif %}
+				</div>
 			</div>
 			<div class="form-row">
 				<div class="col-4"></div>
@@ -121,7 +129,11 @@ Tabular data
 			<th>Place of Execution</th>
 			<th>No. of Ground Layers</th>
 			<th>Colour-code</th>
-			<th>Layers</th>
+			{% if 'toplayervis' in request.GET %}
+				<th>Top layer</th>
+			{% else %}
+				<th>Layers</th>
+			{% endif %}
 		</tr>
 	</thead>
 	<tbody>
@@ -143,21 +155,41 @@ Tabular data
 				<td><a href="{% url 'city-of-execution-detail' artwork.place_of_execution.city %}">{{ artwork.place_of_execution }}</a></td>
 				<td>{{ artwork.data.no_of_grounds }}</td>
 				<td>{{ artwork.data.colour_code}}</td>
-				<td>
-					{% if artwork.data.no_of_grounds == '1' %}
-						<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
-					{% elif artwork.data.no_of_grounds == '2' %}
-						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-						<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-						</div>
-					{% elif artwork.data.no_of_grounds == '3' %}
-						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-						</div>
-					{% endif %}
+				{% if 'toplayervis' in request.GET %}		
+					<td>
+						{% if artwork.data.layer3_colour %}
+							<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% elif artwork.data.layer2_colour %}
+							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% else %}
+							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% endif %}
+					</td>
+				{% else %}
+					<td>
+						{% if artwork.data.no_of_grounds == '1' %}
+							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% elif artwork.data.no_of_grounds == '2' %}
+							<div style=" border: 1px solid black;">
+								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							</div>
+							
+						{% elif artwork.data.no_of_grounds == '3' %}
+							<div style=" border: 1px solid black;">
+								<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							</div>
+
+						{% else %}
+							<div style=" border: 1px solid black;">
+								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							</div>
+						{% endif %}
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>

@@ -32,7 +32,16 @@ Colours
 	<!-- Tabs Content -->
 	<div class="tab-content">
 		<div class="tab-pane container active" id="reliability">
-			<p class="mt-3">As opposed to other existing databases, we hoped to present data with varying levels of reliability. By accepting that not every entry might be up to par with current 21st-century standards, we made sure that data collected in the past is not simply lost. This is still a valuable resource blabla. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur</p><hr>
+			<p class="mt-3">In order to build a comprehensive database of Dutch and Flemish ground colours, it was necessary to use “mixed quality data” so that published and unpublished information across institutions with varying degrees of technical research could be presented and queried together. A “reliability rating system” was developed so that patterns and conclusions could be filtered based on the level of research conducted on individual data points. Each painting entry in the DttG database is given a numerical rating from 1 to 5, representing the reliability of that entry’s data. 
+			<br><br>
+			1: Most reliable. Scanning electron microscopy has been performed to confirm microscopic cross-section analysis;<br>
+			2: Information is based on microscopic cross-section analysis;<br>
+			3: Information is based on surface analysis by a skilled individual (ideally a paintings conservator);<br>
+			4: Information is based on written text where the research methods are unclear;<br>
+			5: There is no technical information on this painting, but it has been checked for available data and is of future interest to the project.<br> 
+			<br>
+			For more, see: Hall-Aquitania, Moorea, and Lieve d’Hont. “Troubleshooting Coloured Grounds: Developing a Methodology for Studying Netherlandish Ground Colour.” In Ground Layers in European Painting 1550-1750, V:1–9. CATS Proceedings. London: Archetype, 2020.
+</p><hr>
 		</div>
 		<div class="tab-pane fade" id="colour">
 			<br>
@@ -76,10 +85,34 @@ Colours
 			</div>
 		</div>
 		<div class="tab-pane fade" id="colour_info">
-			<p class="mt-3">Here there should be an explanation of the colour system. <a href="#">Perhaps also a link to this survey thing? </a>What was done to do this, how were the values chosen etc.</p>
+				<p class="mt-3">The extreme difficulties of describing colour in a meaningful and objective way have caused confusion and concern when attempting to combine observations from different researchers and projects. Because the DttG database was designed to be queried on a large scale, it was necessary to develop a consistent colour categorization system so that data could be plotted, and patterns identified. The database thus includes two types of colour data: free text as related by the responsible researcher and categories based on the most common colours. All free text (and cross-section information) has been translated by Moorea Hall-Aquitania into the DttG colour categories, and she takes responsibility for any mistakes or inconsistencies. 
+				<br><br>
+				The DttG colour checker was developed by Hall-Aquitania with blind survey input from painting conservators to reflect the most common ground colours (based on both surface and microscopic examination). It is intended as a visual reference to the DttG colour categories for future researchers. The colours from this colour checker are shown for each painting, but it should be noted that this is a general categorization and not an accurate representation of that painting’s exact colours.
+				<br><br>
+				For more, see: Hall-Aquitania, Moorea, and Lieve d’Hont. “Troubleshooting Coloured Grounds: Developing a Methodology for Studying Netherlandish Ground Colour.” In Ground Layers in European Painting 1550-1750, V:1–9. CATS Proceedings. London: Archetype, 2020.
+</p>
 		</div>
 		<div class="tab-pane container fade" id="info">
-			<p class="mt-3">If there's any more information that we want to provide the user with?</p>
+			<br>
+
+		<h4>CROSS-SECTION IMAGES</h4>
+		<p>The decision not to use images of cross-sections was made early on, due to several reasons including image rights, lack of consistent colour-correction and/or variable instrumentation, access to the raw data from previous research, and lack of time to re-photograph available samples at a set standard. It is fervently hoped that it will be possible to address some of these issues in the future to include sample images in the database. For now, the location of available images has been noted wherever possible so that researchers can request access to them from the relevant source or institution.</p><hr>
+
+		<h4>DATABASE NOTES</h4>
+		<p>I.	For chalk layers, the colour given is light yellow (LY) to distinguish from lead white layers (W) and account for the yellowing of chalk in animal skin glue (and oil);<br><br>
+		II.	For paintings with more than three ground layers, the full structure is listed as free text but only the top and bottom layers are categorized and described systematically. This allows us to continue to sort based on the top ground layer colour without expanding the entire system to accommodate the scant paintings with four or more ground layers;<br><br>
+		III.	When interpreting ground colour categories from written text where the sample was not accessible, I have used my best judgement based on the original researcher’s description and, when possible, the pigments listed. All faults and inconsistencies are my own;<br><br>
+		IV.	The most difficult categorisation to make has been to differentiate between red and orange, as this relies heavily on the microscopy and photography equipment used. All faults and inconsistencies are my own.
+</p><hr>
+
+		<h4>DATABASE DEVELOPMENT</h4>
+		<p>The DttG database was developed by Paul van Laar in 2022 using the open-source back-end server-side web framework <a href= https://www.djangoproject.com target="_blank" rel="noopener noreferrer">Django</a>. Django is free, and open-source and uses Python. Django is used to browse through the linked DttG SQLite3 database, using querysets of that data to populate HTML templates. In practice, this means that the webpages the user requests are generated dynamically with data from the database. Any updates made to that same database will thus automatically alter the relevant pages as they are requested. 
+		<br><br>
+		A multi-sheet excel file was kept as the input for the database, to retain ease-of-use for cultural heritage researchers with varying backgrounds. This excel sheet is then inserted into the SQLite3 database using a simple python script. 
+		<br><br>
+		The functionality of the database is flexible, and can be expanded as desired. At this stage, it allows for filtering the data on certain parameters (city of execution, artist etc.), as well as asking complex queries that can be exported in .csv format for data interpretation in external software.
+</p><hr>
+
 		</div>
 	</div>
 
