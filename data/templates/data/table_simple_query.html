@@ -52,11 +52,40 @@ Tabular data
 							<option>1</option>
 							<option>2</option>
 							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+							<option>>10</option>
 						</select>
 					</div>
 				</div>
 			</div>
 			<div class="form-row">
+				<div class="col-2 text-left">
+					<h6>Support</h6>
+					<div class="form-group">
+						<select class="form-control" id="support" name="support">
+							<option>any</option>
+							<option>panel</option>
+							<option>canvas</option>
+							<option>other</option>
+							<option>unknown</option>
+						</select>
+					</div>
+				</div>
+				<div class="col"></div>
+				<div class="col-2 text-center">
+					<h6>Toggle top layer</h6>
+					{% if 'toplayervis' in request.GET %}
+						<input class = "form-control" type="checkbox" name="toplayervis" aria-label checked>
+					{% else %}
+						<input class = "form-control" type="checkbox" name="toplayervis" aria-label>
+					{% endif %}
+				</div>
 				<div class="col"></div>
 				<div class="col-2 text-right">
 					<h6>Sort by</h6>
@@ -104,7 +133,11 @@ Tabular data
 			<th>Place of Execution</th>
 			<th>No. of Ground Layers</th>
 			<th>Colour-code</th>
-			<th>Layers</th>
+			{% if 'toplayervis' in request.GET %}
+				<th>Top layer</th>
+			{% else %}
+				<th>Layers</th>
+			{% endif %}
 		</tr>
 	</thead>
 	<tbody>
@@ -118,6 +151,7 @@ Tabular data
 				{% else %}
 					<td>{{ artwork.artist_validity}} <a href="{% url 'artists-detail' artwork.artist1.id %}">{{ artwork.artist1.full_name }} </a></td>
 				{% endif %}
+
 				{% if artwork.date2 %}
 					<td>{{ artwork.date_validity }} {{ artwork.date1 }} - {{ artwork.date2 }}</td>
 				{% else %}
@@ -126,22 +160,41 @@ Tabular data
 				<td><a href="{% url 'city-of-execution-detail' artwork.place_of_execution.city %}">{{ artwork.place_of_execution }}</a></td>
 				<td>{{ artwork.data.no_of_grounds }}</td>
 				<td>{{ artwork.data.colour_code}}</td>
-				<td>
-					{% if artwork.data.no_of_grounds == '1' %}
-						<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
-					{% elif artwork.data.no_of_grounds == '2' %}
-						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-						<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-						</div>
-						
-					{% elif artwork.data.no_of_grounds == '3' %}
-						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-						</div>
-					{% endif %}
+				{% if 'toplayervis' in request.GET %}		
+					<td>
+						{% if artwork.data.layer3_colour %}
+							<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% elif artwork.data.layer2_colour %}
+							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% else %}
+							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% endif %}
+					</td>
+				{% else %}
+					<td>
+						{% if artwork.data.no_of_grounds == '1' %}
+							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						{% elif artwork.data.no_of_grounds == '2' %}
+							<div style=" border: 1px solid black;">
+								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							</div>
+							
+						{% elif artwork.data.no_of_grounds == '3' %}
+							<div style=" border: 1px solid black;">
+								<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							</div>
+
+						{% else %}
+							<div style=" border: 1px solid black;">
+								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							</div>
+						{% endif %}
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>

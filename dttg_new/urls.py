@@ -21,7 +21,7 @@ from django.conf.urls.static import static #for images Part 8 - Corey Schafer
 
 urlpatterns = [
     path('', include('data.urls')),
-    path('admin/', admin.site.urls),
+    path('dttg-login/', admin.site.urls),
 ]
 
 if settings.DEBUG:

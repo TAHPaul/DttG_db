@@ -32,6 +32,14 @@ class AdvancedSearch(django_filters.FilterSet):
         ('1', 'One'),
         ('2', 'Two'),
         ('3', 'Three'),
+        ('4', 'Four'),
+        ('5', 'Five'),
+        ('6', 'Six'),
+        ('7', 'Seven'),
+        ('8', 'Eight'),
+        ('9', 'Nine'),
+        ('10', 'Ten'),
+        ('>10', 'More than ten')
     )
 
     no_of_grounds = django_filters.MultipleChoiceFilter(
@@ -53,13 +61,13 @@ class AdvancedSearch(django_filters.FilterSet):
     bottomlayer = django_filters.MultipleChoiceFilter(
     	field_name='data__layer1_colour__group',
     	choices=COLOUR_GROUPS,
-    	label='Colour of bottom groundlayer'
+    	label='Colour of bottom ground layer'
     	) 
 
     toplayer = django_filters.MultipleChoiceFilter(
     	field_name='data__toplayer_colour__group',
     	choices=COLOUR_GROUPS,
-    	label='Colour of topmost groundlayer'
+    	label='Colour of topmost ground layer'
     	)
 
     reliability = django_filters.NumberFilter(
@@ -101,13 +109,12 @@ class AdvancedSearch(django_filters.FilterSet):
     		('artist1', 'artist'),
     		('city', 'city'),
     		('date1', 'date'),
-    		('data__no_of_grounds', '# groundlayers'),
-    		('data__layer1_colour__group', 'bottom groundlayer colour'),
-    		('data__toplayer_colour__group', 'top groundlayer colour'),
+    		('data__no_of_grounds', '# ground layers'),
+    		('data__layer1_colour__group', 'bottom ground layer colour'),
+    		('data__toplayer_colour__group', 'top ground layer colour'),
    		),
    		label='Order by:'
-    )
-    
+    )   
 
     class Meta:
         model = Artwork

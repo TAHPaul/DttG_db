@@ -13,6 +13,7 @@ from .models import (
     Data
     )
 
+# import generated views native to Django
 from django.views.generic import(
     ListView,
     DetailView
@@ -22,7 +23,7 @@ from django.views.generic import(
 from .forms import AdvancedSearch
 
 
-###OTHER###...................................###OTHER###
+#  OTHER...................................OTHER
 
 def home(request):
 	return render(request, 'data/dttg-home.html')
@@ -39,7 +40,7 @@ def db_info(request):
     }
     return render(request, 'data/db-info.html', context)
 
-###ARTISTS###...............................###ARTISTS###
+#  ARTISTS...............................ARTISTS
 
 class ArtistListView(ListView):
     model = Artist
@@ -59,7 +60,7 @@ class ArtistListView(ListView):
 class ArtistDetailView(DetailView):
     model = Artist
 
-###MUSEUMS###...............................###MUSEUMS###
+#  MUSEUMS...............................MUSEUMS
 
 class MuseumListView(ListView):
     model = Museum
@@ -79,7 +80,7 @@ class MuseumListView(ListView):
 class MuseumDetailView(DetailView):
     model = Museum
 
-###DATA###.....................................###DATA###
+#  DATA.....................................DATA
 class DataListView(ListView):
     model = Data
     context_object_name = 'data'
@@ -136,6 +137,23 @@ def data_table_simple(request):
         else:
             artworks = artworks
 
+    if 'support' in request.GET:
+        support = request.GET['support']
+        if support:
+            if support =='any':
+                artworks = artworks
+            if support == 'canvas':
+                artworks = artworks.filter(support__icontains='canvas')
+            if support == 'panel':
+                artworks = artworks.filter(support__icontains='panel')
+            if support == 'other':
+                artworks = artworks.filter(~Q(support__icontains='canvas') & ~Q(support__icontains='panel'))
+            if support == 'unknown':
+                artworks = artworks.filter(support__iexact='')
+        else:
+            artworks = artworks
+
+
     if 'sortby' in request.GET:
         sortby = request.GET['sortby']
         if sortby == 'ID':
@@ -143,17 +161,17 @@ def data_table_simple(request):
         elif sortby == 'Title':
             artworks = artworks.order_by('title')
         elif sortby == 'Artist':
-            artworks = artworks.order_by('artist1')
+            artworks = artworks.order_by('artist1', 'date1')
         elif sortby == 'Date':
-            artworks = artworks.order_by('date1')
+            artworks = artworks.order_by('date1', 'date2')
         elif sortby == 'Place of execution':
-            artworks = artworks.order_by('place_of_execution')
+            artworks = artworks.order_by('place_of_execution', 'date1')
         elif sortby == '# grounds':
             artworks = artworks.order_by('data__no_of_grounds')
         elif sortby == 'Lowest ground':
-            artworks = artworks.order_by('data__layer1_colour__group')
+            artworks = artworks.order_by('data__layer1_colour__group', 'data__layer1_colour__id')
         elif sortby == 'Uppermost ground':
-            artworks = artworks.order_by('data__toplayer_colour__group')
+            artworks = artworks.order_by('data__toplayer_colour__group', 'data__toplayer_colour__id')
 
     artworks = artworks.distinct()
     results=len(artworks)
@@ -168,7 +186,7 @@ def data_table_simple(request):
 
 def csv_export_simple(request):
     artworks = Artwork.objects.all()
-
+    
     if 'artist' in request.GET:
         artist = request.GET['artist']
         artworks = Artwork.objects.filter(Q(artist1__full_name__icontains=artist) | Q(artist2__full_name__icontains=artist))
@@ -381,7 +399,7 @@ def csv_export_adv(request):
 
     return response
 
-###CITIES###.................................###CITIES###
+#  CITIES.................................CITIES
 
 def city_of_execution_overview(request):
     context = {

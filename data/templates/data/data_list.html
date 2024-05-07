@@ -49,7 +49,7 @@ Data Overview
 								{% elif d.m_number.data.no_of_grounds == '2' %}
 									<div style=" border: 1px solid black;">
 										<div style="background-color: {{ d.m_number.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-									<div style="background-color: {{ d.m_number.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+										<div style="background-color: {{ d.m_number.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
 									</div>
 									
 								{% elif d.m_number.data.no_of_grounds == '3' %}
@@ -58,8 +58,15 @@ Data Overview
 										<div style="background-color: {{ d.m_number.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
 										<div style="background-color: {{ d.m_number.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
 									</div>
+
+								{% else %}
+									<div style=" border: 1px solid black;">
+										<div style="background-color: {{ d.m_number.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
+										<div style="background-color: {{ d.m_number.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+									</div>
 									
 								{% endif %}
+								
 							{% if d.m_number.support%}
 								<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ d.m_number.support }}</small></p>
 							{% else %}

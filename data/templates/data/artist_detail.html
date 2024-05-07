@@ -17,8 +17,19 @@
         </div>
         <div class="col-md-8">
         	<h3 align="center">Biographical information</h3><hr>
-        	<h6 style='display:inline'>Born: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }} </a>({{ object.year_of_birth }})</p><br>
-			<h6 style='display:inline'>Died: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }} </a>({{ object.year_of_death }})</p><br>
+
+        	{% if object.year_of_birth %}
+        		<h6 style='display:inline'>Born: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }} </a>({{ object.year_of_birth }})</p><br>
+    		{% else %}
+    			<h6 style='display:inline'>Born: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }} </a>(Year of birth unknown)</p><br>
+			{% endif %}
+
+			{% if object.year_of_death %}
+				<h6 style='display:inline'>Died: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }} </a>({{ object.year_of_death }})</p><br>
+			{% else %}
+				<h6 style='display:inline'>Died: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }} </a>(Year of death unknown)</p><br>
+			{% endif %}
+
 			{% if object.other_names %}
 				<h6>Also known as:</h6><p align="center"> {{ object.other_names }}</p>
 			{% endif %} 
@@ -27,7 +38,11 @@
 					<h6>Centres of activity:</h6><p align="center">{{ object.centres_of_activity }}</p>
 				</div>
 			{% endif %}
-			<h6><a href="{{ object.rkd_link }}">RKD-link</a></h6>
+
+			{% if object.rkd_link%}
+				<h6><a href="{{ object.rkd_link }}">RKD-link</a></h6>
+			{% endif%}
+
 			<hr>
         </div>
         <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
@@ -76,13 +91,19 @@
 									{% elif artwork.data.no_of_grounds == '2' %}
 										<div style=" border: 1px solid black;">
 											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-										<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+											<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
 										</div>
 										
 									{% elif artwork.data.no_of_grounds == '3' %}
 										<div style=" border: 1px solid black;">
 											<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
 											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+											<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+										</div>
+
+									{% else %}
+										<div style=" border: 1px solid black;">
+											<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
 											<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
 										</div>
 										
