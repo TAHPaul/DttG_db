@@ -265,7 +265,9 @@ def csv_export_simple(request):
         'Layer 2 composition',
         'Layer 3 colour',
         'Layer 3 composition',
-        'Reliability'
+        'Reliability',
+        'Researchers',
+        'Source'
     ])
 
     for entry in artworks:
@@ -307,7 +309,9 @@ def csv_export_simple(request):
             entry.data.layer2_composition,
             layer3,
             entry.data.layer3_composition,
-            entry.data.reliability
+            entry.data.reliability,
+            entry.data.researchers,
+            entry.data.source
             ])
 
     return response
@@ -352,7 +356,9 @@ def csv_export_adv(request):
         'Layer 2 composition',
         'Layer 3 colour',
         'Layer 3 composition',
-        'Reliability'
+        'Reliability',
+        'Researchers',
+        'Source'
     ])
 
     for entry in qs:
@@ -394,7 +400,9 @@ def csv_export_adv(request):
             entry.data.layer2_composition,
             layer3,
             entry.data.layer3_composition,
-            entry.data.reliability
+            entry.data.reliability,
+            entry.data.researchers,
+            entry.data.source
             ])
 
     return response
