@@ -7,7 +7,7 @@ def run():
 		next(reader) #to advance past the headers
 
 		for row in reader:
-			print(row)
+			print("Data entry:", row)
 			
 			#These try functions ensure valid empty cells get added if certain fields are missing
 			try: #artist2
@@ -26,24 +26,44 @@ def run():
 				d2 = None
 
 			try: #height
-				h = float(row[12])
+				h = float(row[14])
 			except ValueError:
 				h = None
 
 			try: #width
-				w = float(row[13])
+				w = float(row[15])
 			except ValueError:
 				w = None
 
-			if row[15] == '': #if no museum is entered, it gets museum entry 49 which is 'unknown'
+			if row[17] == '': #if no museum is entered, it gets museum entry 49 which is 'unknown'
 				m = Museum.objects.get(id=49)
 			else:
-				m = Museum.objects.get(id=row[15])
+				m = Museum.objects.get(id=row[17])
 			
 			qs = Artwork.objects.filter(id=row[0])
 
 			if qs:
-				print("Artwork", str(row[1]), "already exists in database\n")
+				print("Artwork:", str(row[1]), "already exists in database. Will check and update values.\n")
+				artwork = Artwork.objects.get(id=row[0])
+				artwork.title=row[1]
+				artwork.artist_validity=row[2]
+				artwork.artist1=Artist.objects.get(id=row[3])
+				artwork.artist2=a2
+				artwork.place_of_execution=City.objects.get(city=row[5])
+				artwork.date_validity=row[6]
+				artwork.date1=d1
+				artwork.date2=d2
+				artwork.signature=row[11]
+				artwork.support=row[12]
+				artwork.medium=row[13]
+				artwork.height=h
+				artwork.width=w
+				artwork.accession_number=row[16]
+				artwork.museum=m
+				artwork.museum_link=row[18]
+				artwork.rkd_link=row[19]
+				artwork.save()
+				print("Artwork:", str(row[1]), "updated.\n")
 				#checks if the artwork does not already exist in the database
 			else:
 				artwork = Artwork(id=row[0],
@@ -55,15 +75,14 @@ def run():
 								date_validity=row[6],
 								date1=d1,
 								date2=d2,
-								signature=row[9],
-								support=row[10],
-								medium=row[11], 
+								signature=row[11],
+								support=row[12],
+								medium=row[13], 
 								height=h, 
 								width=w, 
-								accession_number=row[14], 
+								accession_number=row[16], 
 								museum=m, 
-								museum_link=row[16], 
-								rkd_link=row[17]) 
-
-			artwork.save()
-			print("Artwork", str(row[1]), "added to database\n")
+								museum_link=row[18], 
+								rkd_link=row[19]) 
+				artwork.save()
+				print("Artwork:", str(row[1]), "added to database\n")
