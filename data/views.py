@@ -259,7 +259,6 @@ def csv_export_simple(request):
         'Date 1', 
         'Date 2',
         'Date bin (5 years)',
-        'Date bin (10 years)',
         'Number of grounds',
         'Description',
         'Toplayer Colour',
@@ -299,11 +298,9 @@ def csv_export_simple(request):
             date_list = [entry.date2, entry.date1]
             date_av = mean(date_list)
             date_bin5 = int((date_av // 5) * 5)
-            date_bin10 = int((date_av // 10) * 10)
         else: 
             date_av = entry.date1
             date_bin5 = int((date_av //5) * 5)
-            date_bin10 = int((date_av // 10) * 10)
 
         writer.writerow([
             entry.id, 
@@ -316,7 +313,6 @@ def csv_export_simple(request):
             entry.date1,
             entry.date2,
             date_bin5,
-            date_bin10,
             entry.data.no_of_grounds,
             entry.data.description,
             entry.data.toplayer_colour,
@@ -365,8 +361,7 @@ def csv_export_adv(request):
         'Date validity', 
         'Date 1', 
         'Date 2',
-        'Date bin (5 years)',
-        'Date bin (10 years)', 
+        'Date bin (5 years)', 
         'Number of grounds',
         'Description',
         'Toplayer Colour',
@@ -406,11 +401,9 @@ def csv_export_adv(request):
             date_list = [entry.date2, entry.date1]
             date_av = mean(date_list)
             date_bin5 = int((date_av // 5) * 5)
-            date_bin10 = int((date_av // 10) * 10)
         else: 
             date_av = entry.date1
             date_bin5 = int((date_av //5) * 5)
-            date_bin10 = int((date_av // 10) * 10)
 
         writer.writerow([
             entry.id, 
@@ -423,7 +416,6 @@ def csv_export_adv(request):
             entry.date1,
             entry.date2,
             date_bin5,
-            date_bin10,
             entry.data.no_of_grounds,
             entry.data.description,
             entry.data.toplayer_colour,
