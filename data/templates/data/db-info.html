@@ -40,8 +40,7 @@ Colours
 			4: Information is based on written text where the research methods are unclear;<br>
 			5: There is no technical information on this painting, but it has been checked for available data and is of future interest to the project.<br> 
 			<br>
-			For more, see: Hall-Aquitania, Moorea, and Lieve d’Hont. “Troubleshooting Coloured Grounds: Developing a Methodology for Studying Netherlandish Ground Colour.” In Ground Layers in European Painting 1550-1750, V:1–9. CATS Proceedings. London: Archetype, 2020.
-</p><hr>
+			For more, see: Hall-Aquitania, Moorea, and Lieve d’Hont. “Troubleshooting Coloured Grounds: Developing a Methodology for Studying Netherlandish Ground Colour.” In Ground Layers in European Painting 1550-1750, V:1–9. CATS Proceedings. London: Archetype, 2020.</p><hr>
 		</div>
 		<div class="tab-pane fade" id="colour">
 			<br>
@@ -89,8 +88,7 @@ Colours
 				<br><br>
 				The DttG colour checker was developed by Hall-Aquitania with blind survey input from painting conservators to reflect the most common ground colours (based on both surface and microscopic examination). It is intended as a visual reference to the DttG colour categories for future researchers. The colours from this colour checker are shown for each painting, but it should be noted that this is a general categorization and not an accurate representation of that painting’s exact colours.
 				<br><br>
-				For more, see: Hall-Aquitania, Moorea, and Lieve d’Hont. “Troubleshooting Coloured Grounds: Developing a Methodology for Studying Netherlandish Ground Colour.” In Ground Layers in European Painting 1550-1750, V:1–9. CATS Proceedings. London: Archetype, 2020.
-</p>
+				For more, see: Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650.” University of Amsterdam, 2025.</p>
 		</div>
 		<div class="tab-pane container fade" id="info">
 			<br>
@@ -102,16 +100,21 @@ Colours
 		<p>I.	For chalk layers, the colour given is light yellow (LY) to distinguish from lead white layers (W) and account for the yellowing of chalk in animal skin glue (and oil);<br><br>
 		II.	For paintings with more than three ground layers, the full structure is listed as free text but only the top and bottom layers are categorized and described systematically. This allows us to continue to sort based on the top ground layer colour without expanding the entire system to accommodate the scant paintings with four or more ground layers;<br><br>
 		III.	When interpreting ground colour categories from written text where the sample was not accessible, I have used my best judgement based on the original researcher’s description and, when possible, the pigments listed. All faults and inconsistencies are my own;<br><br>
-		IV.	The most difficult categorisation to make has been to differentiate between red and orange, as this relies heavily on the microscopy and photography equipment used. All faults and inconsistencies are my own.
-</p><hr>
+		IV.	The most difficult categorisation to make has been to differentiate between red and orange, as this relies heavily on the microscopy and photography equipment used. All faults and inconsistencies are my own.</p><hr>
+
+		<h4>TERMINOLOGY</h4>
+		<p>This database, which was made as part of Hall-Aquitania’s 2025 PhD dissertation <i>Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands, 1500-1650</i>, uses the terminology system for preparatory layers developed by Maartje Stols-Witlox, in which grounds are defined as preparatory layers covering the entire surface to be painted. Ground layers are numbered from the lowest layer and described qualitatively (e.g. a red first ground and a light brown second ground).
+		<br><br>
+		For a detailed definition of preparatory layers and terminology see Stols-Witlox, Maartje. <i>A Perfect Ground: Preparatory Layers for Oil Paintings 1550-1900.</i> London: Archetype, 2017, p. xi-xvi.
+		<br><br>
+		For a further explanation of the terminology and systems used specifically for this database, see Hall-Aquitania, Moorea. “Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650.” University of Amsterdam, 2025.</p><hr>
 
 		<h4>DATABASE DEVELOPMENT</h4>
 		<p>The DttG database was developed by Paul van Laar in 2022 using the open-source back-end server-side web framework <a href= https://www.djangoproject.com target="_blank" rel="noopener noreferrer">Django</a>. Django is free, and open-source and uses Python. Django is used to browse through the linked DttG SQLite3 database, using querysets of that data to populate HTML templates. In practice, this means that the webpages the user requests are generated dynamically with data from the database. Any updates made to that same database will thus automatically alter the relevant pages as they are requested. 
 		<br><br>
 		A multi-sheet excel file was kept as the input for the database, to retain ease-of-use for cultural heritage researchers with varying backgrounds. This excel sheet is then inserted into the SQLite3 database using a simple python script. 
 		<br><br>
-		The functionality of the database is flexible, and can be expanded as desired. At this stage, it allows for filtering the data on certain parameters (city of execution, artist etc.), as well as asking complex queries that can be exported in .csv format for data interpretation in external software.
-</p><hr>
+		The functionality of the database is flexible, and can be expanded as desired. At this stage, it allows for filtering the data on certain parameters (city of execution, artist etc.), as well as asking complex queries that can be exported in .csv format for data interpretation in external software.</p><hr>
 
 		</div>
 	</div>

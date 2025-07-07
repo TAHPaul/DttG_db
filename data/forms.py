@@ -61,13 +61,13 @@ class AdvancedSearch(django_filters.FilterSet):
     bottomlayer = django_filters.MultipleChoiceFilter(
     	field_name='data__layer1_colour__group',
     	choices=COLOUR_GROUPS,
-    	label='Colour of bottom ground layer'
+    	label='Colour of bottom ground'
     	) 
 
     toplayer = django_filters.MultipleChoiceFilter(
     	field_name='data__toplayer_colour__group',
     	choices=COLOUR_GROUPS,
-    	label='Colour of topmost ground layer'
+    	label='Colour of topmost ground'
     	)
 
     reliability = django_filters.NumberFilter(
@@ -84,6 +84,13 @@ class AdvancedSearch(django_filters.FilterSet):
     medium = django_filters.AllValuesMultipleFilter(
         field_name='medium',
         label='Medium'
+        )
+
+    active_in = django_filters.CharFilter(
+        lookup_expr='icontains',
+        field_name='artist1__centres_of_activity',
+        # to_field_name='centres_of_activity',
+        label='Artist active in',
         )
 
 # Here we give options for the analysis part of the painting. this is not 
