@@ -65,43 +65,47 @@ Tabular data
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="col-2 text-left">
-					<h6>Support</h6>
-					<div class="form-group">
-						<select class="form-control" id="support" name="support">
-							<option>any</option>
-							<option>panel</option>
-							<option>canvas</option>
-							<option>other</option>
-							<option>unknown</option>
-						</select>
-					</div>
+			    <div class="col-2 text-left">
+			        <h6>Support</h6>
+			        <div class="form-group">
+			            <select class="form-control" id="support" name="support">
+			                <option>any</option>
+			                <option>panel</option>
+			                <option>canvas</option>
+			                <option>other</option>
+			                <option>unknown</option>
+			            </select>
+			        </div>
+			    </div>
+			    <div class="col-5">
+					<h6 style="color: #383a43">Artist active in</h6>
+					<input class="form-control" type="search" name="active" placeholder="Artist active in" aria-label="search">
 				</div>
-				<div class="col"></div>
-				<div class="col-2 text-center">
-					<h6>Toggle top layer</h6>
-					{% if 'toplayervis' in request.GET %}
-						<input class = "form-control" type="checkbox" name="toplayervis" aria-label checked>
-					{% else %}
-						<input class = "form-control" type="checkbox" name="toplayervis" aria-label>
-					{% endif %}
-				</div>
-				<div class="col"></div>
-				<div class="col-2 text-right">
-					<h6>Sort by</h6>
-					<div class="form-group">
-						<select class="form-control" id="sortby" name="sortby">
-							<option>ID</option>
-							<option>Title</option>
-							<option>Artist</option>
-							<option>Date</option>
-							<option>Place of execution</option>
-							<option># grounds</option>
-							<option>Lowest ground</option>
-							<option>Uppermost ground</option>
-						</select>
-					</div>
-				</div>
+			    <div class="col"></div>
+			    <div class="col-2 text-left">
+			        <h6>Sort by</h6>
+			        <div class="form-group">
+			            <select class="form-control" id="sortby" name="sortby">
+			                <option>ID</option>
+			                <option>Title</option>
+			                <option>Artist</option>
+			                <option>Date</option>
+			                <option>Place of execution</option>
+			                <option># grounds</option>
+			                <option>Lowest ground</option>
+			                <option>Uppermost ground</option>
+			            </select>
+			        </div>
+			    </div>
+			    <div class="col"></div>
+			    <div class="col-2 text-center">
+			        <h6>Toggle top layer</h6>
+			        {% if 'toplayervis' in request.GET %}
+			            <input class = "form-control" type="checkbox" name="toplayervis" aria-label checked>
+			        {% else %}
+			            <input class = "form-control" type="checkbox" name="toplayervis" aria-label>
+			        {% endif %}
+			    </div>
 			</div>
 			<div class="text-left"><button class="btn btn-outline-secondary" type="submit">Search</button></div>
 		</form>		

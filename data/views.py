@@ -154,6 +154,12 @@ def data_table_simple(request):
         else:
             artworks = artworks
 
+    if 'active' in request.GET:
+        active = request.GET['active']
+        if active:
+            artworks = Artwork.objects.filter(Q(artist1__centres_of_activity__icontains=active) | Q(artist2__centres_of_activity__icontains=active))
+        else:
+            artworks = artworks
 
     if 'sortby' in request.GET:
         sortby = request.GET['sortby']
@@ -222,6 +228,13 @@ def csv_export_simple(request):
         else:
             artworks = artworks
 
+    if 'active' in request.GET:
+        active = request.GET['active']
+        if active:
+            artworks = artworks.filter(artist1__centres_of_activity__icontains=active)
+        else:
+            artworks = artworks
+
     if 'sortby' in request.GET:
         sortby = request.GET['sortby']
         if sortby == 'ID':
@@ -243,6 +256,8 @@ def csv_export_simple(request):
 
     artworks = artworks.distinct()
 
+    print('queryset is:', artworks)
+
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=DttG_simple_query.csv'
 
@@ -259,8 +274,12 @@ def csv_export_simple(request):
         'Date 1', 
         'Date 2',
         'Date bin (5 years)',
+        'Support',
+        'Collection',
+        'Accession Number',
         'Number of grounds',
         'Description',
+        'Colour Code',
         'Toplayer Colour',
         'Layer 1 colour',
         'Layer 1 composition',
@@ -313,8 +332,12 @@ def csv_export_simple(request):
             entry.date1,
             entry.date2,
             date_bin5,
+            entry.support,
+            entry.museum.museum_name,
+            entry.accession_number,
             entry.data.no_of_grounds,
             entry.data.description,
+            entry.data.colour_code,
             entry.data.toplayer_colour,
             layer1,
             entry.data.layer1_composition,
@@ -362,8 +385,12 @@ def csv_export_adv(request):
         'Date 1', 
         'Date 2',
         'Date bin (5 years)', 
+        'Support',
+        'Collection',
+        'Accession Number',
         'Number of grounds',
         'Description',
+        'Colour Code',
         'Toplayer Colour',
         'Layer 1 colour',
         'Layer 1 composition',
@@ -403,7 +430,7 @@ def csv_export_adv(request):
             date_bin5 = int((date_av // 5) * 5)
         else: 
             date_av = entry.date1
-            date_bin5 = int((date_av //5) * 5)
+            date_bin5 = int((date_av // 5) * 5)
 
         writer.writerow([
             entry.id, 
@@ -416,8 +443,12 @@ def csv_export_adv(request):
             entry.date1,
             entry.date2,
             date_bin5,
+            entry.support,
+            entry.museum.museum_name,
+            entry.accession_number,
             entry.data.no_of_grounds,
             entry.data.description,
+            entry.data.colour_code,
             entry.data.toplayer_colour,
             layer1,
             entry.data.layer1_composition,

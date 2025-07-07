@@ -57,11 +57,13 @@ Tabular data
 				<div class="col"></div>				
 			</div>
 			<div class="form-row">
-				<div class="col-4"></div>
+				<div class="col-1"></div>
+				<div class="col-4 text-center">
+					{{ advancedsearch.form.active_in|as_crispy_field}}
+				</div>
 				<div class="col-4 text-center">
 					{{ advancedsearch.form.o|as_crispy_field}}
 				</div>
-				<div class="col"></div>
 				<div class="col">
 					<p class="text-center">Show top layer:</p>
 					{% if 'toplayervis' in request.GET %}
@@ -70,6 +72,7 @@ Tabular data
 						<input class = "form-control" type="checkbox" name="toplayervis" aria-label>
 					{% endif %}
 				</div>
+				<div class="col-1"></div>
 			</div>
 			<div class="form-row">
 				<div class="col-4"></div>
