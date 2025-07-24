@@ -139,12 +139,3 @@ class AdvancedSearch(django_filters.FilterSet):
         	'microscopy', 
         	'elem_analysis'
         ]
-
-
-
-
-
-
-
-
-
