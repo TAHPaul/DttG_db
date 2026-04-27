@@ -14,7 +14,11 @@ Artists overview
 		<div class="col-4 mb-4">
 			<div class="card h-100 d-flex">
 				<div class="text-center">
-					<a href="{% url 'artists-detail' artist.id %}"><img class="card-img-top rounded border" src="{{ artist.image.url }}" alt="Card Image" style="height: 200px; width: auto; border-color: #383a43;"></a>
+					{% if artist.rkd_image_url %}
+					<a href="{% url 'artists-detail' artist.id %}"><img class="card-img-top rounded border" src="{{ artist.rkd_image_url }}" alt="{{ artist.full_name }}" style="height: 200px; width: auto; border-color: #383a43;"></a>
+					{% elif artist.image %}
+					<a href="{% url 'artists-detail' artist.id %}"><img class="card-img-top rounded border" src="{{ artist.image.url }}" alt="{{ artist.full_name }}" style="height: 200px; width: auto; border-color: #383a43;"></a>
+					{% endif %}
 				</div>
 				<div class="card-body d-flex flex-column">
 					<h5 class="card-title" align="center"><a href="{% url 'artists-detail' artist.id %}" class="stretched-link">{{artist.full_name}}</a></h5>

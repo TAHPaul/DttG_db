@@ -16,7 +16,11 @@ Data Overview
 				<a class="text-dark shadow" href="{% url 'data-detail' d.m_number.id %}">
 					<div class="card shadow h-100 d-flex">
 						<div class="text-center">
-							<img class="card-img-top border rounded" src="{{ d.m_number.image.url}}" alt="Card Image" style="max-height:200px; width:auto; border-color: #383a43;">
+							{% if d.m_number.rkd_image_url %}
+							<img class="card-img-top border rounded" src="{{ d.m_number.rkd_image_url }}" alt="{{ d.m_number.title }}" style="max-height:200px; width:auto; border-color: #383a43;">
+							{% elif d.m_number.image %}
+							<img class="card-img-top border rounded" src="{{ d.m_number.image.url }}" alt="{{ d.m_number.title }}" style="max-height:200px; width:auto; border-color: #383a43;">
+							{% endif %}
 						</div>
 						<div class="card-body d-flex flex-column">
 							<h5 class="card-title" align="center"><a href="{% url 'data-detail' d.m_number.id %}" class="stretched-link">{{ d.m_number.id }}: {{ d.m_number.title }}</a></h5>

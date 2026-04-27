@@ -48,18 +48,12 @@ class ArtistListView(ListView):
     context_object_name = 'artists'
     ordering = ['id']
     paginate_by = 9
-    # Only artists that have at least one linked artwork are shown
-    artists = Artist.objects.filter(artist__isnull=False).distinct().order_by('full_name')
-
-    global no_of_artists
-    no_of_artists = len(artists)
-
     def get_queryset(self):
         return Artist.objects.filter(artist__isnull=False).distinct().order_by('full_name')
 
     def get_context_data(self, **kwargs):
         context = super(ArtistListView, self).get_context_data(**kwargs)
-        context['no_of_artists'] = no_of_artists
+        context['no_of_artists'] = self.get_queryset().count()
         return context
 
 class ArtistDetailView(DetailView):
@@ -72,14 +66,9 @@ class MuseumListView(ListView):
     context_object_name = 'museums'
     ordering = ['id']
     paginate_by = 15
-    museums = Museum.objects.all().order_by('museum_name')
-
-    global no_of_museums
-    no_of_museums = len(museums)
-
     def get_context_data(self, **kwargs):
         context = super(MuseumListView, self).get_context_data(**kwargs)
-        context['no_of_museums'] = no_of_museums
+        context['no_of_museums'] = Museum.objects.count()
         return context
 
 class MuseumDetailView(DetailView):
@@ -92,14 +81,9 @@ class DataListView(ListView):
     ordering = ['m_number']
     paginate_by = 12
 
-    entries = Data.objects.all()
-
-    global no_of_entries
-    no_of_entries = len(entries)
-
     def get_context_data(self, **kwargs):
         context = super(DataListView, self).get_context_data(**kwargs)
-        context['no_of_entries'] = no_of_entries
+        context['no_of_entries'] = Data.objects.count()
         return context
 
 class DataDetailView(DetailView):

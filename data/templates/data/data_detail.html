@@ -16,7 +16,11 @@
 	<div class="row text-left">
         <div class="col-md-6 my-auto">
         	<div class="text-center">
-        		<img class="img-fluid align-self-center rounded border" style="border-color: #383a43;" src="{{ object.m_number.image.url }}">
+				{% if object.m_number.rkd_image_url %}
+				<img class="img-fluid align-self-center rounded border" style="border-color: #383a43;" src="{{ object.m_number.rkd_image_url }}" alt="{{ object.m_number.title }}">
+				{% elif object.m_number.image %}
+				<img class="img-fluid align-self-center rounded border" style="border-color: #383a43;" src="{{ object.m_number.image.url }}" alt="{{ object.m_number.title }}">
+				{% endif %}
         	</div>
         </div>
         <div class="col-md-6">

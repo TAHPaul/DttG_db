@@ -89,6 +89,7 @@ class Artist(models.Model):
 	year_of_death = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(2022)], blank = True, null = True, default=None)
 	centres_of_activity = models.TextField(blank=True, help_text="Please format: City1 | City2 | City3 | etc. ")
 	rkd_link = models.URLField(blank=True)
+	rkd_image_url = models.URLField(blank=True, help_text='Auto-populated from RKD IIIF API. Run fetch_rkd_images to update.')
 	image = models.ImageField(default='artist_images/default_artist.jpg', upload_to=artist_file_name)
 
 	def __str__(self):
@@ -160,6 +161,7 @@ class Artwork(models.Model):
 	museum = models.ForeignKey(Museum, models.SET('museum was deleted'), related_name='artwork_museum')
 	museum_link = models.URLField(blank=True)
 	rkd_link = models.URLField(blank=True)
+	rkd_image_url = models.URLField(blank=True, help_text='Auto-populated from RKD IIIF API. Run fetch_rkd_images to update.')
 	image = models.ImageField(default='artwork_images/default_artwork.jpg', upload_to=artwork_file_name)
 
 	def __str__(self):

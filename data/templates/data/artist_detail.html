@@ -12,7 +12,11 @@
     <div class="row text-left">
         <div class="col-md-4 my-auto">
         	<div class="text-center">
-        		<img class="img-fluid align-self-center rounded border" src="{{ object.image.url }}">
+	        		{% if object.rkd_image_url %}
+	        		<img class="img-fluid align-self-center rounded border" src="{{ object.rkd_image_url }}" alt="{{ object.full_name }}">
+	        		{% elif object.image %}
+	        		<img class="img-fluid align-self-center rounded border" src="{{ object.image.url }}" alt="{{ object.full_name }}">
+	        		{% endif %}
         	</div>
         </div>
         <div class="col-md-8">
