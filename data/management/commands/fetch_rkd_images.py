@@ -8,6 +8,8 @@ a ready-to-use thumbnail URL in the rkd_image_url field.
 Usage:
     python manage.py fetch_rkd_images            # skip already-populated records
     python manage.py fetch_rkd_images --force    # re-fetch all RKD-linked records
+    python manage.py fetch_rkd_images --dry-run
+    python manage.py fetch_rkd_images --max-updates 10
     python manage.py fetch_rkd_images --artists-only
     python manage.py fetch_rkd_images --artworks-only
 
@@ -48,7 +50,7 @@ def fetch_first_iiif_thumbnail(data_url):
     try:
         with urllib.request.urlopen(req, timeout=10) as r:
             data = json.loads(r.read())
-    except (urllib.error.URLError, json.JSONDecodeError) as e:
+    except Exception as e:
         return None, str(e)
 
     images = data.get('images', [])
@@ -72,11 +74,24 @@ class Command(BaseCommand):
             action='store_true',
             help='Re-fetch even for records that already have an rkd_image_url.',
         )
+        parser.add_argument(
+            '--dry-run',
+            action='store_true',
+            help='Only report how many records would be processed; do not call the RKD API or save anything.',
+        )
+        parser.add_argument(
+            '--max-updates',
+            type=int,
+            default=None,
+            help='Stop after this many successful image updates for each selected model.',
+        )
         parser.add_argument('--artists-only', action='store_true')
         parser.add_argument('--artworks-only', action='store_true')
 
     def handle(self, *args, **options):
         force = options['force']
+        dry_run = options['dry_run']
+        max_updates = options['max_updates']
         do_artists = not options['artworks_only']
         do_artworks = not options['artists_only']
 
@@ -86,6 +101,8 @@ class Command(BaseCommand):
                 data_url_template=ARTIST_DATA_URL,
                 label='Artist',
                 force=force,
+                dry_run=dry_run,
+                max_updates=max_updates,
             )
 
         if do_artworks:
@@ -94,14 +111,20 @@ class Command(BaseCommand):
                 data_url_template=IMAGE_DATA_URL,
                 label='Artwork',
                 force=force,
+                dry_run=dry_run,
+                max_updates=max_updates,
             )
 
-    def _process(self, queryset, data_url_template, label, force):
+    def _process(self, queryset, data_url_template, label, force, dry_run, max_updates):
         if not force:
             queryset = queryset.filter(rkd_image_url='')
 
         total = queryset.count()
         self.stdout.write(f'\n{label}: {total} records to process.')
+
+        if dry_run:
+            self.stdout.write(f'{label} dry run: no API calls made, no records updated.\n')
+            return
 
         ok = skipped = errors = 0
 
@@ -115,7 +138,15 @@ class Command(BaseCommand):
                 continue
 
             data_url = data_url_template.format(id=rkd_id)
-            thumbnail_url, err = fetch_first_iiif_thumbnail(data_url)
+
+            try:
+                thumbnail_url, err = fetch_first_iiif_thumbnail(data_url)
+            except Exception as exc:
+                self.stdout.write(
+                    self.style.WARNING(f'  [{i}/{total}] {obj} — unexpected error: {exc}')
+                )
+                errors += 1
+                continue
 
             if err:
                 self.stdout.write(
@@ -130,6 +161,14 @@ class Command(BaseCommand):
                     self.style.SUCCESS(f'  [{i}/{total}] {obj} — {thumbnail_url}')
                 )
                 ok += 1
+
+                if max_updates and ok >= max_updates:
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f'  Reached max-updates={max_updates}; stopping {label.lower()} run early.'
+                        )
+                    )
+                    break
 
             # Polite rate limit: ~6 requests/second
             time.sleep(0.17)
