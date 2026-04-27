@@ -748,3 +748,118 @@ a.article-title:hover {
   font-size: 0.9rem;
   border-radius: 0 4px 4px 0;
 }
+
+/* ================================================================
+   COLOUR REFERENCE – HUB MODE  (colour-reference--hub)
+   Added 2026-04-27 – used in /db_info/ documentation hub.
+   One row per colour family: Label | Light | Mid | Dark
+   Black and White below a divider, each with a single swatch.
+   ================================================================ */
+
+.colour-reference__hub-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.colour-reference__hub-row {
+  display: grid;
+  grid-template-columns: 7rem repeat(3, 1fr);
+  align-items: stretch;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-subtle, #e0dbd3);
+}
+
+.colour-reference__hub-row--neutral {
+  grid-template-columns: 7rem 1fr;
+  margin-top: 0.75rem;
+}
+
+.colour-reference__hub-row:last-child {
+  border-bottom: none;
+}
+
+.colour-reference__hub-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary, #555);
+  padding-top: 0.5rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.colour-reference__hub-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.colour-reference__swatch--hub {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.colour-reference__swatch-hex {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: monospace;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+.colour-reference__swatch--hub:hover .colour-reference__swatch-hex,
+.colour-reference__swatch--hub:focus-within .colour-reference__swatch-hex {
+  opacity: 1;
+}
+
+.colour-reference__hub-name {
+  font-size: 0.8rem;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.3;
+}
+
+.colour-reference__hub-code {
+  font-size: 0.72rem;
+  color: var(--text-muted, #888);
+  font-family: monospace;
+}
+
+.colour-reference__hub-divider {
+  display: none; /* removed – separation handled by margin-top on neutral rows */
+}
+
+/* Hub mobile: stack label above swatches in a 3-col swatch row */
+@media (max-width: 540px) {
+  .colour-reference__hub-row,
+  .colour-reference__hub-row--neutral {
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 0.25rem;
+  }
+
+  .colour-reference__hub-label {
+    grid-column: 1 / -1;
+    padding-top: 0.25rem;
+    padding-bottom: 0;
+  }
+}

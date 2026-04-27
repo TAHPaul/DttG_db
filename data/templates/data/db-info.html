@@ -30,9 +30,10 @@
 			<p>The DttG database can be queried in two ways:</p>
 			<ul>
 				<li><strong>Simple query</strong> — filter paintings by a single parameter such as colour, city, artist, or institution.</li>
-				<li><strong>Advanced query</strong> — combine multiple parameters to produce a refined result set that can be exported as a <code>.csv</code> file for further analysis in external software.</li>
+				<li><strong>Advanced query</strong> — combine multiple parameters to produce a refined result.</li>
 			</ul>
-			<p>Each result links to a full data entry with bibliographic references, ground-layer descriptions, and reliability rating. Colour information for each painting is displayed using the standardised DttG colour categories described in the <a href="#colour-system">Colour System</a> section below.</p>
+			<p>Results of queries are displayed in a tabular format, allowing for easy comparison and analysis of different paintings based on the selected criteria. The results can be exported as a <code>.csv</code> file for further analysis in external software.</p>
+			<p>Each result links to a full entry with bibliographic references, ground-layer descriptions, and reliability rating. Colour information for each painting is displayed using the standardised DttG colour categories described in the <a href="#colour-system">Colour System</a> section below.</p>
 			<p>If you are new to the database, the <a href="#reliability">Reliability System</a> section explains how to interpret data quality ratings before drawing conclusions from query results.</p>
 		</div>
 	</section>
@@ -46,7 +47,7 @@
 			<dl class="doc-hub__rating-list">
 				<div class="doc-hub__rating-item">
 					<dt><span class="doc-hub__rating-badge">1</span> Most reliable</dt>
-					<dd>Elemental analysis (such as scanning electron microscopy) has been performed to confirm microscopic cross-section analysis.</dd>
+					<dd>Elemental analysis (such as SEM-EDX) has been performed to confirm microscopic cross-section analysis.</dd>
 				</div>
 				<div class="doc-hub__rating-item">
 					<dt><span class="doc-hub__rating-badge">2</span> Microscopic cross-section</dt>
@@ -61,7 +62,7 @@
 					<dd>Written descriptions form the basis; research methods are unclear.</dd>
 				</div>
 			</dl>
-			<p class="doc-hub__ref">For more, see: Hall-Aquitania, Moorea. "Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025.</p>
+			<p class="doc-hub__ref">For more, see: <b>WHICH REFERENCE DO WE WANT TO ADD HERE?</b>Hall-Aquitania, Moorea. "Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025.</p>
 		</div>
 	</section>
 
@@ -72,10 +73,10 @@
 			<p>The extreme difficulties of describing colour in a meaningful and objective way have caused confusion and concern when attempting to combine observations from different researchers and projects. Because the DttG database was designed to be queried on a large scale, it was necessary to develop a consistent colour categorisation system so that data could be plotted and patterns identified.</p>
 			<p>The database includes two types of colour data: free text as related by the responsible researcher, and standardised categories based on the most common ground colours. All free text (and cross-section information) has been translated by Moorea Hall-Aquitania into the DttG colour categories, and she takes responsibility for any mistakes or inconsistencies.</p>
 			<p>The DttG colour checker was developed by Hall-Aquitania with blind survey input from painting conservators to reflect the most common ground colours (based on both surface and microscopic examination). It is intended as a visual reference to the DttG colour categories for future researchers. The colours shown for each painting represent a general categorisation, not an accurate reconstruction of that painting's exact appearance.</p>
-			<p class="doc-hub__ref">For more, see: Hall-Aquitania, Moorea. "Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025.</p>
+			<p class="doc-hub__ref">For more, see: <b>WHICH REFERENCE DO WE WANT TO ADD HERE?</b></p>
 		</div>
 		<div class="doc-hub__colour-block">
-			{% include 'data/partials/colour_reference.html' with mode='full' %}
+			{% include 'data/partials/colour_reference.html' with mode='hub' %}
 		</div>
 	</section>
 
@@ -83,9 +84,9 @@
 	<section class="doc-hub__section" id="terminology">
 		<h2 class="section-heading">Terminology</h2>
 		<div class="doc-hub__prose">
-			<p>This database, which was made as part of Hall-Aquitania's 2025 PhD dissertation <em>Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands, 1500–1650</em>, uses the terminology system for preparatory layers developed by Maartje Stols-Witlox, in which grounds are defined as preparatory layers covering the entire surface to be painted. Ground layers are numbered from the lowest layer and described qualitatively (e.g. a red first ground and a light brown second ground).</p>
-			<p>For a detailed definition of preparatory layers and terminology, see: Stols-Witlox, Maartje. <em>A Perfect Ground: Preparatory Layers for Oil Paintings 1550–1900.</em> London: Archetype, 2017, pp. xi–xvi.</p>
-			<p>For a further explanation of the terminology and systems used specifically for this database, see: Hall-Aquitania, Moorea. "Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025.</p>
+			<p>The database uses the terminology system for preparatory layers developed by Maartje Stols-Witlox, in which grounds are defined as preparatory layers covering the entire surface to be painted. Ground layers are numbered from the lowest layer and described qualitatively (e.g. a red first ground and a light brown second ground).</p>
+			<p class="doc-hub__ref">For a detailed definition of preparatory layers and terminology, see: Stols-Witlox, Maartje. <em>A Perfect Ground: Preparatory Layers for Oil Paintings 1550–1900.</em> London: Archetype, 2017, pp. xi–xvi.</p>
+			<p class="doc-hub__ref">For a further explanation of the terminology and systems used specifically for this database, see: Hall-Aquitania, Moorea. "Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025.</p>
 		</div>
 	</section>
 
@@ -124,9 +125,12 @@
 	<section class="doc-hub__section" id="citation">
 		<h2 class="section-heading">Citation &amp; Reuse</h2>
 		<div class="doc-hub__prose">
-			<p>If you use data from this database in your research, please cite the accompanying publication:</p>
+			<p>If you use data from this database in your research, please cite the database and accompanying publication:</p>
 			<blockquote class="doc-hub__citation">
-				Hall-Aquitania, Moorea. "Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025.
+				<b>is this how we want the database to be cited? i forget.</b>Hall-Aquitania, Moorea, and Paul J.C. van Laar, "The Down to the Ground Database of Coloured Grounds," RKD - Nederlands Instituut voor Kunstgeschiedenis, 2026. https://dttg.rkdstudies.nl/
+			</blockquote>
+			<blockquote class="doc-hub__citation">
+				<b>What publication? your diss? jhna? rkd studies?</b>
 			</blockquote>
 			<p>For questions about data reuse, corrections, or contributions, please follow the submission guidelines published in the accompanying RKD Studies article.</p>
 		</div>
