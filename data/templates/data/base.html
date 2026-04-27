@@ -48,7 +48,7 @@
 				    <a class="dropdown-item" href="{% url 'artists-overview' %}">Artists</a>
 				    <a class="dropdown-item" href="{% url 'city-of-execution-overview' %}">Places of execution</a>
 				    <a class="dropdown-item" href="{% url 'museums-overview' %}">Museums</a>
-				    <a class="dropdown-item" href="{% url 'database-info' %}">Database Information</a>
+				    <a class="dropdown-item" href="{% url 'database-info' %}">Documentation</a>
 				  </div>
 				</div>
 	        </div>
@@ -57,7 +57,7 @@
 	  </nav>
 	</header>
 	{% endif %}
-	<main role="main" class="{% if request.GET.embed == '1' %}container-fluid px-2{% else %}container{% endif %}">
+	<main role="main" class="{% block main_class %}{% if request.GET.embed == '1' %}container-fluid px-2{% else %}container{% endif %}{% endblock %}">
 	  <div class="row">
 	    <div class="col-md-12">
 	      {% block content %}{% endblock %}
@@ -93,6 +93,13 @@
     <script>
 		$(document).ready(function(){
 		  $('[data-toggle="tooltip"]').tooltip();
+
+		  $('[data-swatch-hex]').each(function(){
+			var swatchHex = $(this).attr('data-swatch-hex');
+			if (swatchHex) {
+			  $(this).css('background-color', swatchHex);
+			}
+		  });
 
 		  var isEmbedMode = document.body.getAttribute('data-embed-mode') === '1';
 

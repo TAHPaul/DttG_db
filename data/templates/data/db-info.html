@@ -53,7 +53,7 @@ Colours
 									<small class="text-muted">({{ colour.id }})</small>
 									<small>{{ colour.hex_code }}</small>
 								</div>
-								<div style="background-color: {{ colour.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+								<div class="db-info-colour-swatch" data-swatch-hex="{{ colour.hex_code }}"></div>
 								<br>
 							</div>
 						{% endif %}
@@ -63,7 +63,7 @@ Colours
 							<a class="mr-2" href=""> {{ white.colour_name }} </a>
 							<small class="text-muted">({{ white.id }})</small>
 							<small>{{ white.hex_code}}</small>
-							<div style="background-color: {{ white.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+							<div class="db-info-colour-swatch" data-swatch-hex="{{ white.hex_code }}"></div>
 							<br>
 						</div>
 					</div>
@@ -72,7 +72,7 @@ Colours
 							<a class="mr-2" href=""> {{ black.colour_name }} </a>
 							<small class="text-muted">({{ black.id }})</small>
 							<small>{{ black.hex_code}}</small>
-							<div style="background-color: {{ black.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
+							<div class="db-info-colour-swatch" data-swatch-hex="{{ black.hex_code }}"></div>
 						</div>
 					</div>
 					

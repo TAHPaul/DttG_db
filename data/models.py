@@ -245,7 +245,7 @@ class Data(models.Model):
 	layer3_colour = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='colour_3', null=True, blank=True)
 	layer3_composition = models.TextField(blank=True)
 	toplayer_colour = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='colour_toplayer', null=True, blank=True)
-	reliability = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)], blank=True, null=True)
+	reliability = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(4)], blank=True, null=True)
 	sample = models.CharField(max_length=10, choices=OPTIONS, blank=True)
 	microscopy = models.CharField(max_length=10, choices=OPTIONS, blank=True)
 	elem_analysis = models.CharField(max_length=10, choices=OPTIONS, blank=True)
