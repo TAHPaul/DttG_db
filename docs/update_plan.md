@@ -225,3 +225,28 @@ Decisions confirmed (2026-04-27):
 
 ## Deployment verification caveat
 Deployment behaviour cannot be fully verified from repository-only access. Full verification requires production/server access and/or explicit deployment runbook details (hosting, env vars, process manager, static/media strategy, DB/runtime details).
+
+## Open question for RKD IT officer — environment variable injection (action required before go-live)
+
+The application now reads its production configuration from environment variables (see `.env.example` for the full list). Before the updated code can be deployed successfully, the RKD IT officer needs to confirm **how environment variables are injected into the Django process** on the server, and then set the following values:
+
+| Variable | Required value |
+|----------|---------------|
+| `DJANGO_SECRET_KEY` | A new random secret key (generate with `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`) |
+| `DJANGO_DEBUG` | `False` |
+| `DJANGO_ALLOWED_HOSTS` | `downtotheground.rkdstudies.nl` |
+| `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://downtotheground.rkdstudies.nl` |
+| `DJANGO_STATIC_ROOT` | Absolute path to where static files should be served from on the server |
+| `DJANGO_MEDIA_ROOT` | Absolute path to where uploaded media files are stored on the server |
+
+Depending on the server setup, the injection method will be one of:
+- **Apache with `mod_wsgi`**: `SetEnv` directives in the Apache `.conf` file for the virtual host.
+- **Apache with `mod_wsgi` daemon mode**: `SetEnvIf` in `.conf` or a `WSGIPassAuthorization` + separate env file.
+- **systemd service**: `Environment=` or `EnvironmentFile=` directive in the unit file.
+- **uWSGI**: `env =` lines in the `.ini` config file, or an `--env` argument.
+- **Gunicorn + supervisor/systemd**: env vars in the supervisor `.conf` or systemd unit.
+- **Plain `.env` file loaded at startup**: supported if the process manager sources a `.env` file before launching Django.
+
+The IT officer should let us know which of these applies. We can then provide the exact lines to add to their config. **Do not commit a `.env` file or any secrets to the repository.**
+
+After the IT officer confirms the mechanism and sets the variables, `python manage.py check --deploy` should be run on the server to verify the production configuration is sound.
