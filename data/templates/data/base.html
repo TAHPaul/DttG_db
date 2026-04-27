@@ -20,7 +20,8 @@
 		<title>{% block title%}{% endblock title %}</title>
 	{% endif %}
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100{% if request.GET.embed == '1' %} embed-mode{% endif %}">
+	{% if request.GET.embed != '1' %}
 	<header class="site-header">
 	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top"><!-- was fixed-top-->
 	    <div class="container">
@@ -55,7 +56,8 @@
 	    </div>
 	  </nav>
 	</header>
-	<main role="main" class="container">
+	{% endif %}
+	<main role="main" class="{% if request.GET.embed == '1' %}container-fluid px-2{% else %}container{% endif %}">
 	  <div class="row">
 	    <div class="col-md-12">
 	      {% block content %}{% endblock %}
@@ -92,10 +94,12 @@
 		$(document).ready(function(){
 		  $('[data-toggle="tooltip"]').tooltip();
 
+		  var isEmbedMode = {% if request.GET.embed == '1' %}true{% else %}false{% endif %};
+
 		  var mobileNoticeKey = 'dttg_mobile_notice_dismissed_v1';
 		  var isSmallScreen = window.matchMedia('(max-width: 991.98px)').matches;
 		  var isMobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-		  var shouldShowMobileNotice = (isSmallScreen || isMobileUserAgent) && !localStorage.getItem(mobileNoticeKey);
+		  var shouldShowMobileNotice = !isEmbedMode && (isSmallScreen || isMobileUserAgent) && !localStorage.getItem(mobileNoticeKey);
 
 		  if (shouldShowMobileNotice) {
 			$('#mobileNoticeModal').modal('show');
@@ -108,10 +112,43 @@
 		  $('#mobileNoticeModal').on('hidden.bs.modal', function(){
 			localStorage.setItem(mobileNoticeKey, '1');
 		  });
+
+		  if (isEmbedMode) {
+			$('a[href]').each(function(){
+			  var href = $(this).attr('href');
+			  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) {
+				return;
+			  }
+
+			  var targetUrl;
+			  try {
+				targetUrl = new URL(href, window.location.origin);
+			  } catch (e) {
+				return;
+			  }
+
+			  if (targetUrl.origin !== window.location.origin) {
+				return;
+			  }
+
+			  if (targetUrl.searchParams.get('embed') !== '1') {
+				targetUrl.searchParams.set('embed', '1');
+				$(this).attr('href', targetUrl.pathname + targetUrl.search + targetUrl.hash);
+			  }
+			});
+
+			$('form').each(function(){
+			  var method = (($(this).attr('method') || 'get') + '').toLowerCase();
+			  if (method === 'get' && $(this).find('input[name="embed"]').length === 0) {
+				$('<input>').attr({type: 'hidden', name: 'embed', value: '1'}).appendTo(this);
+			  }
+			});
+		  }
 		});
 	</script>
 	
 </body>
+{% if request.GET.embed != '1' %}
 <footer class="bg-light text-center text-lg-start mt-auto">
 <!--Copyright-->
 	<div class="text-center p-3" style="background-color: #383a43; color: #e8e9eb">
@@ -119,4 +156,5 @@
 	</div>
 <!--Copyright-->
 </footer>
+{% endif %}
 </html>
