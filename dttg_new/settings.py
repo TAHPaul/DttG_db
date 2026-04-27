@@ -45,6 +45,11 @@ ALLOWED_HOSTS = [
 _csrf_origins = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '')
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins.split(',') if o.strip()]
 
+# Comma-separated list of external origins allowed to embed this site in an iframe.
+# Example: "https://jhna.org,https://www.jhna.org"
+_frame_ancestors = os.environ.get('DJANGO_FRAME_ANCESTORS', '')
+FRAME_ANCESTORS = [o.strip() for o in _frame_ancestors.split(',') if o.strip()]
+
 
 # Application definition
 
@@ -72,6 +77,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if FRAME_ANCESTORS:
+    MIDDLEWARE = [
+        mw
+        for mw in MIDDLEWARE
+        if mw != 'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    ]
+    MIDDLEWARE.append('dttg_new.frame_ancestors_middleware.FrameAncestorsCSPMiddleware')
 
 ROOT_URLCONF = 'dttg_new.urls'
 

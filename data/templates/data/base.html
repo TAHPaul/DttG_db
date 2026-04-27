@@ -63,6 +63,25 @@
 	  </div>
 	</main>
 
+	<div class="modal fade" id="mobileNoticeModal" tabindex="-1" role="dialog" aria-labelledby="mobileNoticeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="mobileNoticeModalLabel">Desktop recommended</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="mobileNoticeClose">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        This database is optimized for desktop use. You can continue on mobile, but some views and tables may be less comfortable to use.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" data-dismiss="modal" id="mobileNoticeContinue">Continue</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -72,6 +91,23 @@
     <script>
 		$(document).ready(function(){
 		  $('[data-toggle="tooltip"]').tooltip();
+
+		  var mobileNoticeKey = 'dttg_mobile_notice_dismissed_v1';
+		  var isSmallScreen = window.matchMedia('(max-width: 991.98px)').matches;
+		  var isMobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		  var shouldShowMobileNotice = (isSmallScreen || isMobileUserAgent) && !localStorage.getItem(mobileNoticeKey);
+
+		  if (shouldShowMobileNotice) {
+			$('#mobileNoticeModal').modal('show');
+		  }
+
+		  $('#mobileNoticeContinue, #mobileNoticeClose').on('click', function(){
+			localStorage.setItem(mobileNoticeKey, '1');
+		  });
+
+		  $('#mobileNoticeModal').on('hidden.bs.modal', function(){
+			localStorage.setItem(mobileNoticeKey, '1');
+		  });
 		});
 	</script>
 	

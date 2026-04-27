@@ -240,6 +240,7 @@ The application now reads its production configuration from environment variable
 | `DJANGO_DEBUG` | `False` |
 | `DJANGO_ALLOWED_HOSTS` | `downtotheground.rkdstudies.nl` |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://downtotheground.rkdstudies.nl` |
+| `DJANGO_FRAME_ANCESTORS` | Optional allowlist for iframe embedding, e.g. `https://jhna.org,https://www.jhna.org` |
 | `DJANGO_STATIC_ROOT` | Absolute path to where static files should be served from on the server |
 | `DJANGO_MEDIA_ROOT` | Absolute path to where uploaded media files are stored on the server |
 
@@ -254,3 +255,5 @@ Depending on the server setup, the injection method will be one of:
 The IT officer should let us know which of these applies. We can then provide the exact lines to add to their config. **Do not commit a `.env` file or any secrets to the repository.**
 
 After the IT officer confirms the mechanism and sets the variables, `python manage.py check --deploy` should be run on the server to verify the production configuration is sound.
+
+Embedding note (optional): if external embedding is required, set `DJANGO_FRAME_ANCESTORS` to an explicit comma-separated origin allowlist and restart the Django process. Then verify the response header includes `Content-Security-Policy: frame-ancestors ...` and that the target page loads inside an iframe on the allowed site.
