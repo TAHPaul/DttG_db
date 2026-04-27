@@ -570,4 +570,181 @@ a.article-title:hover {
   .colour-reference__compact-neutral-row {
     grid-template-columns: 1fr;
   }
+
+  /* ── Documentation hub – mobile ── */
+  .doc-hub__anchornav {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .doc-hub__rating-list {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-hub__section--wide {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* ================================================================
+   DOCUMENTATION HUB  (doc-hub)
+   Added 2026-04-27 – long-form documentation page at /db_info/
+   These classes are additive; legacy tab CSS is left intact.
+   ================================================================ */
+
+.doc-hub__header {
+  padding: 2.5rem 0 1.5rem;
+  border-bottom: 1px solid var(--border-subtle, #e0dbd3);
+  margin-bottom: 2rem;
+}
+
+.doc-hub__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.doc-hub__subtitle {
+  font-size: 1rem;
+  color: var(--text-muted, #666);
+  margin: 0;
+  max-width: 56ch;
+}
+
+/* Anchor navigation */
+.doc-hub__anchornav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle, #e0dbd3);
+}
+
+.doc-hub__anchor-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent, #7a5230);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.doc-hub__anchor-link:hover {
+  text-decoration: underline;
+}
+
+/* Sections */
+.doc-hub__section {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border-subtle, #e0dbd3);
+}
+
+.doc-hub__section:last-child {
+  border-bottom: none;
+}
+
+.doc-hub__section--wide {
+  width: min(100%, calc(100% + 4rem));
+  margin-left: -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  box-sizing: border-box;
+}
+
+.doc-hub__prose {
+  max-width: 72ch;
+}
+
+.doc-hub__prose p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.doc-hub__prose ul,
+.doc-hub__prose ol {
+  margin: 0.5rem 0 1rem 1.25rem;
+  line-height: 1.75;
+}
+
+.doc-hub__ref {
+  font-size: 0.875rem;
+  color: var(--text-muted, #666);
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* Reliability rating list */
+.doc-hub__rating-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  list-style: none;
+  padding: 0;
+}
+
+.doc-hub__rating-item {
+  background: var(--surface-alt, #f7f4ef);
+  border-radius: 6px;
+  padding: 0.875rem 1rem;
+}
+
+.doc-hub__rating-item dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+  font-size: 0.9rem;
+}
+
+.doc-hub__rating-item dd {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #444);
+  line-height: 1.55;
+}
+
+.doc-hub__rating-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--accent, #7a5230);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Database notes list */
+.doc-hub__notes-list {
+  padding-left: 1.5rem;
+  line-height: 1.75;
+}
+
+.doc-hub__notes-list li {
+  margin-bottom: 0.75rem;
+}
+
+/* Colour block – give the full-mode grid room */
+.doc-hub__colour-block {
+  margin-top: 2rem;
+}
+
+/* Citation blockquote */
+.doc-hub__citation {
+  border-left: 3px solid var(--accent, #7a5230);
+  margin: 1rem 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface-alt, #f7f4ef);
+  font-style: italic;
+  font-size: 0.9rem;
+  border-radius: 0 4px 4px 0;
 }
