@@ -20,7 +20,7 @@
 		<title>{% block title%}{% endblock title %}</title>
 	{% endif %}
 </head>
-<body class="d-flex flex-column min-vh-100{% if request.GET.embed == '1' %} embed-mode{% endif %}">
+<body class="d-flex flex-column min-vh-100{% if request.GET.embed == '1' %} embed-mode{% endif %}" data-embed-mode="{% if request.GET.embed == '1' %}1{% else %}0{% endif %}">
 	{% if request.GET.embed != '1' %}
 	<header class="site-header">
 	  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top"><!-- was fixed-top-->
@@ -94,7 +94,7 @@
 		$(document).ready(function(){
 		  $('[data-toggle="tooltip"]').tooltip();
 
-		  var isEmbedMode = {% if request.GET.embed == '1' %}true{% else %}false{% endif %};
+		  var isEmbedMode = document.body.getAttribute('data-embed-mode') === '1';
 
 		  var mobileNoticeKey = 'dttg_mobile_notice_dismissed_v1';
 		  var isSmallScreen = window.matchMedia('(max-width: 991.98px)').matches;
