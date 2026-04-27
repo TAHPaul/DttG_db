@@ -106,7 +106,14 @@
 		  }
 
 		  $('#mobileNoticeContinue, #mobileNoticeClose').on('click', function(){
+			this.blur();
 			localStorage.setItem(mobileNoticeKey, '1');
+		  });
+
+		  $('#mobileNoticeModal').on('hide.bs.modal', function(){
+			if (this.contains(document.activeElement)) {
+			  document.activeElement.blur();
+			}
 		  });
 
 		  $('#mobileNoticeModal').on('hidden.bs.modal', function(){
