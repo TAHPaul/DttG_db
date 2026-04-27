@@ -111,3 +111,28 @@ a.article-title:hover {
     background-position: center;
     position: relative;
 }
+
+.about-logo-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  max-width: 100%;
+  padding: 0.25rem;
+  margin: 0 auto;
+}
+
+.about-logo-slot-dark {
+  background-color: #383a43;
+}
+
+.about-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 0;
+}
