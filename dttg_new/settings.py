@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from a .env file if present.
+# On the production server, place a .env file in the project root
+# (same directory as manage.py). Shell environment variables always
+# take precedence over values in the .env file.
+load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +31,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Local development works without any env vars set (safe defaults below).
 # ---------------------------------------------------------------------------
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 _secret_key_default = 'django-insecure-REDACTED-see-env-file'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', _secret_key_default)
@@ -32,9 +42,6 @@ if not DEBUG and SECRET_KEY == _secret_key_default:
         'DJANGO_SECRET_KEY must be set to a secure value when DEBUG=False. '
         'Generate one with: python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
     )
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 # Comma-separated list of allowed hostnames, e.g. "downtotheground.rkdstudies.nl,localhost"
 ALLOWED_HOSTS = [
