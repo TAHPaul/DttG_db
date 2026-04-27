@@ -46,10 +46,18 @@
 			<hr>
 			<h6 style='display:inline'>Museum: </h6><p style='display:inline'><a href="{% url 'museums-detail' object.m_number.museum.id %}">{{ object.m_number.museum.museum_name }}</a> [inv.nr: {{ object.m_number.accession_number}}]</p><br>
 			{% if object.m_number.museum_link%}
-				<h6 style='display:inline'><a href="{{ object.m_number.museum_link }}">Museum-link</a></h6><br>
+				{% if '://' in object.m_number.museum_link %}
+					<h6 style='display:inline'><a href="{{ object.m_number.museum_link }}" target="_blank" rel="noopener noreferrer">Museum-link</a></h6><br>
+				{% else %}
+					<h6 style='display:inline'><a href="https://{{ object.m_number.museum_link }}" target="_blank" rel="noopener noreferrer">Museum-link</a></h6><br>
+				{% endif %}
 			{% endif %}
 			{% if object.m_number.rkd_link%}
-				<h6 style='display:inline'><a href="{{ object.m_number.rkd_link }}">RKD-link</a></h6>
+				{% if '://' in object.m_number.rkd_link %}
+					<h6 style='display:inline'><a href="{{ object.m_number.rkd_link }}" target="_blank" rel="noopener noreferrer">RKD-link</a></h6>
+				{% else %}
+					<h6 style='display:inline'><a href="https://{{ object.m_number.rkd_link }}" target="_blank" rel="noopener noreferrer">RKD-link</a></h6>
+				{% endif %}
 			{% endif %}
 			<hr>
         </div>
@@ -67,7 +75,11 @@
 			<a class="nav-link active" data-toggle="tab" href="#overview">Overview</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" data-toggle="tab" href="#samples">Sample data</a>
+			{% if object.sample_name_1 or object.sample_link_1 or object.sample_name_2 or object.sample_link_2 or object.sample_location or object.embargo or object.sample1df or object.sample1bf or object.sample1uv or object.sample2df or object.sample2bf or object.sample2uv %}
+				<a class="nav-link" data-toggle="tab" href="#samples">Sample data</a>
+			{% else %}
+				<a class="nav-link disabled text-muted" href="#" tabindex="-1" aria-disabled="true" data-toggle="tooltip" data-placement="top" title="No sample data available" onclick="return false;">Sample data</a>
+			{% endif %}
 		</li>
 	</ul>
 
@@ -90,22 +102,22 @@
 						<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
 					{% endif %}
 					{% if object.no_of_grounds == '1' %}
-						<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+						<div data-swatch-hex="{{ object.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
 					{% elif object.no_of_grounds == '2' %}
 						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ object.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-							<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							<div data-swatch-hex="{{ object.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+							<div data-swatch-hex="{{ object.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
 						</div>
 					{% elif object.no_of_grounds == '3' %}
 						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ object.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-							<div style="background-color: {{ object.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-							<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							<div data-swatch-hex="{{ object.layer3_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+							<div data-swatch-hex="{{ object.layer2_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+							<div data-swatch-hex="{{ object.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
 						</div>
 					{% else %}
 						<div style=" border: 1px solid black;">
-							<div style="background-color: {{ object.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-							<div style="background-color: {{ object.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+							<div data-swatch-hex="{{ object.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+							<div data-swatch-hex="{{ object.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
 						</div>
 					{% endif %}
 					{% if object.m_number.support%}
@@ -246,7 +258,7 @@
 						<h4>Embargo</h4>
 						<p><small>The sample images are not allowed to be shared.</small></p>
 					{% else %}
-						{% if object.sample1df or object.sample1bf or object.sample1uv or object.sample2df or objects.sample2bf or object.sample2uv %}
+						{% if object.sample1df or object.sample1bf or object.sample1uv or object.sample2df or object.sample2bf or object.sample2uv %}
 							<ul class="nav nav-tabs">
 								{% if object.sample1df or object.sample1bf or object.sample1uv %}
 									<li class="nav-item dropdown">
