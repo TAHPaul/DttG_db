@@ -107,6 +107,44 @@ python manage.py migrate
 python manage.py runserver
 ---
 ```
+
+## RKD image URL refresh (for new links)
+
+When new `rkd_link` values are added to `Artist` or `Artwork`, run the management command below to fetch and store RKD IIIF thumbnail URLs in `rkd_image_url`.
+
+### Recommended safe command (auto-stop)
+```bash
+python manage.py fetch_rkd_images --until-stable
+```
+
+This command:
+- Processes only records that have `rkd_link` and empty `rkd_image_url`.
+- Repeats passes and stops automatically when no new URLs are found.
+- Leaves already-filled `rkd_image_url` values untouched.
+
+### Useful variants
+```bash
+# Count pending records only (no API calls, no writes)
+python manage.py fetch_rkd_images --dry-run
+
+# Only artists
+python manage.py fetch_rkd_images --artists-only --until-stable
+
+# Only artworks
+python manage.py fetch_rkd_images --artworks-only --until-stable
+
+# Pilot run: stop after N successful updates per model
+python manage.py fetch_rkd_images --max-updates 10
+
+# Re-fetch everything (overwrites existing URLs; use sparingly)
+python manage.py fetch_rkd_images --force
+```
+
+### Notes
+- Some RKD records legitimately return no image (`images` empty) and will remain unfilled.
+- Some records may fail due to temporary RKD API/server errors; re-running later can fill additional URLs.
+- Templates already prefer `rkd_image_url` when present and fall back to local uploaded images.
+
 ## Publications
 For full accounts of the methodological and art historical context:  
 

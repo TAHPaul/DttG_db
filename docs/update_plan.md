@@ -18,11 +18,15 @@
 ## Status snapshot (2026-04-27)
 - Phase 1 (repository hygiene + planning docs): completed.
 - Phase 2A (local baseline commands): completed.
-- Phase 2B (run-as-is smoke checklist): completed, with known pagination-related artist-page error reproduced.
-- Phase 3 planning (hardening policy/decisions): completed.
-- Django 4.2 upgrade checkpoint: completed (`4.2.30`, `manage.py check` clean, route smoke pass).
-- Django 5.2 upgrade checkpoint: completed (`5.2.13`, blocker-only `django-filter` compatibility fix, route smoke pass).
-- Next: checkpoint commit, then begin Phase 5 functional bug-fix tranche.
+- Phase 2B (run-as-is smoke checklist): completed.
+- Phase 3 (settings hardening): completed — env-driven config, CSRF trusted origins, `.env.example`, `.gitignore` updated.
+- Django 4.2 upgrade checkpoint: completed (`4.2.30`).
+- Django 5.2 upgrade checkpoint: completed (`5.2.13`, blocker-only `django-filter` fix).
+- Dependency audit: completed — removed unused `django-htmx` and `django-extensions`.
+- Phase 5 bug fixes: completed — artist pagination crash, artists-without-artworks filter, museum city/country display, museum website link guard.
+- User/auth reset: completed — legacy accounts deleted, new superuser and staff accounts created.
+- **Pending (local code complete):** RKD IT officer to set env vars on server and run `manage.py check --deploy` (see "Open question for RKD IT officer" section below).
+- **Next optional work:** Phase 6 (CSV import workflow), Phase 7 (content/UI updates).
 
 ## Phase plan and dependencies
 

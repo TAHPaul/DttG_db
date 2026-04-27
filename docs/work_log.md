@@ -153,3 +153,74 @@
 	- Smoke probes after uninstall: `/`, `/entries-table-simple/`, `/entries-table-adv/` all `200`.
 - **Client-facing note:** Compatibility remains clean after removal; `django-filter` and `django-crispy-forms` are actively used by forms/templates and should remain.
 - **Outstanding questions:** None for compatibility; next functional tranche can proceed.
+
+## 2026-04-27 (Bug fixes — artist pagination, museum UI)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** `fix: artist pagination crash, hide artists without artworks, museum city/country and website display`
+- **Area:** Application bug fixes
+- **Files changed:** `data/views.py`, `data/templates/data/artist_list.html`, `data/templates/data/museum_list.html`
+- **Summary of change:** Fixed four confirmed bugs:
+	1. Artist list pagination hard crash (`NoReverseMatch`) on pages where an artist had an empty city-of-birth or city-of-death — birth/death city links are now conditionally rendered.
+	2. Artists with no artworks in the database were appearing in the artist list — the view now filters them out.
+	3. Museum cards showed `UNKNOWN,` when no country was stored — the comma separator is now conditional on the country field being non-empty; location text centred.
+	4. Museum cards always showed a `(Site)` link even when no website URL was stored — the link is now conditional on `museum.website` being non-empty.
+- **Reason for change:** Functional correctness and UI cleanliness; bug #1 caused a hard 500 error visible to users.
+- **Testing/checks performed:**
+	- `python manage.py check` -> clean.
+	- `/artists/?page=21` (previously crashing) -> `200`.
+	- All artist pages 11–22 -> `200` confirmed in server log during manual review.
+	- `/museums/` -> `200`.
+- **Client-facing note:** Pagination on the artist overview no longer crashes. Artists without artworks are hidden. Museum location and website display is now clean.
+- **Outstanding questions:** None.
+
+## 2026-04-27 (Security hardening — environment-driven configuration)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** `security: env-driven settings, CSRF trusted origins, deployment notes for RKD IT`
+- **Area:** Settings hardening / production readiness
+- **Files changed:** `dttg_new/settings.py`, `.env.example`, `.gitignore`, `docs/update_plan.md`
+- **Summary of change:** Moved `SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, `STATIC_ROOT`, and `MEDIA_ROOT` from hardcoded values to environment variable reads with safe local fallbacks. Added `.env.example` as a reference template. Added `.env` to `.gitignore` to prevent secrets being committed.
+- **Reason for change:**
+	- The hardcoded `SECRET_KEY` in source is a security risk.
+	- `DEBUG=True` hardcoded meant debug output was exposed on the live site.
+	- The CSRF 403 error seen at `https://downtotheground.rkdstudies.nl/dttg-login/` was caused by `CSRF_TRUSTED_ORIGINS` not being set for the production hostname.
+- **Testing/checks performed:**
+	- `python manage.py check` -> clean.
+	- Settings values verified with no env vars set: `DEBUG=True`, empty `ALLOWED_HOSTS`, empty `CSRF_TRUSTED_ORIGINS` (correct local-dev defaults).
+- **Client-facing note:** The application is now safe to deploy without secrets in source code. The CSRF 403 login error will be resolved once the RKD IT officer sets the four required environment variables on the server (documented in `docs/update_plan.md` under "Open question for RKD IT officer").
+- **Action required (RKD IT officer — before go-live):**
+	- Set `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=False`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS` as environment variables in the server process.
+	- Restart the Django process after setting them.
+	- Run `python manage.py check --deploy` on the server to confirm production readiness.
+	- Full instructions and variable values are in `docs/update_plan.md` → "Open question for RKD IT officer".
+- **Outstanding questions:** RKD IT officer to confirm how environment variables are injected into the Django process (Apache mod_wsgi, systemd, uWSGI, etc.).
+
+## 2026-04-27 (User/auth reset)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** N/A (database change only — not version controlled)
+- **Area:** Authentication / user management
+- **Files changed:** None (DB only)
+- **Summary of change:** All four legacy admin accounts (last active 2022, passwords lost) were deleted and a new superuser was created. Additional staff accounts created via Django admin for active users.
+- **Reason for change:** Passwords to existing accounts were lost; fresh start required.
+- **Testing/checks performed:** Login confirmed working via `/dttg-login/`.
+- **Client-facing note:** Users can change their own password at any time via `/dttg-login/password_change/`.
+- **Outstanding questions:** None.
+
+## 2026-04-27 (RKD image sync complete + refresh runbook)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** `1ea6ef8`, `1a7611b`
+- **Area:** RKD image integration operations
+- **Files changed:** `data/management/commands/fetch_rkd_images.py`, `README.md`
+- **Summary of change:** Completed RKD image URL backfill and added an operational runbook for future refreshes when new `rkd_link` values are added.
+- **Reason for change:** Ensure maintainers can safely re-run synchronization without manual supervision.
+- **Testing/checks performed:**
+	- Verified command supports `--dry-run`, `--max-updates`, and `--until-stable`.
+	- Verified database state after sync:
+		- Artists with RKD links: `196`; fetched: `119`; remaining: `77`.
+		- Artworks with RKD links: `409`; fetched: `407`; remaining: `2` (`M723`, `M724`).
+	- Spot checks showed remaining records are due to upstream RKD no-image responses or API errors.
+- **Client-facing note:** For future updates, run `python manage.py fetch_rkd_images --until-stable`; it stops automatically when no new URLs can be fetched.
+- **Outstanding questions:** None.
