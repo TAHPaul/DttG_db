@@ -25,10 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ---------------------------------------------------------------------------
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY',
-    'django-insecure-REDACTED-see-env-file',
-)
+_secret_key_default = 'django-insecure-REDACTED-see-env-file'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', _secret_key_default)
+if not DEBUG and SECRET_KEY == _secret_key_default:
+    raise RuntimeError(
+        'DJANGO_SECRET_KEY must be set to a secure value when DEBUG=False. '
+        'Generate one with: python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
+    )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
