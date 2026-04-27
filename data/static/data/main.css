@@ -137,6 +137,44 @@ a.article-title:hover {
   border: 0;
 }
 
+.about-project-subtitle {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #2b2d33;
+}
+
+.about-people-list {
+  padding-left: 1.1rem;
+}
+
+.about-carousel {
+  padding: 0.5rem 2.75rem 1.5rem;
+}
+
+.about-carousel .carousel-control-prev,
+.about-carousel .carousel-control-next {
+  width: 2.25rem;
+}
+
+.about-carousel .carousel-control-prev-icon,
+.about-carousel .carousel-control-next-icon {
+  background-color: rgba(56, 58, 67, 0.75);
+  border-radius: 999px;
+  background-size: 55%;
+}
+
+.about-carousel__indicators {
+  bottom: -0.75rem;
+}
+
+.about-carousel__indicators li {
+  background-color: #383a43;
+}
+
 /* ===== Content UI refresh: shared components ===== */
 
 .page-width-wide {
