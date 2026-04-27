@@ -119,3 +119,20 @@
 	- Route smoke (local server) -> `/`, `/about/`, `/artists/`, `/entries/`, `/entries-table-simple/`, `/entries-table-adv/`, `/museums/`, `/city-of-execution/`, `/dttg-login/` all successful.
 - **Client-facing note:** Django 4.2 checkpoint is stable locally with no upgrade-blocking runtime failures.
 - **Outstanding questions:** Proceed directly to Django 5.2 checkpoint.
+
+## 2026-04-27 (Django 5.2 checkpoint)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** uncommitted (manual commit pending)
+- **Area:** Framework/runtime upgrade checkpoint
+- **Files changed:** `requirements.txt`, `docs/update_plan.md`, `docs/work_log.md`, `docs/local_setup_notes.md`, `docs/copilot_working_notes.md`
+- **Summary of change:** Upgraded Django from `4.2.30` to `5.2.13`; resolved one upgrade blocker by updating `django-filter` from `22.1` to `25.2`.
+- **Reason for change:** Complete agreed LTS checkpoint path before functional bug-fix tranche.
+- **Testing/checks performed:**
+	- `python -m django --version` -> `5.2.13`
+	- `python manage.py check` -> `System check identified no issues (0 silenced).`
+	- Initial route smoke identified one blocker: `/entries-table-adv/` returned `500`.
+	- Traceback review indicated `django-filter==22.1` compatibility issue under Django 5.2.
+	- After blocker-only dependency update, route smoke passed on `/`, `/about/`, `/artists/`, `/entries/`, `/entries-table-simple/`, `/entries-table-adv/`, `/museums/`, `/city-of-execution/`, `/dttg-login/`.
+- **Client-facing note:** Django 5.2 checkpoint is stable locally. Existing known functional issues outside upgrade blockers remain deferred by plan.
+- **Outstanding questions:** Approve checkpoint commit, then begin post-checkpoint functional fixes.

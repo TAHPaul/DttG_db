@@ -25,4 +25,5 @@
 - Python-based probes remain reliable for non-destructive verification tasks.
 
 ## Planned immediate next step
-- Policy is finalized; next step is controlled implementation sequencing (recommended: confirmed artist pagination bug fix first, then minimal env-driven settings hardening in single `settings.py`).
+- Upgrade-first checkpoint sequence is complete through Django 5.2.13 (including blocker-only `django-filter` compatibility update).
+- Next step is post-checkpoint functional bug-fix tranche per plan, starting with confirmed artist pagination error reproduction/fix in a focused commit.

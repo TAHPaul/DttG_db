@@ -21,7 +21,8 @@
 - Phase 2B (run-as-is smoke checklist): completed, with known pagination-related artist-page error reproduced.
 - Phase 3 planning (hardening policy/decisions): completed.
 - Django 4.2 upgrade checkpoint: completed (`4.2.30`, `manage.py check` clean, route smoke pass).
-- Next: Django 5.2 upgrade checkpoint with blocker-only fixes.
+- Django 5.2 upgrade checkpoint: completed (`5.2.13`, blocker-only `django-filter` compatibility fix, route smoke pass).
+- Next: checkpoint commit, then begin Phase 5 functional bug-fix tranche.
 
 ## Phase plan and dependencies
 

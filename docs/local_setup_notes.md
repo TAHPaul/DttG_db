@@ -136,3 +136,34 @@ Verified via local server + urllib probes:
 
 ### Note on test-client probing
 Using Django `Client()` without host override triggered `DisallowedHost` for `testserver` due current `ALLOWED_HOSTS=[]`. This did not block local runserver checks and is treated as a testing-method caveat, not an upgrade blocker.
+
+## Django 5.2 LTS checkpoint (2026-04-27)
+- Upgrade performed: `Django 4.2.30` -> `Django 5.2.13`.
+- `requirements.txt` updated to pin `Django==5.2.13`.
+- `python manage.py check` result: `System check identified no issues (0 silenced).`
+
+### 5.2 blocker observed and resolved
+- Initial smoke run after Django upgrade:
+	- `/entries-table-adv/` -> `500`
+	- Other checklist routes remained reachable.
+- Root cause identified from traceback:
+	- `django-filter==22.1` incompatibility under Django 5.2 in advanced table filter flow.
+- Blocker-only fix applied:
+	- Updated dependency to `django-filter==25.2`.
+	- Re-ran `python manage.py check` -> clean.
+
+### 5.2 route smoke results (post-fix)
+Verified via local server + urllib probes:
+- `/` -> `200`
+- `/about/` -> `200`
+- `/artists/` -> `200`
+- `/entries/` -> `200`
+- `/entries-table-simple/` -> `200`
+- `/entries-table-adv/` -> `200`
+- `/museums/` -> `200`
+- `/city-of-execution/` -> `200`
+- `/dttg-login/` -> `200` (redirect/login flow working)
+
+### 5.2 checkpoint conclusion
+- Local runtime is stable at Django 5.2.13 after one blocker-only dependency compatibility update.
+- Functional bug work remains intentionally deferred until after checkpoint commit.
