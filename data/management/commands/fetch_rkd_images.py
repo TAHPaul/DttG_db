@@ -10,6 +10,7 @@ Usage:
     python manage.py fetch_rkd_images --force    # re-fetch all RKD-linked records
     python manage.py fetch_rkd_images --dry-run
     python manage.py fetch_rkd_images --max-updates 10
+    python manage.py fetch_rkd_images --until-stable
     python manage.py fetch_rkd_images --artists-only
     python manage.py fetch_rkd_images --artworks-only
 
@@ -85,6 +86,11 @@ class Command(BaseCommand):
             default=None,
             help='Stop after this many successful image updates for each selected model.',
         )
+        parser.add_argument(
+            '--until-stable',
+            action='store_true',
+            help='Repeat passes until no new URLs are fetched, then stop automatically.',
+        )
         parser.add_argument('--artists-only', action='store_true')
         parser.add_argument('--artworks-only', action='store_true')
 
@@ -92,28 +98,50 @@ class Command(BaseCommand):
         force = options['force']
         dry_run = options['dry_run']
         max_updates = options['max_updates']
+        until_stable = options['until_stable']
         do_artists = not options['artworks_only']
         do_artworks = not options['artists_only']
 
-        if do_artists:
-            self._process(
-                queryset=Artist.objects.filter(rkd_link__gt=''),
-                data_url_template=ARTIST_DATA_URL,
-                label='Artist',
-                force=force,
-                dry_run=dry_run,
-                max_updates=max_updates,
-            )
+        if until_stable and dry_run:
+            self.stdout.write(self.style.WARNING('--until-stable is ignored in --dry-run mode.'))
 
-        if do_artworks:
-            self._process(
-                queryset=Artwork.objects.filter(rkd_link__gt=''),
-                data_url_template=IMAGE_DATA_URL,
-                label='Artwork',
-                force=force,
-                dry_run=dry_run,
-                max_updates=max_updates,
-            )
+        if until_stable and force:
+            self.stdout.write(self.style.WARNING('--until-stable with --force may run indefinitely; proceeding anyway.'))
+
+        pass_no = 0
+        while True:
+            pass_no += 1
+            self.stdout.write(self.style.NOTICE(f'\n=== fetch_rkd_images pass {pass_no} ==='))
+            fetched_this_pass = 0
+
+            if do_artists:
+                fetched_this_pass += self._process(
+                    queryset=Artist.objects.filter(rkd_link__gt=''),
+                    data_url_template=ARTIST_DATA_URL,
+                    label='Artist',
+                    force=force,
+                    dry_run=dry_run,
+                    max_updates=max_updates,
+                )
+
+            if do_artworks:
+                fetched_this_pass += self._process(
+                    queryset=Artwork.objects.filter(rkd_link__gt=''),
+                    data_url_template=IMAGE_DATA_URL,
+                    label='Artwork',
+                    force=force,
+                    dry_run=dry_run,
+                    max_updates=max_updates,
+                )
+
+            if not until_stable or dry_run:
+                break
+
+            if fetched_this_pass == 0:
+                self.stdout.write(self.style.SUCCESS('\nNo new URLs fetched in this pass; stopping (stable state reached).'))
+                break
+
+            self.stdout.write(self.style.NOTICE(f'\nFetched {fetched_this_pass} new URL(s) in pass {pass_no}; starting another pass...'))
 
     def _process(self, queryset, data_url_template, label, force, dry_run, max_updates):
         if not force:
@@ -124,7 +152,7 @@ class Command(BaseCommand):
 
         if dry_run:
             self.stdout.write(f'{label} dry run: no API calls made, no records updated.\n')
-            return
+            return 0
 
         ok = skipped = errors = 0
 
@@ -176,3 +204,4 @@ class Command(BaseCommand):
         self.stdout.write(
             f'\n{label} done: {ok} updated, {skipped} skipped/no-image, {errors} errors.\n'
         )
+        return ok
