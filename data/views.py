@@ -48,10 +48,14 @@ class ArtistListView(ListView):
     context_object_name = 'artists'
     ordering = ['id']
     paginate_by = 9
-    artists = Artist.objects.all().order_by('full_name')
+    # Only artists that have at least one linked artwork are shown
+    artists = Artist.objects.filter(artist__isnull=False).distinct().order_by('full_name')
 
-    global no_of_artists 
+    global no_of_artists
     no_of_artists = len(artists)
+
+    def get_queryset(self):
+        return Artist.objects.filter(artist__isnull=False).distinct().order_by('full_name')
 
     def get_context_data(self, **kwargs):
         context = super(ArtistListView, self).get_context_data(**kwargs)

@@ -18,8 +18,8 @@ Artists overview
 				</div>
 				<div class="card-body d-flex flex-column">
 					<h5 class="card-title" align="center"><a href="{% url 'artists-detail' artist.id %}" class="stretched-link">{{artist.full_name}}</a></h5>
-					<small>Born: <a href="{% url 'city-of-execution-detail' artist.place_of_birth.city %}">{{ artist.place_of_birth }} </a>({{ artist.year_of_birth }})</small>
-					<small>Died: <a href="{% url 'city-of-execution-detail' artist.place_of_death.city %}">{{ artist.place_of_death }} </a>({{ artist.year_of_death }})</small>
+					<small>Born: {% if artist.place_of_birth and artist.place_of_birth.city %}<a href="{% url 'city-of-execution-detail' artist.place_of_birth.city %}">{{ artist.place_of_birth }}</a>{% else %}{{ artist.place_of_birth }}{% endif %} ({{ artist.year_of_birth }})</small>
+					<small>Died: {% if artist.place_of_death and artist.place_of_death.city %}<a href="{% url 'city-of-execution-detail' artist.place_of_death.city %}">{{ artist.place_of_death }}</a>{% else %}{{ artist.place_of_death }}{% endif %} ({{ artist.year_of_death }})</small>
 					<hr style="border-top-color: #383a43;">
 					<h6 align="center">Artworks in database:</h6>
 					<h6 align="center">{{ artist.artist.count }}</h6>
