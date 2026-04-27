@@ -19,7 +19,9 @@
 - Phase 1 (repository hygiene + planning docs): completed.
 - Phase 2A (local baseline commands): completed.
 - Phase 2B (run-as-is smoke checklist): completed, with known pagination-related artist-page error reproduced.
-- Next: prepare Phase 3 planning details (security/config hardening sequence), while tracking confirmed bug fixes in planned maintenance tranche.
+- Phase 3 planning (hardening policy/decisions): completed.
+- Django 4.2 upgrade checkpoint: completed (`4.2.30`, `manage.py check` clean, route smoke pass).
+- Next: Django 5.2 upgrade checkpoint with blocker-only fixes.
 
 ## Phase plan and dependencies
 

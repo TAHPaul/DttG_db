@@ -104,3 +104,18 @@
 - **Testing/checks performed:** Planning documentation updates only; no runtime or code changes.
 - **Client-facing note:** The hardening approach is now fully agreed and staged safely for this legacy deployment context.
 - **Outstanding questions:** None for policy; next action is implementation planning order (bug-fix first vs hardening first in code phase).
+
+## 2026-04-27 (Django 4.2 checkpoint)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** uncommitted (manual commit pending)
+- **Area:** Framework/runtime upgrade checkpoint
+- **Files changed:** `requirements.txt`, `docs/update_plan.md`, `docs/work_log.md`, `docs/local_setup_notes.md`
+- **Summary of change:** Upgraded Django from `4.0.6` to `4.2.30`, pinned requirements, and completed 4.2 validation checks.
+- **Reason for change:** Follow agreed upgrade-first sequencing before functional bug-fix work.
+- **Testing/checks performed:**
+	- `python -m django --version` -> `4.2.30`
+	- `python manage.py check` -> `System check identified no issues (0 silenced).`
+	- Route smoke (local server) -> `/`, `/about/`, `/artists/`, `/entries/`, `/entries-table-simple/`, `/entries-table-adv/`, `/museums/`, `/city-of-execution/`, `/dttg-login/` all successful.
+- **Client-facing note:** Django 4.2 checkpoint is stable locally with no upgrade-blocking runtime failures.
+- **Outstanding questions:** Proceed directly to Django 5.2 checkpoint.

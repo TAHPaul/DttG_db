@@ -116,3 +116,23 @@ Verified via local runserver probe:
 ### Phase 2B conclusion
 - Baseline app is generally runnable and key routes load.
 - At least one known bug is confirmed and should be handled in planned bug-fix tranche before modernization work proceeds too far.
+
+## Django 4.2 LTS checkpoint (2026-04-27)
+- Upgrade performed: `Django 4.0.6` -> `Django 4.2.30`.
+- `requirements.txt` updated to pin `Django==4.2.30`.
+- `python manage.py check` result: `System check identified no issues (0 silenced).`
+
+### 4.2 route smoke results
+Verified via local server + urllib probes:
+- `/` -> `200`
+- `/about/` -> `200`
+- `/artists/` -> `200`
+- `/entries/` -> `200`
+- `/entries-table-simple/` -> `200`
+- `/entries-table-adv/` -> `200`
+- `/museums/` -> `200`
+- `/city-of-execution/` -> `200`
+- `/dttg-login/` -> `200` (redirect/login flow working)
+
+### Note on test-client probing
+Using Django `Client()` without host override triggered `DisallowedHost` for `testserver` due current `ALLOWED_HOSTS=[]`. This did not block local runserver checks and is treated as a testing-method caveat, not an upgrade blocker.
