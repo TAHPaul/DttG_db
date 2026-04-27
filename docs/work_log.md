@@ -136,3 +136,20 @@
 	- After blocker-only dependency update, route smoke passed on `/`, `/about/`, `/artists/`, `/entries/`, `/entries-table-simple/`, `/entries-table-adv/`, `/museums/`, `/city-of-execution/`, `/dttg-login/`.
 - **Client-facing note:** Django 5.2 checkpoint is stable locally. Existing known functional issues outside upgrade blockers remain deferred by plan.
 - **Outstanding questions:** Approve checkpoint commit, then begin post-checkpoint functional fixes.
+
+## 2026-04-27 (Dependency usage + compatibility audit)
+- **Date:** 2026-04-27
+- **Branch:** `dttg-deployment-update`
+- **Commit:** uncommitted (manual commit pending)
+- **Area:** Dependency compatibility and cleanup
+- **Files changed:** `requirements.txt`, `dttg_new/settings.py`, `docs/work_log.md`
+- **Summary of change:** Audited extension compatibility and code usage; removed unused `django-htmx` and `django-extensions` from settings and pinned requirements.
+- **Reason for change:** Reduce maintenance surface and remove packages not used by runtime app code.
+- **Testing/checks performed:**
+	- `python -m pip check` -> no broken requirements.
+	- `python manage.py check` -> no issues.
+	- Imported remaining declared extension modules (`django`, `PIL`, `crispy_forms`, `django_filters`) successfully.
+	- Uninstalled `django-htmx` and `django-extensions` from `.venv` and re-ran checks.
+	- Smoke probes after uninstall: `/`, `/entries-table-simple/`, `/entries-table-adv/` all `200`.
+- **Client-facing note:** Compatibility remains clean after removal; `django-filter` and `django-crispy-forms` are actively used by forms/templates and should remain.
+- **Outstanding questions:** None for compatibility; next functional tranche can proceed.
