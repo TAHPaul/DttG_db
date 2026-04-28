@@ -4,11 +4,16 @@
 Artists overview
 {% endblock title%}
 
+{% block main_class %}container-fluid px-0{% endblock %}
+
 {% block content%}
-	<div class="jumbotron text-center">
-		<h1 class="display-4" style="color: #e8e9eb">List of Artists</h1>
-		<p style="color: #e8e9eb">Artists in database: {{ no_of_artists }}</p>
+	<div class="page-header page-header--light">
+		<div class="page-header__inner">
+			<h1 class="display-4 page-header__title">List of Artists</h1>
+			<p class="page-header__subtitle">Artists in database: {{ no_of_artists }}</p>
+		</div>
 	</div>
+	<div class="page-width-wide mt-4">
 	<div class="row">
 	{% for artist in artists %}
 		<div class="col-4 mb-4">
@@ -24,35 +29,35 @@ Artists overview
 					<h5 class="card-title" align="center"><a href="{% url 'artists-detail' artist.id %}" class="stretched-link">{{artist.full_name}}</a></h5>
 					<small>Born: {% if artist.place_of_birth and artist.place_of_birth.city %}<a href="{% url 'city-of-execution-detail' artist.place_of_birth.city %}">{{ artist.place_of_birth }}</a>{% else %}{{ artist.place_of_birth }}{% endif %} ({{ artist.year_of_birth }})</small>
 					<small>Died: {% if artist.place_of_death and artist.place_of_death.city %}<a href="{% url 'city-of-execution-detail' artist.place_of_death.city %}">{{ artist.place_of_death }}</a>{% else %}{{ artist.place_of_death }}{% endif %} ({{ artist.year_of_death }})</small>
-					<hr style="border-top-color: #383a43;">
-					<h6 align="center">Artworks in database:</h6>
+				<hr>
+				<h6 class="text-center">Artworks in database:</h6>
 					<h6 align="center">{{ artist.artist.count }}</h6>
 				</div>
 			</div>
 		</div>
 	{% endfor %}
+	</div>
 
 	{% if is_paginated %}
-		<div class="container text-center">
-			<br><hr><br>
+		<div class="pagination-nav">
 			{% if page_obj.has_previous %}
-				<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
-				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
+				<a class="pagination-nav__btn" href="?page=1">First</a>
+				<a class="pagination-nav__btn" href="?page={{ page_obj.previous_page_number }}">Previous</a>
 			{% endif %}
 
 			{% for num in page_obj.paginator.page_range %}
 				{% if page_obj.number == num %}
-					<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
+					<a class="pagination-nav__btn pagination-nav__btn--active" href="?page={{ num }}">{{ num }}</a>
 				{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
-					<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
+					<a class="pagination-nav__btn" href="?page={{ num }}">{{ num }}</a>
 				{% endif %}
 			{% endfor %}
 
 			{% if page_obj.has_next %}
-				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
-				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-			{% endif %}	
-			<br><hr><br>
+				<a class="pagination-nav__btn" href="?page={{ page_obj.next_page_number }}">Next</a>
+				<a class="pagination-nav__btn" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+			{% endif %}
 		</div>
 	{% endif %}
+	</div>
 {% endblock content %}

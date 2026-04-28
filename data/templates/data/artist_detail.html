@@ -1,14 +1,24 @@
 {% extends 'data/base.html' %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'data/view-toggle.js' %}"></script>
+{% endblock %}
 
 {% block title%}
 {{object.id }}: {{object.full_name }}
 {% endblock title%}
 
+{% block main_class %}container-fluid px-0{% endblock %}
+
 {% block content%}
-	<div class="jumbotron text-center">
-		<h1 class="display-4" style="color: #e8e9eb">{{object.id}}. {{ object.full_name }}</h1>
-		<p style="color: #e8e9eb"> ({{ object.artist.count }} database entries)</p>
+	<div class="page-header page-header--light">
+		<div class="page-header__inner">
+			<h1 class="display-4 page-header__title">{{object.id}}. {{ object.full_name }}</h1>
+			<p class="page-header__subtitle">{{ object.artist.count }} database entries</p>
+		</div>
 	</div>
+	<div class="page-width-wide mt-4">
     <div class="row text-left">
         <div class="col-md-4 my-auto">
         	<div class="text-center">
@@ -20,124 +30,96 @@
         	</div>
         </div>
         <div class="col-md-8">
-        	<h3 align="center">Biographical information</h3><hr>
+        	<h3 class="text-center">Biographical information</h3><hr>
 
-        	{% if object.year_of_birth %}
-        		<h6 style='display:inline'>Born: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }} </a>({{ object.year_of_birth }})</p><br>
-    		{% else %}
-    			<h6 style='display:inline'>Born: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }} </a>(Year of birth unknown)</p><br>
+        	<div class="detail-meta">
+        		{% if object.year_of_birth %}
+        			<span class="detail-meta__label">Born</span>
+        			<span class="detail-meta__value"><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }}</a> ({{ object.year_of_birth }})</span>
+			{% else %}
+				<span class="detail-meta__label">Born</span>
+				<span class="detail-meta__value"><a href="{% url 'city-of-execution-detail' object.place_of_birth.city %}">{{ object.place_of_birth }}</a> (year unknown)</span>
 			{% endif %}
 
 			{% if object.year_of_death %}
-				<h6 style='display:inline'>Died: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }} </a>({{ object.year_of_death }})</p><br>
+				<span class="detail-meta__label">Died</span>
+				<span class="detail-meta__value"><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }}</a> ({{ object.year_of_death }})</span>
 			{% else %}
-				<h6 style='display:inline'>Died: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }} </a>(Year of death unknown)</p><br>
+				<span class="detail-meta__label">Died</span>
+				<span class="detail-meta__value"><a href="{% url 'city-of-execution-detail' object.place_of_death.city %}">{{ object.place_of_death }}</a> (year unknown)</span>
 			{% endif %}
 
 			{% if object.other_names %}
-				<h6>Also known as:</h6><p align="center"> {{ object.other_names }}</p>
-			{% endif %} 
-			{% if object.centres_of_activity %}
-				<div>
-					<h6>Centres of activity:</h6><p align="center">{{ object.centres_of_activity }}</p>
-				</div>
+				<span class="detail-meta__label">Also known as</span>
+				<span class="detail-meta__value">{{ object.other_names }}</span>
 			{% endif %}
 
-			{% if object.rkd_link%}
-				<h6><a href="{{ object.rkd_link }}">RKD-link</a></h6>
-			{% endif%}
+			{% if object.centres_of_activity %}
+				<span class="detail-meta__label">Centres of activity</span>
+				<span class="detail-meta__value">{{ object.centres_of_activity }}</span>
+			{% endif %}
 
-			<hr>
+			{% if object.rkd_link %}
+				<span class="detail-meta__label">RKD</span>
+				<span class="detail-meta__value"><a href="{{ object.rkd_link }}">RKD profile</a></span>
+			{% endif %}
+		</div>
+		<hr>
         </div>
         <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
         <!-- alternatively, we could maybe embed the RKD map? -->
     </div>
-	<!-- This has to become some sort of data overview -->
-	<br>
-	<div class="jumbotron text-center">
-		<h3 align="center" class="display-4" style="color: #e8e9eb">Data Overview</h3>
+	<div class="section-separator">
+		<h2 class="section-separator__title">Database entries</h2>
 	</div>
-	<!-- Nav tabs -->
+	<div>
+		{% if object.artist.count is not None %}
+			<!-- View toggle -->
+			<div class="d-flex justify-content-end mb-3" data-view-toggle data-default-view="cards">
+				<div class="view-toggle">
+					<button class="view-toggle__btn view-toggle__btn--active" data-view="cards" aria-label="Card view">&#9638; Cards</button>
+					<button class="view-toggle__btn" data-view="table" aria-label="Table view">&#9776; Table</button>
+				</div>
+			</div>
 
-	<ul class="nav nav-tabs" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" data-toggle="tab" href="#cards">Data entries</a>
-		</li>
-<!-- 		<li class="nav-item">
-			<a class="nav-link" data-toggle="tab" href="#graphs">Graph data</a>
-		</li> -->
-	</ul>
-
-	<!-- Tab panes -->
-	<div class="tab-content">
-		<div class="tab-pane container active" id="cards">
-			{% if object.artist.count is not None %}
-				<br><h4 align="center">{{ object.artist.count }} entries in database:</h4><br>
-				<div class="row">
+			<!-- Card view (default); JS pagination at 9 cards -->
+			<div class="entry-view-cards">
+				<div class="row mt-3">
 					{% for artwork in object.artist.all %}
-						<div class="col-4 mb-4">
-							<div class="card h-100 d-flex">
-								<div class="card-body d-flex flex-column">
-									<h5 class="card-title" align="center"><a href="{% url 'data-detail' artwork.id %}" class="stretched-link">{{artwork.id}}: {{ artwork.title }}</a></h5>
-									{% if artwork.date2 %}
-										<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}}-{{artwork.date2}})</p>
-									{% else %}
-										<p class="card-text" align="center">({{ artwork.date_validity }}{{artwork.date1}})</p>
-									{% endif %}
-									<h6 align="center" class="mt-auto">Preparatory layers:</h6>
-									{% if artwork.medium %}
-										<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ artwork.medium }})</small></p>
-									{% else %}
-										<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
-									{% endif %}
-									{% if artwork.data.no_of_grounds == '1' %}
-										<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
-									{% elif artwork.data.no_of_grounds == '2' %}
-										<div style=" border: 1px solid black;">
-											<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
-											<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-										</div>
-										
-									{% elif artwork.data.no_of_grounds == '3' %}
-										<div style=" border: 1px solid black;">
-											<div data-swatch-hex="{{ artwork.data.layer3_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
-											<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-											<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-										</div>
-
-									{% else %}
-										<div style=" border: 1px solid black;">
-											<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
-											<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-										</div>
-										
-									{% endif %}
-									{% if artwork.support%}
-										<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ artwork.support }}</small></p>
-									{% else %}
-										<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
-									{% endif %}
-								</div>
-							</div>
-						</div>
+						{% with aw=artwork aw_data=artwork.data %}
+							{% include "data/includes/_entry_cards.html" %}
+						{% endwith %}
 					{% endfor %}
 				</div>
-			{% else %}
-				<h4 align="center">No entries (yet) in database.</h4>
-			{% endif %}		
-		</div>
-<!-- 		<div class="tab-pane container fade" id="graphs">
-			number of groundlayer and count/total
-		lowest  groundlayer and count/total
-		Top groundlayer and count/total
+			</div>
 
-	this has to become a dropdown menu
-
-			Idea to have dynamic generation of certain graphs or data visualisations
-		</div> -->
-
-	
-	
+			<!-- Table view (hidden by default) -->
+			<div class="entry-view-table" style="display:none;">
+				<table class="table table-condensed table-hover table-striped data-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Title</th>
+							<th>Artist</th>
+							<th>Date</th>
+							<th>Place of Execution</th>
+							<th>No. of Ground Layers</th>
+							<th>Colour-code</th>
+							<th data-sort-method="none">Layers</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for artwork in object.artist.all %}
+							{% with aw=artwork aw_data=artwork.data %}
+								{% include "data/includes/_entry_table_row.html" %}
+							{% endwith %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% else %}
+			<h4 class="text-center">No entries (yet) in database.</h4>
+		{% endif %}
+	</div>
+	</div><!-- /.page-width-wide -->
 {% endblock content %}
-
-	

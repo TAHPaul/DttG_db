@@ -4,15 +4,20 @@
 	{{ object.m_number.id}}: {{ object.m_number.title }}
 {% endblock title%}
 
+{% block main_class %}container-fluid px-0{% endblock %}
+
 {% block content%}
-	<div class="jumbotron text-center">
-		<h1 class="display-4" style="color: #e8e9eb">{{object.m_number.id}}: {{ object.m_number.title }}</h1>
-		{% if object.m_number.date2 %}
-			<h3 class="card-text" align="center" style="color: #e8e9eb">({{ object.m_number.date_validity }}{{object.m_number.date1}}-{{object.m_number.date2}})</h3>
-		{% else %}
-			<h3 class="card-text" align="center" style="color: #e8e9eb">({{ object.m_number.date_validity }}{{object.m_number.date1}})</h3>
-		{% endif %}
+	<div class="page-header page-header--light">
+		<div class="page-header__inner">
+			<h1 class="display-4 page-header__title">{{object.m_number.id}}: {{ object.m_number.title }}</h1>
+			{% if object.m_number.date2 %}
+				<p class="page-header__subtitle">({{ object.m_number.date_validity }}{{object.m_number.date1}}-{{object.m_number.date2}})</p>
+			{% else %}
+				<p class="page-header__subtitle">({{ object.m_number.date_validity }}{{object.m_number.date1}})</p>
+			{% endif %}
+		</div>
 	</div>
+	<div class="page-width-wide mt-4">
 	<div class="row text-left">
         <div class="col-md-6 my-auto">
         	<div class="text-center">
@@ -24,49 +29,72 @@
         	</div>
         </div>
         <div class="col-md-6">
-        	<h3 align="center">Biographical information</h3><hr>
-        	{% if object.m_number.artist2.full_name %}
-	    		{% if object.m_number.artist_validity %}
-	    			<p>{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
-	    		{% else %}	
-	    			<p><h6 style='display:inline'>By: </h6><a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a></p>
-	    		{% endif %}
-	    	{% else %}
-	    		{% if object.m_number.artist_validity %}
-	    			<p><h6 style='display:inline'>{{object.m_number.artist_validity}} </h6><a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+        	<h3 class="text-center">Biographical information</h3><hr>
+        	<div class="detail-meta">
+        		<span class="detail-meta__label">Artist</span>
+        		<span class="detail-meta__value">
+	        	{% if object.m_number.artist2.full_name %}
+	    			{% if object.m_number.artist_validity %}
+	    				{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> &amp; <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a>
+	    			{% else %}
+	    				<a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a> &amp; <a href="{% url 'artists-detail' object.m_number.artist2.id %}">{{ object.m_number.artist2.full_name }}</a>
+	    			{% endif %}
 	    		{% else %}
-	    			<p><h6 style='display:inline'>By: </h6><a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a></p>
+	    			{% if object.m_number.artist_validity %}
+	    				{{object.m_number.artist_validity}} <a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a>
+	    			{% else %}
+	    				<a href="{% url 'artists-detail' object.m_number.artist1.id %}">{{ object.m_number.artist1.full_name }}</a>
+	    			{% endif %}
 	    		{% endif %}
-	    	{% endif %}
-			<h6 style='display:inline'>Executed in: </h6><p style='display:inline'><a href="{% url 'city-of-execution-detail' object.m_number.place_of_execution.city %}">{{ object.m_number.place_of_execution }}</a></p><br>
-        	<h6 style='display:inline'>Support: </h6><p style='display:inline' class="text-capitalize">{{ object.m_number.support }}</p><br>
-        	<h6 style='display:inline'>Medium: </h6><p style='display:inline' class="text-capitalize">{{ object.m_number.medium }}</p><br>
-        	<h6 style='display:inline'>Dimensions (cm): </h6><p style='display:inline'>{{ object.m_number.height }} x {{ object.m_number.width }}</p><br>
-			<h6 style='display:inline'>Signed? </h6><p style='display:inline' class="text-capitalize">{{ object.m_number.signature }}</p><br>
-			<hr>
-			<h6 style='display:inline'>Museum: </h6><p style='display:inline'><a href="{% url 'museums-detail' object.m_number.museum.id %}">{{ object.m_number.museum.museum_name }}</a> [inv.nr: {{ object.m_number.accession_number}}]</p><br>
-			{% if object.m_number.museum_link%}
-				{% if '://' in object.m_number.museum_link %}
-					<h6 style='display:inline'><a href="{{ object.m_number.museum_link }}" target="_blank" rel="noopener noreferrer">Museum-link</a></h6><br>
-				{% else %}
-					<h6 style='display:inline'><a href="https://{{ object.m_number.museum_link }}" target="_blank" rel="noopener noreferrer">Museum-link</a></h6><br>
-				{% endif %}
+        		</span>
+
+			<span class="detail-meta__label">Executed in</span>
+			<span class="detail-meta__value"><a href="{% url 'city-of-execution-detail' object.m_number.place_of_execution.city %}">{{ object.m_number.place_of_execution }}</a></span>
+
+			<span class="detail-meta__label">Support</span>
+			<span class="detail-meta__value text-capitalize">{{ object.m_number.support }}</span>
+
+			<span class="detail-meta__label">Medium</span>
+			<span class="detail-meta__value text-capitalize">{{ object.m_number.medium }}</span>
+
+			<span class="detail-meta__label">Dimensions (cm)</span>
+			<span class="detail-meta__value">{{ object.m_number.height }} &times; {{ object.m_number.width }}</span>
+
+			<span class="detail-meta__label">Signed</span>
+			<span class="detail-meta__value text-capitalize">{{ object.m_number.signature }}</span>
+
+			<span class="detail-meta__label">Museum</span>
+			<span class="detail-meta__value"><a href="{% url 'museums-detail' object.m_number.museum.id %}">{{ object.m_number.museum.museum_name }}</a> [inv.nr: {{ object.m_number.accession_number}}]</span>
+
+			{% if object.m_number.museum_link %}
+				<span class="detail-meta__label">Museum link</span>
+				<span class="detail-meta__value">
+					{% if '://' in object.m_number.museum_link %}
+						<a href="{{ object.m_number.museum_link }}" target="_blank" rel="noopener noreferrer">View on museum site</a>
+					{% else %}
+						<a href="https://{{ object.m_number.museum_link }}" target="_blank" rel="noopener noreferrer">View on museum site</a>
+					{% endif %}
+				</span>
 			{% endif %}
-			{% if object.m_number.rkd_link%}
-				{% if '://' in object.m_number.rkd_link %}
-					<h6 style='display:inline'><a href="{{ object.m_number.rkd_link }}" target="_blank" rel="noopener noreferrer">RKD-link</a></h6>
-				{% else %}
-					<h6 style='display:inline'><a href="https://{{ object.m_number.rkd_link }}" target="_blank" rel="noopener noreferrer">RKD-link</a></h6>
-				{% endif %}
+
+			{% if object.m_number.rkd_link %}
+				<span class="detail-meta__label">RKD</span>
+				<span class="detail-meta__value">
+					{% if '://' in object.m_number.rkd_link %}
+						<a href="{{ object.m_number.rkd_link }}" target="_blank" rel="noopener noreferrer">RKD link</a>
+					{% else %}
+						<a href="https://{{ object.m_number.rkd_link }}" target="_blank" rel="noopener noreferrer">RKD link</a>
+					{% endif %}
+				</span>
 			{% endif %}
-			<hr>
+		</div>
+		<hr>
         </div>
     </div>
-        <!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
-        <!-- alternatively, we could maybe embed the RKD map? --> 
-	<br>
-	<div class="jumbotron text-center">
-		<h3 align="center" class="display-4" style="color: #e8e9eb">Data</h3>
+		<!-- IDEA: maybe make this two tabs: the other is a map with place of birth, place of death, and centres of activity mapped out. -->
+		<!-- alternatively, we could maybe embed the RKD map? -->
+	<div class="section-separator">
+		<h2 class="section-separator__title">Data</h2>
 	</div>
 	<!-- Nav tabs -->
 
@@ -89,17 +117,20 @@
 			<div class="row">
 				<div class="col-8">
 					<br>
-					<h4 align="center">Description:</h4>
+					<h4 class="text-center">Description:</h4>
 					<hr>
-					<h6 style='display:inline'>Preparatory layers: </h6><p style='display:inline'>{{ object.no_of_grounds }} ({{ object.colour_code }})</p><br>
-					<h6 style='display:inline'>Free-text description: </h6>
-					<p>{{ object.description }}</p><br>
+					<div class="detail-meta">
+						<span class="detail-meta__label">Preparatory layers</span>
+						<span class="detail-meta__value">{{ object.no_of_grounds }} ({{ object.colour_code }})</span>
+						<span class="detail-meta__label">Description</span>
+						<span class="detail-meta__value">{{ object.description }}</span>
+					</div>
 				</div>
 				<div class="col-4 my-auto">
 					{% if object.m_number.medium %}
-						<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ object.m_number.medium }})</small></p>
+						<p class="text-black-50 font-weight-light font-italic" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ object.m_number.medium }})</small></p>
 					{% else %}
-						<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
+						<p class="text-black-50 font-weight-light font-italic" style="margin-bottom:5px;"><small>Paint layers</small></p>
 					{% endif %}
 					{% if object.no_of_grounds == '1' %}
 						<div data-swatch-hex="{{ object.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
@@ -121,17 +152,17 @@
 						</div>
 					{% endif %}
 					{% if object.m_number.support%}
-						<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ object.m_number.support }}</small></p>
+						<p class="text-black-50 font-weight-light font-italic text-capitalize"><small>{{ object.m_number.support }}</small></p>
 					{% else %}
-						<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
+						<p class="text-black-50 font-weight-light font-italic"><small>Support</small></p>
 					{% endif %}
 				</div>
 			</div>
 			<hr>
 			<div class="row">
 				<div class="col-8">
-					<h4 align="center" style="margin-bottom: 0px;">Layer information:</h4>
-					<p align="center" ><small>(Counting from the support up towards the paint layers)</small></p>
+					<h4 class="text-center" style="margin-bottom: 0px;">Layer information:</h4>
+					<p class="text-center"><small>(Counting from the support up towards the paint layers)</small></p>
 					<hr>
 					{% if object.no_of_grounds == '1' %}
 						<div >
@@ -175,11 +206,14 @@
 				</div>
 				<div class="col-4">
 					<div>
-						<h4 align="center" style="margin-bottom: 35px;">Data information:</h4>
+						<h4 class="text-center" style="margin-bottom: 35px;">Data information:</h4>
 					<hr>
 					</div>
 					<div>
-						<h6 style='display:inline' data-toggle="tooltip" data-placement="bottom" title="Description of the reliability rating">Reliability-rating: </h6><p style='display:inline'>{{ object.reliability }}</p>
+						<div class="detail-meta">
+							<span class="detail-meta__label" data-toggle="tooltip" data-placement="bottom" title="Description of the reliability rating">Reliability</span>
+							<span class="detail-meta__value">{{ object.reliability }}</span>
+						</div>
 						<hr>
 						{% if object.sample or object.microscopy or object.elem_analysis %}
 						<div>
@@ -214,12 +248,12 @@
 						{% endif %}
 					</div>	
 					{% if object.researchers %}
-						<h6 align="center">Researchers:</h6>
+						<p class="form-label-custom mt-2">Researchers</p>
 						<p>{{ object.researchers }}</p>
 						<hr>
 					{% endif %}				
 					{% if object.source %}
-						<h6 align="center">Source:</h6>
+						<p class="form-label-custom mt-2">Source</p>
 						<p><small>{{ object.source }}</small></p>
 						<hr>
 					{% endif %}
@@ -236,22 +270,28 @@
 			</div>
 			<div class="row">
 				<div class="col-4">
+					<div class="detail-meta">
 					{% if object.sample_name_1 %}
+						<span class="detail-meta__label">Sample 1</span>
 						{% if object.sample_link_1 %}
-							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'><a href="{{object.sample_link_1}}">{{object.sample_name_1}}</a></p>
+							<span class="detail-meta__value"><a href="{{object.sample_link_1}}">{{object.sample_name_1}}</a></span>
 						{% else %}
-							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'>{{object.sample_name_1}}</p>
+							<span class="detail-meta__value">{{object.sample_name_1}}</span>
 						{% endif %}
 					{% endif %}
 					{% if object.sample_name_2 %}
+						<span class="detail-meta__label">Sample 2</span>
 						{% if object.sample_link_2 %}
-							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'><a href="{{object.sample_link_2}}">{{object.sample_name_2}}</a></p>
+							<span class="detail-meta__value"><a href="{{object.sample_link_2}}">{{object.sample_name_2}}</a></span>
 						{% else %}
-							<h6 style='display:inline'>Sample(s): </h6><p style='display:inline'>{{object.sample_name_2}}</p>
+							<span class="detail-meta__value">{{object.sample_name_2}}</span>
 						{% endif %}
 					{% endif %}
-					<h6 >Sample location: </h6>
-					<p >{{ object.sample_location }}</p>					
+					{% if object.sample_location %}
+						<span class="detail-meta__label">Sample location</span>
+						<span class="detail-meta__value">{{ object.sample_location }}</span>
+					{% endif %}
+					</div>
 				</div>
 				<div class="col-8">
 					{% if object.embargo %}
@@ -304,7 +344,7 @@
 							<div class="tab-content">
 								<div class="tab-pane fade" id="1bf">
 									<br>
-									<h3 align="center">Brightfield</h3>
+									<h3>Brightfield</h3>
 									<hr>
 									<div class="text-center">
 										{% if object.sample1bf %}
@@ -314,7 +354,7 @@
 								</div>
 								<div class="tab-pane fade" id="1df">
 									<br>
-									<h3 align="center">Darkfield</h3>
+									<h3>Darkfield</h3>
 									<hr>
 									<div class="text-center">
 										{% if object.sample1df %}
@@ -324,7 +364,7 @@
 								</div>
 								<div class="tab-pane fade" id="1uv">
 									<br>
-									<h3 align="center">UV</h3>
+									<h3>UV</h3>
 									<hr>
 									<div class="text-center">
 										{% if object.sample1uv %}
@@ -335,7 +375,7 @@
 								</div>
 								<div class="tab-pane fade" id="2bf">
 									<br>
-									<h3 align="center">Brightfield</h3>
+									<h3>Brightfield</h3>
 									<hr>
 									<div class="text-center">
 										{% if object.sample2bf %}
@@ -345,7 +385,7 @@
 								</div>
 								<div class="tab-pane fade" id="2df">
 									<br>
-									<h3 align="center">Darkfield</h3>
+									<h3>Darkfield</h3>
 									<hr>
 									<div class="text-center">
 										{% if object.sample2df %}
@@ -355,7 +395,7 @@
 								</div>
 								<div class="tab-pane fade" id="2uv">
 									<br>
-									<h3 align="center">UV</h3>
+									<h3>UV</h3>
 									<hr>
 									<div class="text-center">
 										{% if object.sample2uv %}
@@ -365,7 +405,7 @@
 								</div>
 							</div>
 						{% else %}
-							<h4 align="center">No sample images available.</h4>
+							<h4>No sample images available.</h4>
 						{% endif %}
 					{% endif %}
 				</div>
@@ -379,4 +419,5 @@
 			<hr>
 		</div>
 	</div>
+	</div><!-- /.page-width-wide -->
 {% endblock content %}

@@ -1,109 +1,92 @@
 {% extends 'data/base.html' %}
+{% load static %}
 
 {% block title%}
 Data Overview
 {% endblock title%}
 
+{% block extra_js %}
+<script src="{% static 'data/view-toggle.js' %}"></script>
+{% endblock %}
+
+{% block main_class %}container-fluid px-0{% endblock %}
+
 {% block content%}
-	<div class="jumbotron text-center ">
-		<h1 class="display-4" style="color: #e8e9eb">List of entries</h1>
-		<p style="color: #e8e9eb">Entries in database: {{ no_of_entries }}</p>
-	</div>
-
-	<div class="row" >
-		{% for d in data %}
-			<div class="col-4 mb-4">
-				<a class="text-dark shadow" href="{% url 'data-detail' d.m_number.id %}">
-					<div class="card shadow h-100 d-flex">
-						<div class="text-center">
-							{% if d.m_number.rkd_image_url %}
-							<img class="card-img-top border rounded" src="{{ d.m_number.rkd_image_url }}" alt="{{ d.m_number.title }}" style="max-height:200px; width:auto; border-color: #383a43;">
-							{% elif d.m_number.image %}
-							<img class="card-img-top border rounded" src="{{ d.m_number.image.url }}" alt="{{ d.m_number.title }}" style="max-height:200px; width:auto; border-color: #383a43;">
-							{% endif %}
-						</div>
-						<div class="card-body d-flex flex-column">
-							<h5 class="card-title" align="center"><a href="{% url 'data-detail' d.m_number.id %}" class="stretched-link">{{ d.m_number.id }}: {{ d.m_number.title }}</a></h5>
-							{% if d.m_number.date2 %}
-								<small class="card-text" align="center">({{ d.m_number.date_validity }}{{d.m_number.date1}}-{{d.m_number.date2}})</small>
-							{% else %}
-								<small class="card-text" align="center">({{ d.m_number.date_validity }}{{d.m_number.date1}})</small>
-							{% endif %}
-							{% if d.m_number.artist2.full_name %}
-								{% if d.m_number.artist_validity %}
-									<small class="mt-auto">{{ d.m_number.artist_validity }} <a href="{% url 'artists-detail' d.m_number.artist1.id %}">{{ d.m_number.artist1.full_name }}</a> & <a href="{% url 'artists-detail' d.m_number.artist2.id %}">{{ d.m_number.artist2.full_name }}</a></small>
-								{% else %}
-									<small class="mt-auto">By: <a href="{% url 'artists-detail' d.m_number.artist1.id %}">{{ d.m_number.artist1.full_name }}</a> & "{% url 'artists-detail' d.m_number.artist2.id %}">{{ d.m_number.artist2.full_name }}</small>
-								{% endif %}
-							{% else %}
-								{% if d.m_number.artist_validity %}
-									<small class="mt-auto">{{ d.m_number.artist_validity }} <a href="{% url 'artists-detail' d.m_number.artist1.id %}">{{ d.m_number.artist1.full_name }}</a></small>
-								{% else %}
-									<small class="mt-auto">By: <a href="{% url 'artists-detail' d.m_number.artist1.id %}">{{ d.m_number.artist1.full_name }}</a></small>
-								{% endif %}
-							{% endif %}
-							<small>Painted in: <a href="{% url 'city-of-execution-detail' d.m_number.place_of_execution.city %}">{{ d.m_number.place_of_execution }}</a></small><br>
-							{% if d.m_number.medium %}
-								<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ d.m_number.medium }})</small></p>
-							{% else %}
-								<p class="text-black-50 font-weight-light font-italic" align="center" style="margin-bottom:5px;"><small>Paint layers</small></p>
-							{% endif %}
-								{% if d.m_number.data.no_of_grounds == '1' %}
-									<div data-swatch-hex="{{ d.m_number.data.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
-								{% elif d.m_number.data.no_of_grounds == '2' %}
-									<div style=" border: 1px solid black;">
-										<div data-swatch-hex="{{ d.m_number.data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
-										<div data-swatch-hex="{{ d.m_number.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-									</div>
-									
-								{% elif d.m_number.data.no_of_grounds == '3' %}
-									<div style=" border: 1px solid black;">
-										<div data-swatch-hex="{{ d.m_number.data.layer3_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
-										<div data-swatch-hex="{{ d.m_number.data.layer2_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-										<div data-swatch-hex="{{ d.m_number.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-									</div>
-
-								{% else %}
-									<div style=" border: 1px solid black;">
-										<div data-swatch-hex="{{ d.m_number.data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
-										<div data-swatch-hex="{{ d.m_number.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
-									</div>
-									
-								{% endif %}
-								
-							{% if d.m_number.support%}
-								<p class="text-black-50 font-weight-light font-italic text-capitalize" align="center"><small>{{ d.m_number.support }}</small></p>
-							{% else %}
-								<p class="text-black-50 font-weight-light font-italic" align="center"><small>Support</small></p>
-							{% endif %}
-						</div>
-					</div>
-				</a>
-			</div>
-		{% endfor %}
-	</div>
-
-	{% if is_paginated %}
-		<div class="container text-center">
-			<br><hr><br>
-			{% if page_obj.has_previous %}
-				<a class="btn btn-outline-info mb-4"href="?page=1">First</a>
-				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.previous_page_number }}">Previous</a>
-			{% endif %}
-
-			{% for num in page_obj.paginator.page_range %}
-				{% if page_obj.number == num %}
-					<a class="btn btn-info mb-4"href="?page={{ num }}">{{ num }}</a>
-				{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'%}
-					<a class="btn btn-outline-info mb-4"href="?page={{ num }}">{{ num }}</a>
-				{% endif %}
-			{% endfor %}
-
-			{% if page_obj.has_next %}
-				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
-				<a class="btn btn-outline-info mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-			{% endif %}	
-			<br><hr><br>
+	<div class="page-header page-header--light">
+		<div class="page-header__inner">
+			<h1 class="display-4 page-header__title">List of entries</h1>
+			<p class="page-header__subtitle">Entries in database: {{ no_of_entries }}</p>
 		</div>
-	{% endif %}
+	</div>
+
+	<div class="page-width-wide mt-4">
+
+	<!-- View toggle -->
+	<div class="d-flex justify-content-end mb-3" data-view-toggle data-default-view="cards">
+		<div class="view-toggle">
+			<button class="view-toggle__btn view-toggle__btn--active" data-view="cards" aria-label="Card view">&#9638; Cards</button>
+			<button class="view-toggle__btn" data-view="table" aria-label="Table view">&#9776; Table</button>
+		</div>
+	</div>
+
+	<!-- Card view (default) -->
+	<div class="entry-view-cards" data-server-paginated>
+		<div class="row">
+			{% for d in data %}
+				{% with aw=d.m_number aw_data=d %}
+					{% include "data/includes/_entry_cards.html" %}
+				{% endwith %}
+			{% endfor %}
+		</div>
+
+		{% if is_paginated %}
+			<div class="pagination-nav">
+				{% if page_obj.has_previous %}
+					<a class="pagination-nav__btn" href="?page=1">First</a>
+					<a class="pagination-nav__btn" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+				{% endif %}
+				{% for num in page_obj.paginator.page_range %}
+					{% if page_obj.number == num %}
+						<a class="pagination-nav__btn pagination-nav__btn--active" href="?page={{ num }}">{{ num }}</a>
+					{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+						<a class="pagination-nav__btn" href="?page={{ num }}">{{ num }}</a>
+					{% endif %}
+				{% endfor %}
+				{% if page_obj.has_next %}
+					<a class="pagination-nav__btn" href="?page={{ page_obj.next_page_number }}">Next</a>
+					<a class="pagination-nav__btn" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+
+	<!-- Table view (hidden by default) -->
+	<div class="entry-view-table" style="display:none;">
+		<table class="table table-condensed table-hover table-striped data-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Artist</th>
+					<th>Date</th>
+					<th>Place of Execution</th>
+					<th>No. of Ground Layers</th>
+					<th>Colour-code</th>
+					<th data-sort-method="none">Layers</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for d in all_data %}
+					{% with aw=d.m_number aw_data=d %}
+						{% include "data/includes/_entry_table_row.html" %}
+					{% endwith %}
+				{% endfor %}
+			</tbody>
+		</table>
+		{% if is_paginated %}
+			{# table always shows all entries — no page note needed #}
+		{% endif %}
+	</div>
+
+	</div>
 {% endblock content %}

@@ -996,3 +996,276 @@ a.article-title:hover {
     padding-bottom: 0;
   }
 }
+
+/* ================================================================
+   BROWSE / DETAIL / QUERY UI REFRESH
+   Added 2026-04-28 – covers list, detail, and query page templates.
+   All classes below are additive; no existing classes are modified.
+   ================================================================ */
+
+/* ── Page header: Option B — compact dark strip ── */
+.page-header {
+  background: #383a43;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 1.75rem 1rem;
+  width: 100%;
+}
+
+.page-header__inner {
+  width: min(1200px, calc(100% - 2rem));
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.page-header__title {
+  color: #e8e9eb;
+  margin-bottom: 0.25rem;
+}
+
+.page-header__subtitle {
+  color: rgba(232, 233, 235, 0.82);
+  margin-bottom: 0;
+}
+
+/* ── Page header: Option C — light heading section ── */
+.page-header--light {
+  background: #f8f8f7;
+  border-bottom: 1px solid #dfe0e3;
+  padding: 1.75rem 1rem;
+  width: 100%;
+}
+
+.page-header--light .page-header__inner {
+  text-align: center;
+}
+
+.page-header--light .page-header__title {
+  color: #2b2d33;
+}
+
+.page-header--light .page-header__subtitle {
+  color: #5d6475;
+}
+
+/* ── Detail meta: two-column label/value grid ── */
+.detail-meta {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  row-gap: 0.55rem;
+  column-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-meta__label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5d6475;
+  padding-top: 0.15rem;
+  align-self: start;
+}
+
+.detail-meta__value {
+  color: #2b2d33;
+  align-self: start;
+}
+
+/* ── Pagination nav ── */
+.pagination-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.pagination-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid #383a43;
+  border-radius: 999px;
+  background: transparent;
+  color: #383a43;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pagination-nav__btn:hover,
+.pagination-nav__btn:focus {
+  background: #383a43;
+  color: #f4f5f6;
+  text-decoration: none;
+}
+
+.pagination-nav__btn--active {
+  background: #383a43;
+  color: #f4f5f6;
+}
+
+.pagination-nav__btn--active:hover,
+.pagination-nav__btn--active:focus {
+  background: #2b2d33;
+  color: #f4f5f6;
+}
+
+/* ── Section separator: replaces mid-page jumbotrons on detail pages ── */
+.section-separator {
+  margin: 2.5rem 0 1.5rem;
+  border-top: 2px solid #dfe0e3;
+  padding-top: 1.25rem;
+}
+
+.section-separator__title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #2b2d33;
+  margin-bottom: 0;
+}
+
+/* ── Query results bar ── */
+.query-results-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.query-results-bar__count {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2b2d33;
+  margin-bottom: 0;
+}
+
+/* ── Form label replacement ── */
+.form-label-custom {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #383a43;
+  margin-bottom: 0.3rem;
+}
+
+/* ── Data table: thead styling override ── */
+.data-table thead th {
+  background: #383a43;
+  color: #e8e9eb;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-color: #383a43;
+}
+
+.data-table tbody td a {
+  color: #383a43;
+  font-weight: 500;
+}
+
+.data-table tbody td a:hover {
+  color: #2b2d33;
+  text-decoration: underline;
+}
+
+/* ── Nav tabs: steel palette override (for data_detail) ── */
+.nav-tabs .nav-link {
+  color: #383a43;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #2b2d33;
+}
+
+.nav-tabs .nav-link.active {
+  background: #383a43;
+  color: #e8e9eb;
+  border-color: #383a43 #383a43 #ffffff;
+}
+
+/* ── Mobile adjustments for new components ── */
+@media (max-width: 575px) {
+  .detail-meta {
+    grid-template-columns: 1fr;
+    row-gap: 0.1rem;
+  }
+
+  .detail-meta__label {
+    margin-bottom: 0;
+    padding-top: 0.65rem;
+  }
+
+  .pagination-nav__btn {
+    font-size: 0.82rem;
+    padding: 0.25rem 0.65rem;
+  }
+
+  .query-results-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}
+
+/* ── View toggle (Cards / Table) ── */
+.view-toggle {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.view-toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid #383a43;
+  border-radius: 999px;
+  background: transparent;
+  color: #383a43;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: background 0.15s, color 0.15s;
+}
+
+.view-toggle__btn:hover {
+  background: #f0f0f2;
+}
+
+.view-toggle__btn--active {
+  background: #383a43;
+  color: #e8e9eb;
+  border-color: #383a43;
+}
+
+.view-toggle__btn--active:hover {
+  background: #2b2d33;
+}
+
+/* ── Tablesort: clickable headers ── */
+th[role=columnheader]:not([data-sort-method=none]) {
+  cursor: pointer;
+  user-select: none;
+}
+
+th[role=columnheader]:not([data-sort-method=none])::after {
+  content: ' \2195';
+  font-size: 0.7em;
+  color: rgba(232, 233, 235, 0.6);
+  vertical-align: middle;
+}
+
+th[aria-sort=ascending]::after  { content: ' \2191' !important; color: #e8e9eb; }
+th[aria-sort=descending]::after { content: ' \2193' !important; color: #e8e9eb; }
+}

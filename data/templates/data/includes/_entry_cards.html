@@ -1,0 +1,64 @@
+<div class="col-4 mb-4 entry-card">
+	<a class="text-dark" href="{% url 'data-detail' aw.id %}">
+		<div class="card shadow h-100 d-flex">
+			<div class="text-center">
+				{% if aw.rkd_image_url %}
+					<img class="card-img-top border rounded" src="{{ aw.rkd_image_url }}" alt="{{ aw.title }}" style="max-height:200px; width:auto; border-color: #383a43;">
+				{% elif aw.image %}
+					<img class="card-img-top border rounded" src="{{ aw.image.url }}" alt="{{ aw.title }}" style="max-height:200px; width:auto; border-color: #383a43;">
+				{% endif %}
+			</div>
+			<div class="card-body d-flex flex-column">
+				<h5 class="card-title text-center"><a href="{% url 'data-detail' aw.id %}" class="stretched-link">{{ aw.id }}: {{ aw.title }}</a></h5>
+				{% if aw.date2 %}
+					<small class="card-text text-center">({{ aw.date_validity }}{{ aw.date1 }}-{{ aw.date2 }})</small>
+				{% else %}
+					<small class="card-text text-center">({{ aw.date_validity }}{{ aw.date1 }})</small>
+				{% endif %}
+				{% if aw.artist2.full_name %}
+					{% if aw.artist_validity %}
+						<small class="mt-2">{{ aw.artist_validity }} <a href="{% url 'artists-detail' aw.artist1.id %}">{{ aw.artist1.full_name }}</a> &amp; <a href="{% url 'artists-detail' aw.artist2.id %}">{{ aw.artist2.full_name }}</a></small>
+					{% else %}
+						<small class="mt-2"><a href="{% url 'artists-detail' aw.artist1.id %}">{{ aw.artist1.full_name }}</a> &amp; <a href="{% url 'artists-detail' aw.artist2.id %}">{{ aw.artist2.full_name }}</a></small>
+					{% endif %}
+				{% else %}
+					{% if aw.artist_validity %}
+						<small class="mt-2">{{ aw.artist_validity }} <a href="{% url 'artists-detail' aw.artist1.id %}">{{ aw.artist1.full_name }}</a></small>
+					{% else %}
+						<small class="mt-2"><a href="{% url 'artists-detail' aw.artist1.id %}">{{ aw.artist1.full_name }}</a></small>
+					{% endif %}
+				{% endif %}
+				<small>Painted in: <a href="{% url 'city-of-execution-detail' aw.place_of_execution.city %}">{{ aw.place_of_execution }}</a></small>
+				{% if aw.medium %}
+					<p class="text-black-50 font-weight-light font-italic mt-auto" style="margin-bottom:5px;"><small>Paint layers </small><small class="text-lowercase">({{ aw.medium }})</small></p>
+				{% else %}
+					<p class="text-black-50 font-weight-light font-italic mt-auto" style="margin-bottom:5px;"><small>Paint layers</small></p>
+				{% endif %}
+				{% if aw_data.no_of_grounds == '1' %}
+					<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
+				{% elif aw_data.no_of_grounds == '2' %}
+					<div style="border: 1px solid black;">
+						<div data-swatch-hex="{{ aw_data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+						<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+					</div>
+				{% elif aw_data.no_of_grounds == '3' %}
+					<div style="border: 1px solid black;">
+						<div data-swatch-hex="{{ aw_data.layer3_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+						<div data-swatch-hex="{{ aw_data.layer2_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+						<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+					</div>
+				{% else %}
+					<div style="border: 1px solid black;">
+						<div data-swatch-hex="{{ aw_data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+						<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+					</div>
+				{% endif %}
+				{% if aw.support %}
+					<p class="text-black-50 font-weight-light font-italic text-capitalize"><small>{{ aw.support }}</small></p>
+				{% else %}
+					<p class="text-black-50 font-weight-light font-italic"><small>Support</small></p>
+				{% endif %}
+			</div>
+		</div>
+	</a>
+</div>

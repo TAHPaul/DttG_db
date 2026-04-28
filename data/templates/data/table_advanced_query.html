@@ -7,25 +7,28 @@
 Advanced Search
 {% endblock title%}
 
+{% block main_class %}container-fluid px-0{% endblock %}
+
 {% block content%}
 
 <!-- Header at the top -->
-<div class="jumbotron text-center">
-	<h1 class="display-4" style="color: #e8e9eb">Advanced Search</h1>
-	<p style="color: #e8e9eb">- Advanced Queries -</p>
-	<div class="row border-bottom text-center" style="border-color: #e8e9eb"></div>
-<!-- Buttons that toggle visibility of the search function, and allow to switch to alternative search mode -->
-	<div class="mt-4 pb-4">
-		<a class="btn btn-outline-light float-left" role="button" href="{% url 'data-table-simple' %}">Switch to Simple Search</a>
-		<button class="btn btn-outline-light float-right" type="button" data-toggle="collapse" data-target="#advsearch" aria-expanded="false" aria-controls="advsearch">Toggle search form visibility</button>
+<div class="page-header page-header--light">
+	<div class="page-header__inner">
+		<h1 class="display-4 page-header__title">Advanced Search</h1>
+		<p class="page-header__subtitle">Advanced Queries</p>
 	</div>
+</div>
+<div class="page-width-wide">
+<div class="d-flex justify-content-between mt-3 mb-2">
+	<a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'data-table-simple' %}">Switch to Simple Search</a>
+	<button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#advsearch" aria-expanded="false" aria-controls="advsearch">Toggle search form visibility</button>
 </div>
 
 <!-- Search form -->
 <div class="collapse show" id="advsearch">
-	<div class="container rounded border p-4" style="border-color: #383a43; background-color: #dfe0e3">
+	<div class="content-panel page-width-wide mt-3">
 		<form method="get">
-			<h5 align="center">Object information:</h5>
+			<h5 class="text-center">Object information:</h5>
 			<div class="form-row mt-3 mb-4">
 				<div class="col-1"></div>
 				<div class="col-4 text-center">
@@ -39,7 +42,7 @@ Advanced Search
 				</div>
 				<div class="col-1"></div>
 			</div>
-			<h5 align="center">Ground information:</h5>
+			<h5 class="text-center">Ground information:</h5>
 			<div class="form-row mt-3 mb-4">
 				<div class="col"></div>				
 				<div class="col-2 text-center">
@@ -75,14 +78,16 @@ Advanced Search
 				<div class="col-1"></div>
 			</div>
 			<div class="form-row">
-				<div class="col-4"></div>
-				<div class="col text-center">
-					<input type="submit" />
+				<div class="col-4 text-center">
+					<button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#extrasearch" aria-expanded="false" aria-controls="extrasearch">Toggle additional query fields</button>
 				</div>
-				<div class="col-4"></div>
+				<div class="col-4 text-center">
+					<input class="btn btn-dark" type="submit" value="Search" />
+				</div>
+				<div class="col-4 text-right">
+					<a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'data-table-adv' %}">Reset search form</a>
+				</div>
 			</div>
-			<button class="btn btn-outline-dark" type="button" data-toggle="collapse" data-target="#extrasearch" aria-expanded="false" aria-controls="extrasearch">Toggle additional query fields</button>
-			<a class="btn btn-dark float-right" role="button" href="{% url 'data-table-adv' %}">Reset search form</a>
 			<div class="collapse" id="extrasearch">
 				<div class="form-row mt-4">
 					<div class="col"></div>
@@ -108,20 +113,16 @@ Advanced Search
 	</div>
 </div>
 
-<div class="row mt-3 mb-3 p-3">
+<div class="query-results-bar mt-3 mb-3">
 	<!-- Amount of results -->
-	<div class="col text-left align-self-center">
-		<h5>{{ results }} results</h5>
-	</div>
+	<span class="query-results-bar__count">{{ results }} results</span>
 	<!-- Export function -->
-	<div class="col text-right align-self-center">
-		<a href="{% url 'csv-export-adv' %}?{{request.GET.urlencode}}"><button type="button" class="btn btn-outline-info">Export to CSV</button></a>
-	</div>	
+	<a href="{% url 'csv-export-adv' %}?{{request.GET.urlencode}}"><button type="button" class="btn btn-outline-secondary btn-sm">Export to CSV</button></a>
 </div>
 
 
 <!-- This generates a table for all the results -->
-<table class="table table-condensed table-hover table-striped">
+<table class="table table-condensed table-hover table-striped data-table">
 	<thead>
 		<tr>
 			<!-- Headings -->
@@ -197,4 +198,5 @@ Advanced Search
 		{% endfor %}
 	</tbody>
 </table>
+</div><!-- /.page-width-wide -->
 {% endblock content %}

@@ -89,6 +89,7 @@ class DataListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(DataListView, self).get_context_data(**kwargs)
         context['no_of_entries'] = Data.objects.count()
+        context['all_data'] = Data.objects.select_related('m_number').order_by('m_number')
         return context
 
 class DataDetailView(DetailView):
