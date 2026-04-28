@@ -134,9 +134,9 @@ Advanced Search
 			<th>No. of Ground Layers</th>
 			<th>Colour-code</th>
 			{% if 'toplayervis' in request.GET %}
-				<th>Top layer</th>
+				<th data-sort-method="none">Top layer</th>
 			{% else %}
-				<th>Layers</th>
+				<th data-sort-method="none">Layers</th>
 			{% endif %}
 		</tr>
 	</thead>

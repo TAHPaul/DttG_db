@@ -1268,4 +1268,3 @@ th[role=columnheader]:not([data-sort-method=none])::after {
 
 th[aria-sort=ascending]::after  { content: ' \2191' !important; color: #e8e9eb; }
 th[aria-sort=descending]::after { content: ' \2193' !important; color: #e8e9eb; }
-}
