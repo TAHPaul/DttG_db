@@ -211,8 +211,18 @@
 					</div>
 					<div>
 						<div class="detail-meta">
-							<span class="detail-meta__label" data-toggle="tooltip" data-placement="bottom" title="Description of the reliability rating">Reliability</span>
+							<span class="detail-meta__label">Reliability</span>
+							{% if object.reliability == 1 %}
+							<span class="detail-meta__value" data-toggle="tooltip" data-placement="bottom" title="Rating 1 – Most reliable: elemental analysis (e.g. SEM-EDX) has been performed to confirm microscopic cross-section analysis." style="cursor:help; text-decoration:underline dashed; text-underline-offset:3px; width:fit-content;">{{ object.reliability }}</span>
+							{% elif object.reliability == 2 %}
+							<span class="detail-meta__value" data-toggle="tooltip" data-placement="bottom" title="Rating 2 – Microscopic cross-section: cross-section analysis with light microscopy; no elemental confirmation." style="cursor:help; text-decoration:underline dashed; text-underline-offset:3px; width:fit-content;">{{ object.reliability }}</span>
+							{% elif object.reliability == 3 %}
+							<span class="detail-meta__value" data-toggle="tooltip" data-placement="bottom" title="Rating 3 – Surface analysis: surface examination by a skilled individual, ideally a paintings conservator with magnification." style="cursor:help; text-decoration:underline dashed; text-underline-offset:3px; width:fit-content;">{{ object.reliability }}</span>
+							{% elif object.reliability == 4 %}
+							<span class="detail-meta__value" data-toggle="tooltip" data-placement="bottom" title="Rating 4 – Written descriptions: written descriptions form the basis; research methods are unclear." style="cursor:help; text-decoration:underline dashed; text-underline-offset:3px; width:fit-content;">{{ object.reliability }}</span>
+							{% else %}
 							<span class="detail-meta__value">{{ object.reliability }}</span>
+							{% endif %}
 						</div>
 						<hr>
 						{% if object.sample or object.microscopy or object.elem_analysis %}
