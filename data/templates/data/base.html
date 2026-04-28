@@ -35,20 +35,22 @@
 	          <a class="nav-item nav-link font-weight-bold" href="{% url 'dttg-about' %}">ABOUT</a>
 	        </div>
 	        <!-- Navbar Right Side -->
-	        <div class="navbar-nav">
+	        <div class="navbar-nav align-items-md-center">
 	          <!-- <a class="nav-item nav-link" href="#">Login</a>-->
 	          <!-- <a class="nav-item nav-link" href="#">Register</a>-->
-	          <div class="dropdown">
-				  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Database
+	          <div class="dropdown site-nav-dropdown">
+				  <button class="btn site-nav-dropdown__toggle dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Open database navigation menu">
+				    Browse database
 				  </button>
-				  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-				    <a class="dropdown-item" href="{% url 'data-table-simple' %}">Search</a>
-				    <a class="dropdown-item" href="{% url 'data-overview' %}">Data entries</a>
-				    <a class="dropdown-item" href="{% url 'artists-overview' %}">Artists</a>
-				    <a class="dropdown-item" href="{% url 'city-of-execution-overview' %}">Places of execution</a>
-				    <a class="dropdown-item" href="{% url 'museums-overview' %}">Museums</a>
-				    <a class="dropdown-item" href="{% url 'database-info' %}">Documentation</a>
+				  <div class="dropdown-menu dropdown-menu-right site-nav-dropdown__menu" aria-labelledby="dropdownMenuButton">
+				    <h6 class="dropdown-header site-nav-dropdown__header">Explore</h6>
+				    <a class="dropdown-item site-nav-dropdown__item" href="{% url 'data-table-simple' %}">Search</a>
+				    <a class="dropdown-item site-nav-dropdown__item" href="{% url 'data-overview' %}">Data entries</a>
+				    <a class="dropdown-item site-nav-dropdown__item" href="{% url 'artists-overview' %}">Artists</a>
+				    <a class="dropdown-item site-nav-dropdown__item" href="{% url 'city-of-execution-overview' %}">Places of execution</a>
+				    <a class="dropdown-item site-nav-dropdown__item" href="{% url 'museums-overview' %}">Museums</a>
+				    <div class="dropdown-divider"></div>
+				    <a class="dropdown-item site-nav-dropdown__item" href="{% url 'database-info' %}">Documentation</a>
 				  </div>
 				</div>
 	        </div>
@@ -163,12 +165,21 @@
 	
 </body>
 {% if request.GET.embed != '1' %}
-<footer class="bg-light text-center text-lg-start mt-auto">
-<!--Copyright-->
-	<div class="text-center p-3" style="background-color: #383a43; color: #e8e9eb">
-		© Full Stack development by Paul van Laar
+<footer class="site-footer mt-auto">
+	<div class="container">
+		<div class="site-footer__content">
+			<div class="site-footer__brand">
+				<h2 class="site-footer__title">Down to the Ground Database</h2>
+				<p class="site-footer__text mb-0">Open-access research tool for studying coloured ground layers in Netherlandish painting.</p>
+			</div>
+			<ul class="site-footer__links list-unstyled mb-0" aria-label="Footer links">
+				<li><a href="{% url 'database-info' %}">Documentation</a></li>
+				<li><a href="https://github.com/TAHPaul/DttG_db" target="_blank" rel="noopener noreferrer">GitHub repository</a></li>
+				<li><a href="https://dttg.rkdstudies.nl/contents/" target="_blank" rel="noopener noreferrer">RKD Studies</a></li>
+			</ul>
+		</div>
+		<div class="site-footer__meta">© {% now "Y" %} Built by Paul van Laar for the Down to the Ground project.</div>
 	</div>
-<!--Copyright-->
 </footer>
 {% endif %}
 </html>

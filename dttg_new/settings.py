@@ -14,14 +14,19 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from a .env file if present.
-# On the production server, place a .env file in the project root
-# (same directory as manage.py). Shell environment variables always
-# take precedence over values in the .env file.
-load_dotenv(Path(__file__).resolve().parent.parent / '.env')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Use local defaults when running from the repo's local virtualenv.
+# Override with DJANGO_LOAD_DOTENV=True to test production-like settings locally.
+_dotenv_setting = os.environ.get('DJANGO_LOAD_DOTENV')
+if _dotenv_setting is None:
+    _load_dotenv = not (BASE_DIR / '.venv').exists()
+else:
+    _load_dotenv = _dotenv_setting == 'True'
+
+if _load_dotenv:
+    load_dotenv(BASE_DIR / '.env')
 
 
 # ---------------------------------------------------------------------------
@@ -49,6 +54,10 @@ ALLOWED_HOSTS = [
     for h in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
     if h.strip()
 ]
+
+for local_host in ('127.0.0.1', 'localhost', '[::1]'):
+    if local_host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(local_host)
 
 # Required when DEBUG=False and requests arrive over HTTPS.
 # Comma-separated, e.g. "https://downtotheground.rkdstudies.nl"
@@ -162,7 +171,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', str(BASE_DIR / 'staticfiles'))
 MEDIA_ROOT = os.environ.get('DJANGO_MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 MEDIA_URL = '/media/'
