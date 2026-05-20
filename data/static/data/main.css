@@ -774,6 +774,7 @@ a.article-title:hover {
 .doc-hub__section {
   padding: 2.5rem 0;
   border-bottom: 1px solid var(--border-subtle, #e0dbd3);
+  scroll-margin-top: 2.5rem;
 }
 
 .doc-hub__section:last-child {

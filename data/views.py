@@ -36,6 +36,7 @@ def get_colour_reference_context():
 def home(request):
     context = get_colour_reference_context()
     context['title'] = 'Home'
+    context['entry_count'] = Data.objects.count()
     return render(request, 'data/dttg-home.html', context)
 
 def about(request):

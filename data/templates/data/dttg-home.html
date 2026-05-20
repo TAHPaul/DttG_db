@@ -17,9 +17,9 @@ Home
 			<div class="col-lg-6">
 				<div class="hero-panel__content">
 					<p class="hero-panel__eyebrow">The Down to the Ground database</p>
-					<h1 class="hero-panel__title">Ground-layer data for more than 830 Netherlandish paintings</h1>
-					<p class="hero-panel__lead">A searchable database of ground-layer information from sixteenth- and seventeenth-century Netherlandish paintings, designed to support technical art history, conservation research, and close study of painting practice.</p>
-					<p class="hero-panel__lead mb-0">Coloured grounds matter because they shape painting technique, influence optical and tonal effects, and help us understand workshop practice, chronology, and regional artistic exchange.</p>
+					<h1 class="hero-panel__title">Ground-layer data for {{ entry_count }} Netherlandish paintings</h1>
+					<p class="hero-panel__lead">A database of ground-layer information from sixteenth- and seventeenth-century Netherlandish paintings, designed to support technical art history, conservation research, and close study of painting practice.</p>
+					<p class="hero-panel__lead mb-0">Coloured grounds were introduced to Netherlandish painting in the sixteenth century and became more and more popular through the seventeenth century. They shape painting technique, influence optical and tonal effects, and can help us understand workshop practice, chronology, and artistic mobility.</p>
 					<div class="cta-button-group">
 						<a class="cta-button cta-button--primary" href="{% url 'data-table-simple' %}">Search the database</a>
 						<a class="cta-button cta-button--secondary" href="{% url 'database-info' %}#how-to-use">How to use the database</a>
@@ -46,7 +46,7 @@ Home
 					<h2 class="section-heading__title">Standardised colour categories for querying the data</h2>
 				</div>
 				<p>The DttG colour checker translates varied free-text descriptions into a consistent set of searchable colour categories. This makes it possible to compare entries produced by different researchers, institutions, and analytical methods without losing sight of the interpretive nature of colour description.</p>
-				<p class="mb-3">On the homepage, the checker is shown in a compact reference mode. The full documentation explains how these categories relate to original descriptions and why they should be understood as standardised research categories rather than exact chromatic reconstructions.</p>
+				<p class="mb-3">On the homepage, the checker is shown in a compact reference mode. The full documentation explains how these categories relate to original terminology and why they should be understood as standardised research categories rather than exact chromatic descriptions.</p>
 				<a class="text-link-arrow" href="{% url 'database-info' %}#colour-system">View the full colour system documentation</a>
 			</div>
 			<div class="col-lg-7">
