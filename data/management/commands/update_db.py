@@ -80,9 +80,10 @@ class Command(BaseCommand):
     def _prompt_yes_no(self, section):
         csv_file = SECTION_LOADERS[section][1]
         prompt = f'Update {section} from {csv_file}? [y/N]: '
-        if not self.stdin:
+        try:
+            answer = input(prompt).strip().lower()
+        except EOFError:
             return False
-        answer = self.input(prompt).strip().lower()
         return answer in {'y', 'yes'}
 
     def _validate_csv_files(self, sections):
