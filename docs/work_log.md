@@ -224,3 +224,40 @@
 	- Spot checks showed remaining records are due to upstream RKD no-image responses or API errors.
 - **Client-facing note:** For future updates, run `python manage.py fetch_rkd_images --until-stable`; it stops automatically when no new URLs can be fetched.
 - **Outstanding questions:** None.
+---
+
+## 2026-04-27 — Documentation hub restructure
+- **Date:** 2026-04-27
+- **Branch:** `content-ui-refresh`
+- **Commit:** `617d349`
+- **Area:** Content / UI refresh — Phase 3 (Documentation page)
+- **Files changed:** `data/templates/data/db-info.html`, `data/static/data/main.css`
+- **Summary of change:** Replaced legacy Bootstrap tab UI in `db-info.html` with a long-form documentation hub. Added top anchor navigation and 8 content sections: How to Use, Reliability System, Colour System, Terminology, Cross-Section Images, Database Notes, Database Development, Citation & Reuse. Added additive `doc-hub__*` CSS component block to `main.css` with mobile responsive overrides.
+- **Reason for change:** Phase 3 of `content-ui-refresh` plan approved prior to this session. Tab layout was inaccessible and did not scale gracefully on mobile.
+- **Testing/checks performed:**
+  - `python manage.py check` — no issues.
+  - Template loaded successfully via `Engine.find_template` (bypassing cache).
+  - Route `/db_info/`, URL name `database-info`, and nav label "Documentation" all unchanged.
+  - Inbound deep-link anchors `#how-to-use` and `#colour-system` (used by homepage CTAs) are present.
+  - Colour system section uses `colour_reference.html` partial in `mode='full'`.
+  - Reliability text normalised to 1–4 throughout; legacy "1 to 5" text removed.
+  - Legacy tab CSS left intact in `main.css` (no regressions on other pages).
+- **Client-facing note:** The Documentation page is now a single scrollable page with anchor links at the top. All previous tab content is preserved and reorganised. The colour swatch system is now fully visible without tab interaction.
+- **Outstanding questions:** None.
+
+---
+
+## 2026-04-28 — Documentation colour checker refinements
+- **Date:** 2026-04-28
+- **Branch:** `content-ui-refresh`
+- **Commit:** uncommitted
+- **Area:** Content / UI refresh — Documentation colour checker interaction polish
+- **Files changed:** `data/templates/data/db-info.html`, `data/templates/data/partials/colour_reference.html`, `data/static/data/main.css`, `docs/work_log.md`
+- **Summary of change:** Refined colour checker presentation in documentation hub to a structured row layout with Light → Mid → Dark ordering for chromatic groups, separate Black/White rows, full-width swatches per grid cell, single separator treatment, and improved hover readability. Replaced pseudo-element HEX overlay with real selectable text so users can copy HEX values directly.
+- **Reason for change:** Improve legibility and usability for researchers who need to reference and copy exact colour values.
+- **Testing/checks performed:**
+	- `python manage.py check` — no issues.
+	- Template parse checks passed for `db-info.html` and `partials/colour_reference.html`.
+	- Visual behavior verified in CSS rules: full-width swatches, no double separator line, hover overlay with bold white HEX text.
+- **Client-facing note:** On Documentation → Colour System, users can now highlight and copy HEX values directly from swatches while keeping the same dark-overlay hover cue.
+- **Outstanding questions:** None.

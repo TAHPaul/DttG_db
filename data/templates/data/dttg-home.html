@@ -1,50 +1,120 @@
 {% extends 'data/base.html' %}
 
-{% block title%}
+{% load static %}
+
+{% block title %}
 Home
-{% endblock title%}
+{% endblock title %}
 
-{% block content%}
-	<div class="jumbotron text-center">
-		<h1 class="display-2" style="color: #e8e9eb">Down to the Ground</h1>
-	</div>
-	<h4>ABOUT</h4>
-	<p>
-		The data on ground layers in Dutch and Flemish paintings of the late sixteenth and early seventeenth centuries (approximately 1550-1650) presented here was collected by Moorea Hall-Aquitania starting in 2018, first for a fellowship at the Rijksmuseum and subsequently under the remit of her doctoral research for the <a href=https://ahm.uva.nl/content/projects/down-to-the-ground/down-to-the-ground.html/ target="_blank" rel="noopener noreferrer">NWO Down to the Ground (DttG)</a> project at the University of Amsterdam, 2019-2024. This database was designed by Moorea Hall-Aquitania and Paul van Laar and developed by Paul van Laar for the DttG project in 2022.
-	</p>
+{% block main_class %}container-fluid px-0{% endblock %}
 
-	<hr>
-	
-	<h4>
-		SOURCES
-	</h4>
-	<p>
-		The database is populated with information on ground layers from both published and unpublished sources, as well as new technical research by Hall-Aquitania. All data sources have been cited for each painting, along with the researchers responsible (where known).
-		<br>
-		<br>
-		Much of the current data comes from our museum partners: the Mauritshuis (The Hague), the Frans Hals Museum (Haarlem), the National Gallery (London), the Royal Museum of Fine Arts (Antwerp) and the the Statens Museum for Kunst (Copenhagen), as well as the Rijksmuseum (Amsterdam). We are also grateful for the partnership and resources of the RKD Netherlands Institute for Art History (The Hague).
-	</p>
+{% block content %}
+	<section class="hero-panel page-width-wide mt-4 mb-4">
+		<div class="row no-gutters align-items-stretch hero-panel__inner">
+			<div class="col-lg-6">
+				<img class="hero-panel__image" src="{% get_media_prefix %}/site_media/xsection.jpg" alt="Microscopic paint cross-section showing layered coloured grounds.">
+			</div>
+			<div class="col-lg-6">
+				<div class="hero-panel__content">
+					<p class="hero-panel__eyebrow">The Down to the Ground database</p>
+					<h1 class="hero-panel__title">Ground-layer data for {{ entry_count }} Netherlandish paintings</h1>
+					<p class="hero-panel__lead">A database of ground-layer information from sixteenth- and seventeenth-century Netherlandish paintings, designed to support technical art history, conservation research, and close study of painting practice.</p>
+					<p class="hero-panel__lead mb-0">Coloured grounds were introduced to Netherlandish painting in the sixteenth century and became more and more popular through the seventeenth century. They shape painting technique, influence optical and tonal effects, and can help us understand workshop practice, chronology, and artistic mobility.</p>
+					<div class="cta-button-group">
+						<a class="cta-button cta-button--primary" href="{% url 'data-table-simple' %}">Search the database</a>
+						<a class="cta-button cta-button--secondary" href="{% url 'database-info' %}#how-to-use">How to use the database</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-	<hr>
-	
-	<h4>
-		LACUNAE
-	</h4>
-	
-	<p>
-		Technical research into paintings is often constrained by both conservation ethics and institutional/art historical biases. This means that much technical research based on paint samples was done during conservation campaigns, which are often skewed toward certain artists based on limited financial means and public or academic preferences. One example of this is the overrepresentation of Rembrandt paintings in this database, due to his enduring popularity and the comprehensive work of the Rembrandt Research Project (1968-2014). Paintings are often restored for specific exhibitions, and thus the data is further biased by curatorial trends of the last decades. Furthermore, paintings and painters from the lower end of the market are often excluded from technical/conservation campaigns.
-		<br><br>
-		This is all to say that the DttG database is currently inclined towards the Northern Netherlands and certain historically popular painters whose work has been favored by exhibitions and research projects. While the goal is to represent paintings from all market sectors in both the Northern and Southern Netherlands around 1550-1650, the Southern Netherlands and the sixteenth century are both underrepresented. We hope to remedy this with targeted research as the database grows and urge any researchers with sample data from this period/area to contribute.
-	</p>
+	<section class="page-width-prose content-panel mb-4">
+		<div class="section-heading">
+			<p class="section-heading__eyebrow">Introduction</p>
+			<h2 class="section-heading__title">What this database offers</h2>
+		</div>
+		<p>The Down to the Ground database brings together published research, unpublished institutional documentation, and new technical findings on coloured grounds in Netherlandish paintings. It enables users to search for artists, places of execution, supports, dates, numbers of grounds, and standardised colour categories across a large corpus.</p>
+		<p class="mb-0">The database is intended both as a practical research tool and as a structured record of how coloured grounds were observed, described, and interpreted in technical art-historical research. Each entry should therefore be read alongside its cited sources and reliability rating.</p>
+	</section>
 
-	<hr>
-	
-	<h4>
-		FUTURE DEVELOPMENT
-	</h4>
-	
-	<p>
-		New data are constantly being added and the database infrastructure is periodically reviewed to meet evolving research needs. The next step is to add painting images to each entry (due to current time restraints paintings now have links to their museum and RKD pages) and to migrate the database to an open-access online platform. In the future, we hope to also include cross-section images.
-	</p>
-	<hr>
+	<section class="page-width-wide content-panel content-panel--split mb-4">
+		<div class="row align-items-center">
+			<div class="col-lg-5 mb-4 mb-lg-0">
+				<div class="section-heading mb-3">
+					<p class="section-heading__eyebrow">Colour system</p>
+					<h2 class="section-heading__title">Standardised colour categories for querying the data</h2>
+				</div>
+				<p>The DttG colour checker translates varied free-text descriptions into a consistent set of searchable colour categories. This makes it possible to compare entries produced by different researchers, institutions, and analytical methods without losing sight of the interpretive nature of colour description.</p>
+				<p class="mb-3">On the homepage, the checker is shown in a compact reference mode. The full documentation explains how these categories relate to original terminology and why they should be understood as standardised research categories rather than exact chromatic descriptions.</p>
+				<a class="text-link-arrow" href="{% url 'database-info' %}#colour-system">View the full colour system documentation</a>
+			</div>
+			<div class="col-lg-7">
+				<div class="content-panel content-panel--nested">
+					{% include 'data/partials/colour_reference.html' with mode='compact' %}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="page-width-wide content-panel mb-5" id="homepage-quick-start">
+		<div class="section-heading">
+			<p class="section-heading__eyebrow">Quick start</p>
+			<h2 class="section-heading__title">How to begin using the database</h2>
+		</div>
+		<div class="row quick-start-grid">
+			<div class="col-md-6 col-xl-4 mb-4">
+				<a class="quick-start-card-link" href="{% url 'data-table-simple' %}">
+					<div class="quick-start-card h-100">
+						<span class="quick-start-card__number">1</span>
+						<h3 class="quick-start-card__title">Use Tabular data (Simple Search)</h3>
+						<p class="mb-0">The fastest overview of the corpus and linked records, with filtering by artist, date, place of execution, support, and number of grounds in one interface.</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-6 col-xl-4 mb-4">
+				<a class="quick-start-card-link" href="{% url 'data-table-adv' %}">
+					<div class="quick-start-card h-100">
+						<span class="quick-start-card__number">2</span>
+						<h3 class="quick-start-card__title">Use Advanced Search for complex queries</h3>
+						<p class="mb-0">Combine multiple artists, cities, colours, and reliability filters to explore more specific patterns.</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-6 col-xl-4 mb-4">
+				<a class="quick-start-card-link" href="{% url 'data-overview' %}">
+					<div class="quick-start-card h-100">
+						<span class="quick-start-card__number">3</span>
+						<h3 class="quick-start-card__title">Browse through linked records</h3>
+						<p class="mb-0">Click titles, artists, places, and museums to move between individual records and connected material.</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-6 col-xl-4 mb-4">
+				<div class="quick-start-card h-100">
+					<span class="quick-start-card__number">4</span>
+					<h3 class="quick-start-card__title">Export results as CSV</h3>
+					<p class="mb-0">Download result sets for further analysis, visualisation, and data interpretation in external tools.</p>
+				</div>
+			</div>
+			<div class="col-md-6 col-xl-4 mb-4">
+				<a class="quick-start-card-link" href="{% url 'database-info' %}#citation">
+					<div class="quick-start-card h-100">
+						<span class="quick-start-card__number">5</span>
+						<h3 class="quick-start-card__title">Cite both database and sources</h3>
+						<p class="mb-0">When publishing, cite the database together with the original technical studies and institutional documentation behind each entry.</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-6 col-xl-4 mb-4">
+				<a class="quick-start-card-link" href="https://dttg.rkdstudies.nl/3-how-to-use-the-dttg-database-and-tool/32-template-for-submitting-additions-to-the-dttg-database/" target="_blank" rel="noopener noreferrer">
+					<div class="quick-start-card h-100">
+						<span class="quick-start-card__number">6</span>
+						<h3 class="quick-start-card__title">Contribute your own records</h3>
+						<p class="mb-0">Use the RKD Studies submission template to propose additions and help expand the database corpus.</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
 {% endblock content %}

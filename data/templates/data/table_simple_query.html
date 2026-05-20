@@ -7,45 +7,47 @@
 Simple Search
 {% endblock title%}
 
+{% block main_class %}container-fluid px-0{% endblock %}
+
 {% block content%}
 
 <!-- Header at the top -->
-<div class="jumbotron text-center">
-	<h1 class="display-4" style="color: #e8e9eb">Simple Search</h1>
-	<p style="color: #e8e9eb">- Simple Queries -</p>
-	<div class="row border-bottom text-center" style="border-color: #e8e9eb"></div>
-	
-	<div class="mt-4 pb-4">
-		<!-- Two buttons that collapse the search view(s) -->
-		<a class="btn btn-outline-light float-left" role="button" href="{% url 'data-table-adv' %}">Switch to Advanced Search</a>
-		<button class="btn btn-outline-light float-right" type="button" data-toggle="collapse" data-target="#simplesearch" aria-expanded="false" aria-controls="simplesearch">Toggle search form visibility</button>
+<div class="page-header page-header--light">
+	<div class="page-header__inner">
+		<h1 class="display-4 page-header__title">Simple Search</h1>
+		<p class="page-header__subtitle">Simple Queries</p>
 	</div>
+</div>
+<div class="page-width-wide">
+<div class="d-flex justify-content-between mt-3 mb-2">
+	<a class="btn btn-outline-secondary btn-sm" role="button" href="{% url 'data-table-adv' %}">Switch to Advanced Search</a>
+	<button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse" data-target="#simplesearch" aria-expanded="false" aria-controls="simplesearch">Toggle search form visibility</button>
 </div>
 
 <!-- Simple search function -->
 <div class="collapse show" id="simplesearch">
-	<div class="container rounded border p-4" style="border-color: #383a43; background-color: #dfe0e3">
-		<h4 align="center">Simple Search</h4><hr>
+	<div class="content-panel page-width-wide mt-3">
+		<h4 class="text-center">Simple Search</h4><hr>
 		<form>
 			<div class="form-row">
 				<div class="col-4">
-					<h6 style="color: #383a43">Artist</h6>
+					<label class="form-label-custom">Artist</label>
 					<input class="form-control" type="search" name="artist" placeholder="Artist" aria-label="search">
 				</div>
 				<div class="col-2">
-					<h6 style="color: #383a43">Date range</h6>
+					<label class="form-label-custom">Date range</label>
 					<input class="form-control" type="search" name="date1" placeholder="After" aria-label="search">
 				</div>
 				<div class="col-2">									
-					<h6>...</h6>
+					<label class="form-label-custom">&nbsp;</label>
 					<input class="form-control" type="search" name="date2" placeholder="Before" aria-label="search">
 				</div>
 				<div class="col-3">
-					<h6 style="color: #383a43">Place of Execution</h6>
+					<label class="form-label-custom">Place of Execution</label>
 					<input class="form-control" type="search" name="city" placeholder="City of execution" aria-label="search">
 				</div>
 				<div class="col-1">
-					<h6 style="color: #383a43">#Grounds</h6>
+					<label class="form-label-custom">#Grounds</label>
 					<div class="form-group">
 						<select class="form-control" id="no_of_grounds" name="no_of_grounds">
 							<option></option>
@@ -66,7 +68,7 @@ Simple Search
 			</div>
 			<div class="form-row">
 			    <div class="col-2 text-left">
-			        <h6>Support</h6>
+		        <label class="form-label-custom">Support</label>
 			        <div class="form-group">
 			            <select class="form-control" id="support" name="support">
 			                <option>any</option>
@@ -78,12 +80,12 @@ Simple Search
 			        </div>
 			    </div>
 			    <div class="col-5">
-					<h6 style="color: #383a43">Artist active in</h6>
+				<label class="form-label-custom">Artist active in</label>
 					<input class="form-control" type="search" name="active" placeholder="Artist active in" aria-label="search">
 				</div>
 			    <div class="col"></div>
 			    <div class="col-2 text-left">
-			        <h6>Sort by</h6>
+		        <label class="form-label-custom">Sort by</label>
 			        <div class="form-group">
 			            <select class="form-control" id="sortby" name="sortby">
 			                <option>ID</option>
@@ -99,7 +101,7 @@ Simple Search
 			    </div>
 			    <div class="col"></div>
 			    <div class="col-2 text-center">
-			        <h6>Toggle top layer</h6>
+		        <label class="form-label-custom">Toggle top layer</label>
 			        {% if 'toplayervis' in request.GET %}
 			            <input class = "form-control" type="checkbox" name="toplayervis" aria-label checked>
 			        {% else %}
@@ -107,26 +109,22 @@ Simple Search
 			        {% endif %}
 			    </div>
 			</div>
-			<div class="text-left"><button class="btn btn-outline-secondary" type="submit">Search</button></div>
+			<div class="text-left"><button class="btn btn-dark" type="submit">Search</button></div>
 		</form>		
 	</div>
 </div>
 
 
-<div class="row mt-3 mb-3 p-3">
+<div class="query-results-bar mt-3 mb-3">
 	<!-- Amount of results -->
-	<div class="col text-left align-self-center">
-		<h5>{{ results }} results</h5>
-	</div>
+	<span class="query-results-bar__count">{{ results }} results</span>
 	<!-- Export function -->
-	<div class="col text-right align-self-center">
-		<a href="{% url 'csv-export-simple' %}?{{request.GET.urlencode}}"><button type="button" class="btn btn-outline-info">Export to CSV</button></a>
-	</div>	
+	<a href="{% url 'csv-export-simple' %}?{{request.GET.urlencode}}"><button type="button" class="btn btn-outline-secondary btn-sm">Export to CSV</button></a>
 </div>
 
 
 <!-- This generates a table for all the results -->
-<table class="table table-condensed table-hover table-striped">
+<table class="table table-condensed table-hover table-striped data-table">
 	<thead>
 		<tr>
 			<!--<th></th>-->
@@ -138,9 +136,9 @@ Simple Search
 			<th>No. of Ground Layers</th>
 			<th>Colour-code</th>
 			{% if 'toplayervis' in request.GET %}
-				<th>Top layer</th>
+				<th data-sort-method="none">Top layer</th>
 			{% else %}
-				<th>Layers</th>
+				<th data-sort-method="none">Layers</th>
 			{% endif %}
 		</tr>
 	</thead>
@@ -167,34 +165,34 @@ Simple Search
 				{% if 'toplayervis' in request.GET %}		
 					<td>
 						{% if artwork.data.layer3_colour %}
-							<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+							<div data-swatch-hex="{{ artwork.data.layer3_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
 						{% elif artwork.data.layer2_colour %}
-							<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+							<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
 						{% else %}
-							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+							<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
 						{% endif %}
 					</td>
 				{% else %}
 					<td>
 						{% if artwork.data.no_of_grounds == '1' %}
-							<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px;  border: 1px solid black;"></div>
+							<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
 						{% elif artwork.data.no_of_grounds == '2' %}
 							<div style=" border: 1px solid black;">
-								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
 							</div>
 							
 						{% elif artwork.data.no_of_grounds == '3' %}
 							<div style=" border: 1px solid black;">
-								<div style="background-color: {{ artwork.data.layer3_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
-								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer3_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
 							</div>
 
 						{% else %}
 							<div style=" border: 1px solid black;">
-								<div style="background-color: {{ artwork.data.layer2_colour.hex_code }} ; padding: 10px; margin-bottom:0;"></div>
-								<div style="background-color: {{ artwork.data.layer1_colour.hex_code }} ; padding: 10px; margin:0; padding-top:10;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+								<div data-swatch-hex="{{ artwork.data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
 							</div>
 						{% endif %}
 					</td>
@@ -203,5 +201,6 @@ Simple Search
 		{% endfor %}
 	</tbody>
 </table>
+</div><!-- /.page-width-wide -->
 {% endblock content %}
 <!-- table pagination? --> 

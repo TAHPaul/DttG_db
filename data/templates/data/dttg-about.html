@@ -7,89 +7,92 @@ About
 {% endblock title %}
 
 {% block content %}
-	<div class="jumbotron text-center">
-		<div class="row">
-			<div class="col-2">
-				<img src="{% get_media_prefix %}/site_media/Logo.png" alt="Logo" style="width:125px;">
+	<section class="page-width-wide content-panel mt-4 mb-4">
+		<div class="section-heading mb-3">
+			<p class="section-heading__eyebrow">About</p>
+			<h1 class="section-heading__title">Down to the Ground</h1>
+		</div>
+		<h2 class="about-project-subtitle">A HISTORICAL, VISUAL AND SCIENTIFIC ANALYSIS OF COLOURED GROUNDS IN NETHERLANDISH PAINTINGS, 1550-1650</h2>
+		<p>The colour of ground layers, applied to prepare supports for painting, has a profound effect on painting methods and the visual characteristics of finished pictures. In the Renaissance, painters used white grounds. Coloured grounds originate in late fifteenth-century Italy and spread North in the sixteenth century. They gave rise to a new way of painting, with an emphasis on tonality and chiaroscuro. Currently we have no overview of the transfer mechanisms that influenced their successful spread to the Netherlands, their impact on painting technique and visual effects, and the influence of advances in Early Modern optics and colour theory on their development. In Down to the Ground, art historians, conservators, and scientists investigate the impact of coloured grounds through three interwoven subprojects, focusing on the spread of coloured grounds, the role of ground colour in the painting process, and the development of innovative non-invasive depth-resolved spectral imaging instrumentation (DRSI) to support research into visual and optical characteristics and colour changes. The project will provide insight into the mix of cultural and technological factors that allowed coloured grounds to develop, disclosing their influence on the character, methods, and visual appearance of Netherlandish Golden Age paintings.</p>
+		<p>The <i>Down to the Ground</i> project ran from 2019-2024. Project outcomes included this database, Hall-Aquitania's PhD Dissertation <i>Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650</i>, and a <a href="https://jhna.org/issues/vol-17-2-2025/" target="_blank" rel="noopener noreferrer">special issue of the <i>Journal of Historians of Netherlandish Art</i></a>, published in 2025.</p>
+		<p>The research presented here was made possible in part by the Dutch Research Council (NWO), within the framework of the Humanities Open Competition project <i>Down to the Ground: A Historical, Visual and Scientific Analysis of Coloured Grounds in Netherlandish Paintings, 1550-1650</i> (VC.GW17.029).</p>
+
+		<div class="row mt-4">
+			<div class="col-md-4 mb-3 mb-md-0">
+				<h6>Project leader</h6>
+				<p class="mb-0">Dr. Maartje Stols-Witlox</p>
 			</div>
-			<div class="col">
-				<h1 class="display-2" style="color: #e8e9eb">About</h1>
+			<div class="col-md-4 mb-3 mb-md-0">
+				<h6>Principal researchers</h6>
+				<ul class="mb-0 about-people-list">
+					<li>Dr. Moorea Hall-Aquitania</li>
+					<li>Lieve d'Hont</li>
+					<li>Michaël Maria</li>
+				</ul>
 			</div>
-			<div class="col-2">
-				<img src="{% get_media_prefix %}/site_media/Logo.png" alt="Logo" style="width:125px;">
+			<div class="col-md-4">
+				<h6>Project team</h6>
+				<ul class="mb-0 about-people-list">
+					<li>Prof. Dr. Ella Hendriks</li>
+					<li>Prof. Dr. Erma Hermens</li>
+					<li>Dr. Roger M. Groves</li>
+					<li>Dr. Elmer Kolfin</li>
+					<li>Dr. Andreï Anisimov</li>
+					<li>Paul J.C. van Laar</li>
+				</ul>
 			</div>
 		</div>
-	</div>
-	<h2>
-		DOWN TO THE GROUND
-	</h2>
-	
-	<hr>
-	
-	<h4>
-		A HISTORICAL, VISUAL AND SCIENTIFIC ANALYSIS OF COLOURED GROUNDS IN NETHERLANDISH PAINTINGS, 1550-1650
-	</h4>
-	
-	<p>
-		The colour of ground layers, applied to prepare supports for painting, has a profound effect on painting methods and the visual characteristics of finished pictures. In the Renaissance, painters used white grounds. Coloured grounds originate in late 15th-century Italy and spread North around 1550. They gave rise to a new way of painting, with an emphasis on tonality and chiaroscuro.
+	</section>
 
-		Currently we have no overview of the transfer mechanisms that influenced their successful spread to the Netherlands, their impact on painting technique and visual effects, and the influence of advances in Early Modern optics and colour theory on their development.
+	<section class="page-width-prose content-panel mb-4">
+		<div class="section-heading mb-3">
+			<p class="section-heading__eyebrow">Partners</p>
+		</div>
+		<div class="row mx-2 justify-content-center">
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://www.uva.nl/en" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/UVA.svg" alt="University of Amsterdam logo"></a></div>
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot about-logo-slot-dark" href="https://www.franshalsmuseum.nl/en/" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/FHM.svg" alt="Frans Hals Museum logo"></a></div>
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://www.mauritshuis.nl/en/" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/MH.svg" alt="Mauritshuis logo"></a></div>
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://www.rijksmuseum.nl/en" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/RM.svg" alt="Rijksmuseum logo"></a></div>
+		</div>
+		<div class="row mx-2 justify-content-center">
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://www.nationalgallery.org.uk/" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/NG.svg" alt="National Gallery logo"></a></div>
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://www.smk.dk/en/" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/SMK.svg" alt="Statens Museum for Kunst logo"></a></div>
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://kmska.be/en" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/KMSKA.svg" alt="KMSKA logo"></a></div>
+			<div class="col-6 col-md-3 mb-4"><a class="about-logo-slot" href="https://rkd.nl/en/" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/RKD_new.svg" alt="RKD logo"></a></div>
+		</div>
 
-		In Down to the Ground, art historians, conservators, and scientists investigate the impact of coloured grounds through three interwoven subprojects, focusing on the spread of coloured grounds, the role of ground colour in the painting process, and the development of innovative non-invasive depth-resolved spectral imaging instrumentation (DRSI) to support research into visual and optical characteristics and colour changes. The project will provide insight into the mix of cultural and technological factors that allowed coloured grounds to develop, disclosing their influence on the character, methods, and visual appearance of Netherlandish Golden Age paintings.
-	</p>
-	
-	<hr>
-	
-	<div class="container">
-		<div class="row border-between">
-			<div class="col" style="border-right: 1px solid rgba(0,0,0,0.1)">
-				<h4 align="center">TEAM</h4>
-				<h6>Project leader:</h6>
-				<div class="entry-content">
-					<p class="mb-0">&#9642; Dr. Maartje Stols-Witlox</p>
-					<br>
-				</div>
-				<h6>Principal researchers:</h6>
-				<div class="entry-content">
-					<p class="mb-0">&#9642; Lieve d'Hont</p>
-					<p class="mb-0">&#9642; Dr. Moorea Hall-Aquitania</p>
-					<p class="mb-0">&#9642; Michaël Maria</p>
-					<br>
-				</div>
-				<h6>Project team:</h6>
-				<div class="entry-content">
-					<p class="mb-0">&#9642; Prof. Dr. Ella Hendrinks</p>
-					<p class="mb-0">&#9642; Prof. Dr. Erma Hermens</p>
-					<p class="mb-0">&#9642; Dr. Roger M. Groves</p>
-					<p class="mb-0">&#9642; Dr. Elmer Kolfin</p>
-					<p class="mb-0">&#9642; Dr. Andreï Anisimov</p>
-					<p class="mb-0">&#9642; Paul J.C. van Laar</p>
-					<br>
-				</div>
+		<div class="about-funders mt-4 pt-3">
+			<div class="section-heading mb-3">
+				<p class="section-heading__eyebrow">Funders</p>
 			</div>
-			<div class="col">
-				<h4 align="center">PARTICIPATING INSTITUTIONS</h4>
-				<div class="row mt-4 mx-2">
-					<div class="col-3"><a class="about-logo-slot" href="https://www.uva.nl/en"><img class="about-logo" src="{% get_media_prefix %}/site_media/UVA.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot about-logo-slot-dark" href="https://www.franshalsmuseum.nl/en/"><img class="about-logo" src="{% get_media_prefix %}/site_media/FHM.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://www.mauritshuis.nl/en/"><img class="about-logo" src="{% get_media_prefix %}/site_media/MH.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://www.rijksmuseum.nl/en"><img class="about-logo" src="{% get_media_prefix %}/site_media/RM.svg"></a></div>
-				</div>
-				<div class="row mt-4 mx-2">
-					<div class="col-3"><a class="about-logo-slot" href="https://www.nationalgallery.org.uk/"><img class="about-logo" src="{% get_media_prefix %}/site_media/NG.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://www.smk.dk/en/"><img class="about-logo" src="{% get_media_prefix %}/site_media/SMK.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://kmska.be/en"><img class="about-logo" src="{% get_media_prefix %}/site_media/KMSKA.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://rkd.nl/en/"><img class="about-logo" src="{% get_media_prefix %}/site_media/RKD_new.svg"></a></div>
-				</div>
-				<hr>
-				<h4 align="center">FUNDED BY:</h4>
-				<div class="row mt-4 mb-4 mx-2">
-					<div class="col-3"></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://www.nwo.nl/en"><img class="about-logo" src="{% get_media_prefix %}/site_media/NWO.svg"></a></div>
-					<div class="col-3"><a class="about-logo-slot" href="https://www.nicas-research.nl/"><img class="about-logo" src="{% get_media_prefix %}/site_media/NICAS_black.png"></a></div>
-					<div class="col-3"></div>
-				</div>
+			<div class="row mx-2 justify-content-center align-items-center">
+				<div class="col-6 col-md-3 mb-4 mb-md-0"><a class="about-logo-slot" href="https://www.nwo.nl/en" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/NWO.svg" alt="NWO logo"></a></div>
+				<div class="col-6 col-md-3 mb-4 mb-md-0"><a class="about-logo-slot" href="https://www.nicas-research.nl/" target="_blank" rel="noopener noreferrer"><img class="about-logo" src="{% get_media_prefix %}/site_media/NICAS_black.png" alt="NICAS logo"></a></div>
 			</div>
 		</div>
-	</div>
+	</section>
+
+	<section class="page-width-wide content-panel mb-4">
+		<div class="section-heading mb-3">
+			<p class="section-heading__eyebrow">About the database</p>
+			<h2 class="section-heading__title">Scope, method, and maintenance</h2>
+		</div>
+		<p>The data presented here was collected by Moorea Hall-Aquitania starting in 2018, first for a fellowship at the Rijksmuseum and subsequently under the remit of her doctoral research for the NWO Down to the Ground (DttG) project at the University of Amsterdam, 2019-2024. It was designed by Moorea Hall-Aquitania and Paul J.C. van Laar, and developed by Paul J.C. van Laar in 2022 and 2026.</p>
+		<p>The current scope focuses on Netherlandish paintings from  1500–1650, although relevant paintings up to 1700 are being added. Data are compiled from published scholarship, unpublished institutional documentation, and new technical research, with sources and responsible researchers cited where known.</p>
+		<p>As with most technical datasets, the corpus contains lacunae and biases caused by conservation access, institutional research priorities, and uneven historical coverage. The database is intended as a transparent research instrument that supports both close reading of individual entries and comparative querying across the corpus.</p>
+		<p>The database is hosted at RKD for a minimum period of five years from October 2025 and is updated quarterly.</p>
+		<p class="mb-0">To contribute new entries or corrections, please use the submission template presented in the RKD Studies guide: <a href="https://dttg.rkdstudies.nl/3-how-to-use-the-dttg-database-and-tool/32-template-for-submitting-additions-to-the-dttg-database/" target="_blank" rel="noopener noreferrer">Template for submitting additions to the DttG database</a>.</p>
+	</section>
+
+	<section class="page-width-prose content-panel mb-5">
+		<div class="section-heading mb-3">
+			<p class="section-heading__eyebrow">Further reading</p>
+			<h2 class="section-heading__title">Related publications</h2>
+		</div>
+		<ul class="mb-0">
+			<li>Hall-Aquitania, Moorea, and Paul J. C. van Laar, “Under the Microscope and Into the Database: Designing Data Frameworks for Technical Art Historical Research,” <em>Journal of Historians of Netherlandish Art</em> 17.2. <a href="https://doi.org/10.5092/jhna.2025.17.2.8" target="_blank" rel="noopener noreferrer">https://doi.org/10.5092/jhna.2025.17.2.8</a></li>
+			<li>Hall-Aquitania, Moorea, and Paul J. C. van Laar, <em>The Down to the Ground Project and Database of Coloured Grounds</em>, RKD Studies: <a href="https://dttg.rkdstudies.nl/contents/" target="_blank" rel="noopener noreferrer">https://dttg.rkdstudies.nl/contents</a>.</li>
+			<li>Hall-Aquitania, Moorea, <em>Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650</em>, University of Amsterdam, 2025. <a href="https://hdl.handle.net/11245.1/b5ed6e84-7de9-4d7b-9ab7-76fb3ff7fc2d" target="_blank" rel="noopener noreferrer">https://hdl.handle.net/11245.1/b5ed6e84-7de9-4d7b-9ab7-76fb3ff7fc2d</a></li>
+		</ul>
+	</section>
 {% endblock content %}

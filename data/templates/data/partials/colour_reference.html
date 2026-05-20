@@ -1,0 +1,362 @@
+{% with display_mode=mode|default:'full' %}
+{% regroup colours by group as colour_groups %}
+<div class="colour-reference colour-reference--{{ display_mode }}">
+	{% if display_mode == 'hub' %}
+		<!-- Hub mode: one row per colour family, Light → Mid → Dark columns -->
+		<div class="colour-reference__hub-table">
+			<!-- Brown -->
+			<div class="colour-reference__hub-row">
+				<span class="colour-reference__hub-label">Brown</span>
+				{% for colour in colours %}{% if colour.id == 'LBr' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'Br' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'DBr' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- Grey -->
+			<div class="colour-reference__hub-row">
+				<span class="colour-reference__hub-label">Grey</span>
+				{% for colour in colours %}{% if colour.id == 'LG' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'G' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'DG' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- Orange -->
+			<div class="colour-reference__hub-row">
+				<span class="colour-reference__hub-label">Orange</span>
+				{% for colour in colours %}{% if colour.id == 'LO' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'O' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'DO' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- Pink -->
+			<div class="colour-reference__hub-row">
+				<span class="colour-reference__hub-label">Pink</span>
+				{% for colour in colours %}{% if colour.id == 'LP' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'P' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'DP' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- Red -->
+			<div class="colour-reference__hub-row">
+				<span class="colour-reference__hub-label">Red</span>
+				{% for colour in colours %}{% if colour.id == 'LR' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'R' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'DR' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- Yellow -->
+			<div class="colour-reference__hub-row">
+				<span class="colour-reference__hub-label">Yellow</span>
+				{% for colour in colours %}{% if colour.id == 'LY' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'Y' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+				{% for colour in colours %}{% if colour.id == 'DY' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- Black (neutral separator via CSS margin-top on --neutral rows) -->
+			<div class="colour-reference__hub-row colour-reference__hub-row--neutral">
+				<span class="colour-reference__hub-label">Black</span>
+				{% for colour in colours %}{% if colour.id == 'Bl' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+			<!-- White -->
+			<div class="colour-reference__hub-row colour-reference__hub-row--neutral">
+				<span class="colour-reference__hub-label">White</span>
+				{% for colour in colours %}{% if colour.id == 'W' %}
+				<div class="colour-reference__hub-cell">
+					<div class="colour-reference__swatch colour-reference__swatch--hub" data-swatch-hex="{{ colour.hex_code }}"><span class="colour-reference__swatch-hex">{{ colour.hex_code }}</span></div>
+					<span class="colour-reference__hub-name">{{ colour.colour_name }}</span>
+					<span class="colour-reference__hub-code">{{ colour.id }}</span>
+				</div>
+				{% endif %}{% endfor %}
+			</div>
+		</div>
+	{% elif display_mode == 'full' %}
+		<div class="colour-reference__intro">
+			<p class="mb-2">The DttG colour categories standardise highly varied free-text descriptions so that researchers can search, compare, and visualise grounds across institutions and publications.</p>
+			<p class="mb-0">These swatches represent standardised query categories rather than exact reconstructions of a painting's original appearance or precise measured colour values.</p>
+		</div>
+		<div class="row">
+			{% for group in colour_groups %}
+				<div class="col-md-6 col-lg-4 mb-4">
+					<div class="colour-reference__group-panel h-100">
+						<h3 class="colour-reference__group-title">{{ group.grouper }}</h3>
+						<div class="colour-reference__full-grid">
+							{% for colour in group.list %}
+								<div class="colour-reference__item">
+									<div class="colour-reference__swatch" data-swatch-hex="{{ colour.hex_code }}" aria-hidden="true"></div>
+									<div class="colour-reference__meta">
+										<div class="colour-reference__name-row">
+											<span class="colour-reference__name">{{ colour.colour_name }}</span>
+											<span class="colour-reference__code">{{ colour.id }}</span>
+										</div>
+										<div class="colour-reference__hex">{{ colour.hex_code }}</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<div class="colour-reference__compact-grid colour-reference__compact-grid--fixed">
+			<div class="colour-reference__compact-group">
+				<p class="colour-reference__compact-label">Brown</p>
+				<div class="colour-reference__compact-swatches">
+					{% for colour in colours %}
+						{% if colour.id == 'LBr' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'Br' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'DBr' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="colour-reference__compact-group">
+				<p class="colour-reference__compact-label">Grey</p>
+				<div class="colour-reference__compact-swatches">
+					{% for colour in colours %}
+						{% if colour.id == 'LG' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'G' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'DG' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="colour-reference__compact-group">
+				<p class="colour-reference__compact-label">Orange</p>
+				<div class="colour-reference__compact-swatches">
+					{% for colour in colours %}
+						{% if colour.id == 'LO' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'O' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'DO' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="colour-reference__compact-group">
+				<p class="colour-reference__compact-label">Pink</p>
+				<div class="colour-reference__compact-swatches">
+					{% for colour in colours %}
+						{% if colour.id == 'LP' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'P' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'DP' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="colour-reference__compact-group">
+				<p class="colour-reference__compact-label">Red</p>
+				<div class="colour-reference__compact-swatches">
+					{% for colour in colours %}
+						{% if colour.id == 'LR' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'R' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'DR' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="colour-reference__compact-group">
+				<p class="colour-reference__compact-label">Yellow</p>
+				<div class="colour-reference__compact-swatches">
+					{% for colour in colours %}
+						{% if colour.id == 'LY' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'Y' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+					{% for colour in colours %}
+						{% if colour.id == 'DY' %}
+							<span class="colour-reference__swatch colour-reference__swatch--compact" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="colour-reference__compact-neutral-row">
+			<div class="colour-reference__compact-group colour-reference__compact-group--neutral">
+				<p class="colour-reference__compact-label">Black</p>
+				<div class="colour-reference__compact-swatches colour-reference__compact-swatches--neutral">
+				{% for colour in colours %}
+					{% if colour.id == 'Bl' %}
+						<span class="colour-reference__swatch colour-reference__swatch--compact colour-reference__swatch--neutral" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+					{% endif %}
+				{% endfor %}
+				</div>
+			</div>
+
+			<div class="colour-reference__compact-group colour-reference__compact-group--neutral">
+				<p class="colour-reference__compact-label">White</p>
+				<div class="colour-reference__compact-swatches colour-reference__compact-swatches--neutral">
+				{% for colour in colours %}
+					{% if colour.id == 'W' %}
+						<span class="colour-reference__swatch colour-reference__swatch--compact colour-reference__swatch--neutral" data-swatch-hex="{{ colour.hex_code }}" title="{{ colour.colour_name }} ({{ colour.id }})"></span>
+					{% endif %}
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
+</div>
+{% endwith %}

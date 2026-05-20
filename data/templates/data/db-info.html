@@ -1,121 +1,158 @@
 {% extends 'data/base.html' %}
 
-{% block title%}
-Colours
-{% endblock title%}
+{% block title %}Documentation{% endblock title %}
 
-{% block content%}
-	<div class="container-fluid">
-		<div class="jumbotron text-center">
-			<h1 class="display-4" style="color: #e8e9eb ">Database Information</h1>
+{% block content %}
+<div class="page-width-prose">
+
+	<!-- Page Header -->
+	<header class="doc-hub__header">
+		<h1 class="doc-hub__title">Documentation</h1>
+		<p class="doc-hub__subtitle">Reference material for the Down to the Ground database — methodology, systems, and implementation notes.</p>
+	</header>
+
+	<!-- Anchor Navigation -->
+	<nav class="doc-hub__anchornav" aria-label="Documentation sections">
+		<a href="#how-to-use" class="doc-hub__anchor-link">How to Use</a>
+		<a href="#reliability" class="doc-hub__anchor-link">Reliability System</a>
+		<a href="#colour-system" class="doc-hub__anchor-link">Colour System</a>
+		<a href="#terminology" class="doc-hub__anchor-link">Terminology</a>
+		<a href="#cross-section-images" class="doc-hub__anchor-link">Cross-Section Images</a>
+		<a href="#database-notes" class="doc-hub__anchor-link">Database Notes</a>
+		<a href="#database-development" class="doc-hub__anchor-link">Database Development</a>
+		<a href="#submissions" class="doc-hub__anchor-link">Submissions</a>
+		<a href="#citation" class="doc-hub__anchor-link">Citation &amp; Reuse</a>
+	</nav>
+
+	<!-- ── HOW TO USE ── -->
+	<section class="doc-hub__section" id="how-to-use">
+		<h2 class="section-heading">How to Use the Database</h2>
+		<div class="doc-hub__prose">
+			<p>The DttG database can be queried in two ways:</p>
+			<ul>
+				<li><strong>Simple query</strong> — filter paintings by a single parameter such as colour, city, artist, or institution.</li>
+				<li><strong>Advanced query</strong> — combine multiple parameters to produce a refined result.</li>
+			</ul>
+			<p>Results of queries are displayed in a tabular format, allowing for easy comparison and analysis of different paintings based on the selected criteria. The results can be exported as a <code>.csv</code> file for further analysis in external software.</p>
+			<p>Each result links to a full entry with bibliographic references, ground-layer descriptions, and reliability rating. Colour information for each painting is displayed using the standardised DttG colour categories described in the <a href="#colour-system">Colour System</a> section below.</p>
+			<p>If you are new to the database, the <a href="#reliability">Reliability System</a> section explains how to interpret data quality ratings before drawing conclusions from query results.</p>
+			<p>For more, see the dedicated 'Guide for Using' section on the <a href="https://dttg.rkdstudies.nl/3-how-to-use-the-dttg-database-and-tool/31-guide-for-using-the-dttg-database/ " target="_blank" rel="noopener noreferrer">RKD Study</a>.</p>
 		</div>
-	</div>
+	</section>
 
-	<!-- Nav tabs -->
-
-	<ul class="nav nav-tabs" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" data-toggle="tab" href="#reliability">Reliability System</a>
-		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">Colour System</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" data-toggle="tab" href="#colour">Colours</a>
-					<a class="dropdown-item" data-toggle="tab" href="#colour_info">Information</a>
+	<!-- ── RELIABILITY SYSTEM ── -->
+	<section class="doc-hub__section" id="reliability">
+		<h2 class="section-heading">Reliability System</h2>
+		<div class="doc-hub__prose">
+			<p>In order to build a comprehensive database of Dutch and Flemish ground colours, it was necessary to use "mixed quality data" so that published and unpublished information across institutions with varying degrees of technical research could be presented and queried together. A reliability rating system was developed so that patterns and conclusions could be filtered based on the level of research conducted on the ground layers of individual paintings.</p>
+			<p>Each painting entry in the DttG database is given a numerical rating from <strong>1 to 4</strong>, representing the reliability of that entry's data:</p>
+			<dl class="doc-hub__rating-list">
+				<div class="doc-hub__rating-item">
+					<dt><span class="doc-hub__rating-badge">1</span> Most reliable</dt>
+					<dd>Elemental analysis (such as SEM-EDX) has been performed to confirm microscopic cross-section analysis.</dd>
 				</div>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" data-toggle="tab" href="#info">More info</a>
-		</li>
-	</ul>
-
-	<!-- Tabs Content -->
-	<div class="tab-content">
-		<div class="tab-pane container active" id="reliability">
-			<p class="mt-3">In order to build a comprehensive database of Dutch and Flemish ground colours, it was necessary to use “mixed quality data” so that published and unpublished information across institutions with varying degrees of technical research could be presented and queried together. A “reliability rating system” was developed so that patterns and conclusions could be filtered based on the level of research conducted on individual data points. Each painting entry in the DttG database is given a numerical rating from 1 to 5, representing the reliability of that entry’s data. 
-			<br><br>
-			1: Most reliable. Elemental analysis (such as scanning electron microscopy) has been performed to confirm microscopic cross-section analysis;<br>
-			2: Microscopic cross-section analysis with light microscopy (no elemental information);<br>
-			3: Surfaces analysis by a skilled individual, ideally a paintings conservator with magnification;<br>
-			4: Written descriptions form the basis, but research methods are unclear;<br>
-			<br> 
-			For more, see: Hall-Aquitania, Moorea. “Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650.” University of Amsterdam, 2025.</p><hr>
-		</div>
-		<div class="tab-pane fade" id="colour">
-			<br>
-			<div class="container">
-				<div class="row">
-					{% for colour in colours %}
-						{% if colour.group != 'Black' and colour.group != 'White' %}
-							<div class="col-4">
-								<div align="center">
-									<a class="mr-2" href="#">{{ colour.colour_name }}</a>
-									<small class="text-muted">({{ colour.id }})</small>
-									<small>{{ colour.hex_code }}</small>
-								</div>
-								<div style="background-color: {{ colour.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
-								<br>
-							</div>
-						{% endif %}
-					{% endfor %}
-					<div class="col-12">
-						<div align="center">
-							<a class="mr-2" href=""> {{ white.colour_name }} </a>
-							<small class="text-muted">({{ white.id }})</small>
-							<small>{{ white.hex_code}}</small>
-							<div style="background-color: {{ white.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
-							<br>
-						</div>
-					</div>
-					<div class="col-12">
-						<div align="center">
-							<a class="mr-2" href=""> {{ black.colour_name }} </a>
-							<small class="text-muted">({{ black.id }})</small>
-							<small>{{ black.hex_code}}</small>
-							<div style="background-color: {{ black.hex_code }} ; padding: 30px; border: 2px solid black;"></div>
-						</div>
-					</div>
-					
+				<div class="doc-hub__rating-item">
+					<dt><span class="doc-hub__rating-badge">2</span> Microscopic cross-section</dt>
+					<dd>Cross-section analysis with light microscopy; no elemental confirmation.</dd>
 				</div>
-				<div>
-					<br><br>
+				<div class="doc-hub__rating-item">
+					<dt><span class="doc-hub__rating-badge">3</span> Surface analysis</dt>
+					<dd>Surface examination by a skilled individual, ideally a paintings conservator with magnification.</dd>
 				</div>
-			</div>
+				<div class="doc-hub__rating-item">
+					<dt><span class="doc-hub__rating-badge">4</span> Written descriptions</dt>
+					<dd>Written descriptions form the basis; research methods are unclear.</dd>
+				</div>
+			</dl>
+			<p class="doc-hub__ref">For more, see: Hall-Aquitania, Moorea. "Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025, pp. 41-43.</p>
 		</div>
-		<div class="tab-pane fade" id="colour_info">
-				<p class="mt-3">The extreme difficulties of describing colour in a meaningful and objective way have caused confusion and concern when attempting to combine observations from different researchers and projects. Because the DttG database was designed to be queried on a large scale, it was necessary to develop a consistent colour categorization system so that data could be plotted, and patterns identified. The database thus includes two types of colour data: free text as related by the responsible researcher and categories based on the most common colours. All free text (and cross-section information) has been translated by Moorea Hall-Aquitania into the DttG colour categories, and she takes responsibility for any mistakes or inconsistencies. 
-				<br><br>
-				The DttG colour checker was developed by Hall-Aquitania with blind survey input from painting conservators to reflect the most common ground colours (based on both surface and microscopic examination). It is intended as a visual reference to the DttG colour categories for future researchers. The colours from this colour checker are shown for each painting, but it should be noted that this is a general categorization and not an accurate representation of that painting’s exact colours.
-				<br><br>
-				For more, see: Hall-Aquitania, Moorea. “Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650.” University of Amsterdam, 2025.</p>
+	</section>
+
+	<!-- ── COLOUR SYSTEM ── -->
+	<section class="doc-hub__section doc-hub__section--wide" id="colour-system">
+		<h2 class="section-heading">Colour System</h2>
+		<div class="doc-hub__prose">
+			<p>The difficulty of describing colour in a meaningful and objective way has complicated the comparison of observations across different researchers and projects. Because the DttG database was designed for large scale queries, it was necessary to develop a consistent colour categorisation system to enable the plotting of data and identification of patterns.</p>
+			<p>The database includes two types of colour data: free text as related by the primary researcher, and standardised categories based on the most common ground colours. All free text (and cross-section information) has been translated by Moorea Hall-Aquitania into the DttG colour categories, and she takes responsibility for any mistakes or inconsistencies.</p>
+			<p>The DttG colour checker was developed by Hall-Aquitania with blind survey input from painting conservators to reflect the most common ground colours in sixteenth- and seventeenth-century Netherlandish paintings (based on both surface and microscopic examination). It is intended as a visual reference for the DttG colour categories. The colours shown for each painting represent a generalised colour classifications rather than exact descriptions.</p>
+			<p class="doc-hub__ref">For more, see: Hall-Aquitania, Moorea. "Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025, pp. 43-46.</p>
 		</div>
-		<div class="tab-pane container fade" id="info">
-			<br>
-
-		<h4>CROSS-SECTION IMAGES</h4>
-		<p>The decision not to use images of cross-sections was made early on, due to several reasons including image rights, lack of consistent colour-correction and/or variable instrumentation, access to the raw data from previous research, and lack of time to re-photograph available samples at a set standard. It is fervently hoped that it will be possible to address some of these issues in the future to include sample images in the database. For now, the location of available images has been noted wherever possible so that researchers can request access to them from the relevant source or institution.</p><hr>
-
-		<h4>DATABASE NOTES</h4>
-		<p>I.	For chalk layers, the colour given is light yellow (LY) to distinguish from lead white layers (W) and account for the yellowing of chalk in animal skin glue (and oil);<br><br>
-		II.	For paintings with more than three ground layers, the full structure is listed as free text but only the top and bottom layers are categorized and described systematically. This allows us to continue to sort based on the top ground layer colour without expanding the entire system to accommodate the scant paintings with four or more ground layers;<br><br>
-		III.	When interpreting ground colour categories from written text where the sample was not accessible, I have used my best judgement based on the original researcher’s description and, when possible, the pigments listed. All faults and inconsistencies are my own;<br><br>
-		IV.	The most difficult categorisation to make has been to differentiate between red and orange, as this relies heavily on the microscopy and photography equipment used. All faults and inconsistencies are my own.</p><hr>
-
-		<h4>TERMINOLOGY</h4>
-		<p>This database, which was made as part of Hall-Aquitania’s 2025 PhD dissertation <i>Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands, 1500-1650</i>, uses the terminology system for preparatory layers developed by Maartje Stols-Witlox, in which grounds are defined as preparatory layers covering the entire surface to be painted. Ground layers are numbered from the lowest layer and described qualitatively (e.g. a red first ground and a light brown second ground).
-		<br><br>
-		For a detailed definition of preparatory layers and terminology see Stols-Witlox, Maartje. <i>A Perfect Ground: Preparatory Layers for Oil Paintings 1550-1900.</i> London: Archetype, 2017, p. xi-xvi.
-		<br><br>
-		For a further explanation of the terminology and systems used specifically for this database, see Hall-Aquitania, Moorea. “Common Grounds: The Introduction, Spread, and Popularity of Coloured Grounds in the Netherlands 1500-1650.” University of Amsterdam, 2025.</p><hr>
-
-		<h4>DATABASE DEVELOPMENT</h4>
-		<p>The DttG database was developed by Paul van Laar in 2022 using the open-source back-end server-side web framework <a href= https://www.djangoproject.com target="_blank" rel="noopener noreferrer">Django</a>. Django is free, and open-source and uses Python. Django is used to browse through the linked DttG SQLite3 database, using querysets of that data to populate HTML templates. In practice, this means that the webpages the user requests are generated dynamically with data from the database. Any updates made to that same database will thus automatically alter the relevant pages as they are requested. 
-		<br><br>
-		A multi-sheet excel file was kept as the input for the database, to retain ease-of-use for cultural heritage researchers with varying backgrounds. This excel sheet is then inserted into the SQLite3 database using a simple python script. 
-		<br><br>
-		The functionality of the database is flexible, and can be expanded as desired. At this stage, it allows for filtering the data on certain parameters (city of execution, artist etc.), as well as asking complex queries that can be exported in .csv format for data interpretation in external software.</p><hr>
-
+		<div class="doc-hub__colour-block">
+			{% include 'data/partials/colour_reference.html' with mode='hub' %}
 		</div>
-	</div>		
+	</section>
 
+	<!-- ── TERMINOLOGY ── -->
+	<section class="doc-hub__section" id="terminology">
+		<h2 class="section-heading">Terminology</h2>
+		<div class="doc-hub__prose">
+			<p>The database uses the terminology system for preparatory layers developed by Maartje Stols-Witlox, in which grounds are defined as preparatory layers covering the entire surface to be painted. Ground layers are numbered from the lowest layer and described qualitatively (e.g. a red first ground and a light brown second ground).</p>
+			<p class="doc-hub__ref">For a detailed definition of preparatory layers and terminology, see: Stols-Witlox, Maartje. <em>A Perfect Ground: Preparatory Layers for Oil Paintings 1550–1900.</em> London: Archetype, 2017, pp. xi–xvi.</p>
+			<p class="doc-hub__ref">For a further explanation of the terminology and systems used specifically for this database, see: Hall-Aquitania, Moorea. "Common Grounds: The Development, Spread, and Popularity of Coloured Grounds in the Netherlands 1500–1650." University of Amsterdam, 2025, pp. 22-25.</p>
+		</div>
+	</section>
+
+	<!-- ── CROSS-SECTION IMAGES ── -->
+	<section class="doc-hub__section" id="cross-section-images">
+		<h2 class="section-heading">Cross-Section Images</h2>
+		<div class="doc-hub__prose">
+			<p>The decision not to include images of cross-sections was made early on, due to several reasons including image rights, lack of consistent colour-correction and/or variable instrumentation, limited access to the raw data from previous research, and lack of time to re-photograph available samples at a set standard. It is hoped that it will be possible to address some of these issues in the future to include sample images in the database. For now, the location of available images has been noted wherever possible so that researchers can request access from the relevant source or institution.</p>
+		</div>
+	</section>
+
+	<!-- ── DATABASE NOTES ── -->
+	<section class="doc-hub__section" id="database-notes">
+		<h2 class="section-heading">Database Notes</h2>
+		<div class="doc-hub__prose">
+			<ol class="doc-hub__notes-list">
+				<li>For chalk layers, the colour given is light yellow (LY) to distinguish from lead white layers (W) and to account for the yellowing of chalk in animal skin glue (and oil).</li>
+				<li>For paintings with more than three ground layers, the full structure is listed as free text but only the top and bottom layers are categorised and described systematically. This allows sorting on the top ground layer colour without expanding the entire system to accommodate the small number of paintings with four or more ground layers.</li>
+				<li>When interpreting ground colour categories from written text where the sample was not accessible, the most reasonable judgement has been made based on the original researcher's description and, where possible, the pigments listed. All faults and inconsistencies are the responsibility of Hall-Aquitania.</li>
+				<li>The most difficult colour categorisation is between red and orange, as this differentiation often relies heavily on the microscopy and photography equipment used. All faults and inconsistencies are the responsibility of Hall-Aquitania.</li>
+			</ol>
+		</div>
+	</section>
+
+	<!-- ── DATABASE DEVELOPMENT ── -->
+	<section class="doc-hub__section" id="database-development">
+		<h2 class="section-heading">Database Development</h2>
+		<div class="doc-hub__prose">
+			<p>The DttG database was developed by Paul van Laar in 2022 using the open-source, server-side web framework <a href="https://www.djangoproject.com" target="_blank" rel="noopener noreferrer">Django</a>. Django is free and open-source and uses Python. It is used here to browse through the linked DttG SQLite3 database, using querysets of that data to populate HTML templates. The webpages the user requests are generated dynamically with data from the database; any updates made to the database will thus automatically be reflected in the relevant pages as they are requested.</p>
+			<p>A multi-sheet Excel file was kept as the primary input for the database, to retain ease of use for cultural heritage researchers with varying technical backgrounds. This file is then inserted into the SQLite3 database using a Python script.</p>
+			<p>The functionality of the database is flexible and can be expanded as desired. At this stage it allows for filtering data on a range of parameters (city of execution, artist, museum, etc.) as well as running complex queries that can be exported in <code>.csv</code> format for analysis in external software.</p>
+			<p>The code for this project is open source and available on GitHub at <a href="https://github.com/TAHPaul/DttG_db" target="_blank" rel="noopener noreferrer">https://github.com/TAHPaul/DttG_db</a>. This repository can be used as a starting point or template for similar projects, and includes documentation on the codebase, and import scripts that populate the database.</p>
+			<p>For further technical detail on the database design and tool workflow, see the accompanying RKD Study article: <a href="https://dttg.rkdstudies.nl/2-designing-the-dttg-database-and-database-tool-and-its-wider-applications/" target="_blank" rel="noopener noreferrer">Designing the DttG database and tool</a>.</p>
+		</div>
+	</section>
+
+	<!-- ── SUBMISSIONS ── -->
+	<section class="doc-hub__section" id="submissions">
+		<h2 class="section-heading">Submissions</h2>
+		<div class="doc-hub__prose">
+			<p>For questions about data reuse, corrections, or contributions, please contact Moorea Hall-Aquitania at <a href="mailto:hall-aquitania@rkd.nl">hall-aquitania@rkd.nl</a>. For submissions, please follow the submission guidelines published in the accompanying <a href="https://dttg.rkdstudies.nl/3-how-to-use-the-dttg-database-and-tool/32-template-for-submitting-additions-to-the-dttg-database/" target="_blank" rel="noopener noreferrer">RKD Studies article</a>.</p>
+		</div>
+	</section>
+
+	<!-- ── CITATION AND REUSE ── -->
+	<section class="doc-hub__section" id="citation">
+		<h2 class="section-heading">Citations</h2>
+		<div class="doc-hub__prose">
+			<p>If you use data from this database in your research, please cite the database and accompanying RKD Study:</p>
+			<p>To cite the entire database:</p>
+			<blockquote class="doc-hub__citation">
+				Hall-Aquitania, Moorea, and Paul J.C. van Laar. <i>Down to the Ground Database</i>. RKD Studies. Accessed [Month Day, Year]. https://downtotheground.rkdstudies.nl/
+			</blockquote>
+			<p>To cite an individual entry:</p>
+			<blockquote class="doc-hub__citation">
+				Hall-Aquitania, Moorea, and Paul J.C. van Laar. "M001: The Fall Of Man." <i>Down to the Ground Database</i>. RKD Studies. Accessed [Month Day, Year]. https://downtotheground.rkdstudies.nl/entry/M001/
+			</blockquote>
+			<p style="line-height: 1.2;"><small>Original source citation, where available, are found on individual entry pages and should be cited alongside the database entry.</small></p>
+			<p>RKD Study:</p>
+			<blockquote class="doc-hub__citation">
+				Hall-Aquitania, Moorea, and Paul J.C. van Laar. <i>The Down to the Ground Project and Database of Coloured Grounds</i>. RKD Studies (2025): https://dttg.rkdstudies.nl/contents/.
+			</blockquote>
+		</div>
+	</section>
+
+</div><!-- /page-width-prose -->
 {% endblock content %}

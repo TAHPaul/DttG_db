@@ -1,0 +1,43 @@
+<tr>
+	<td>{{ aw.id }}</td>
+	<td><a href="{% url 'data-detail' aw.id %}">{{ aw.title }}</a></td>
+	{% if aw.artist2.full_name %}
+		<td>
+			{{ aw.artist_validity }}
+			<a href="{% url 'artists-detail' aw.artist1.id %}">{{ aw.artist1.full_name }}</a>
+			&amp;
+			<a href="{% url 'artists-detail' aw.artist2.id %}">{{ aw.artist2.full_name }}</a>
+		</td>
+	{% else %}
+		<td>{{ aw.artist_validity }} <a href="{% url 'artists-detail' aw.artist1.id %}">{{ aw.artist1.full_name }}</a></td>
+	{% endif %}
+	{% if aw.date2 %}
+		<td>{{ aw.date_validity }} {{ aw.date1 }} - {{ aw.date2 }}</td>
+	{% else %}
+		<td>{{ aw.date_validity }} {{ aw.date1 }}</td>
+	{% endif %}
+	<td><a href="{% url 'city-of-execution-detail' aw.place_of_execution.city %}">{{ aw.place_of_execution }}</a></td>
+	<td>{{ aw_data.no_of_grounds }}</td>
+	<td>{{ aw_data.colour_code }}</td>
+	<td>
+		{% if aw_data.no_of_grounds == '1' %}
+			<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; border: 1px solid black;"></div>
+		{% elif aw_data.no_of_grounds == '2' %}
+			<div style="border: 1px solid black;">
+				<div data-swatch-hex="{{ aw_data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+				<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+			</div>
+		{% elif aw_data.no_of_grounds == '3' %}
+			<div style="border: 1px solid black;">
+				<div data-swatch-hex="{{ aw_data.layer3_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+				<div data-swatch-hex="{{ aw_data.layer2_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+				<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+			</div>
+		{% else %}
+			<div style="border: 1px solid black;">
+				<div data-swatch-hex="{{ aw_data.layer2_colour.hex_code }}" style="padding: 10px; margin-bottom:0;"></div>
+				<div data-swatch-hex="{{ aw_data.layer1_colour.hex_code }}" style="padding: 10px; margin:0; padding-top:10;"></div>
+			</div>
+		{% endif %}
+	</td>
+</tr>

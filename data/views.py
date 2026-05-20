@@ -26,19 +26,25 @@ from .forms import AdvancedSearch
 
 #  OTHER...................................OTHER
 
+def get_colour_reference_context():
+    return {
+        'colours': Colour.objects.all().order_by('group', 'id'),
+        'black': Colour.objects.get(colour_name='Black'),
+        'white': Colour.objects.get(colour_name='White'),
+    }
+
 def home(request):
-	return render(request, 'data/dttg-home.html')
+    context = get_colour_reference_context()
+    context['title'] = 'Home'
+    context['entry_count'] = Data.objects.count()
+    return render(request, 'data/dttg-home.html', context)
 
 def about(request):
 	return render(request, 'data/dttg-about.html')
 
 def db_info(request):
-    context = {
-        'colours': Colour.objects.all().order_by('group'),
-        'title': 'Colours',
-        'black': Colour.objects.get(colour_name='Black'),
-        'white': Colour.objects.get(colour_name='White'),
-    }
+    context = get_colour_reference_context()
+    context['title'] = 'Documentation'
     return render(request, 'data/db-info.html', context)
 
 #  ARTISTS...............................ARTISTS
@@ -84,6 +90,7 @@ class DataListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(DataListView, self).get_context_data(**kwargs)
         context['no_of_entries'] = Data.objects.count()
+        context['all_data'] = Data.objects.select_related('m_number').order_by('m_number')
         return context
 
 class DataDetailView(DetailView):
