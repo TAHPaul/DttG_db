@@ -145,6 +145,39 @@ python manage.py fetch_rkd_images --force
 - Some records may fail due to temporary RKD API/server errors; re-running later can fill additional URLs.
 - Templates already prefer `rkd_image_url` when present and fall back to local uploaded images.
 
+## Updating the database from CSV files
+If you have new or corrected CSV exports in `data/csv/`, use the new management command to import or update records from one or more sections.
+
+### Run the updater interactively
+```bash
+python manage.py update_db
+```
+This prompts for each section and only updates the parts you choose.
+
+### Run specific sections
+```bash
+python manage.py update_db --artists --museums
+```
+Only the selected CSV sections are processed.
+
+### Run all sections
+```bash
+python manage.py update_db --all
+```
+Processes all CSV loaders in `data/csv/`.
+
+### Dry run
+```bash
+python manage.py update_db --all --dry-run
+```
+Shows what would run without changing the database.
+
+### Non-interactive mode
+```bash
+python manage.py update_db --all --yes
+```
+Skips prompts and confirms all selected sections automatically.
+
 ## Publications
 For full accounts of the methodological and art historical context:  
 
