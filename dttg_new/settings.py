@@ -17,16 +17,9 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Use local defaults when running from the repo's local virtualenv.
-# Override with DJANGO_LOAD_DOTENV=True to test production-like settings locally.
-_dotenv_setting = os.environ.get('DJANGO_LOAD_DOTENV')
-if _dotenv_setting is None:
-    _load_dotenv = not (BASE_DIR / '.venv').exists()
-else:
-    _load_dotenv = _dotenv_setting == 'True'
-
-if _load_dotenv:
-    load_dotenv(BASE_DIR / '.env')
+# Always load .env if it exists. python-dotenv silently does nothing when the
+# file is absent, so local development without a .env file still works fine.
+load_dotenv(BASE_DIR / '.env')
 
 
 # ---------------------------------------------------------------------------
